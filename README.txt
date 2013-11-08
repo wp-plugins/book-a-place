@@ -53,3 +53,8 @@ That’s it! Now everybody can book a place. You will get an email about this as
 1. This is the scheme in wp-admin
 1. The scheme with cart in front-end
 1. Settings page
+
+== Changelog ==
+
+= 0.1.0 =
+Initial version.
