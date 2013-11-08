@@ -15,6 +15,10 @@ Booking places, seats, tickets… In theatres, cinemas, restaurants etc. It’s 
 
 Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. We created our plugin as simple as possible. And we are ready to continue working on it to make it better.
 
+= Our ToDo =
+
+1. Event manager.
+1. Scheme reusing - different events can use the same scheme.
 
 == Installation ==
 
@@ -40,11 +44,6 @@ Are you confused now? Don’t worry, we are almost there :)
 1. You can find a shortcode for each scheme in Schemes section. This shortcode can be embedded to any post or page.
 
 That’s it! Now everybody can book a place. You will get an email about this as administrator and user will get an email too. Email templates can be edited in Settings section (‘E-mail templates’ tab). In section Orders administrator will find information about all orders.
-
-== ToDo ==
-
-1. Event manager.
-1. Scheme reusing - different events can use the same scheme.
 
 
 == Screenshots ==
