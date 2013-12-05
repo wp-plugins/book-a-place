@@ -34,21 +34,26 @@
 #scheme-controls {
   margin-top: 10px;
 }
-.wp-core-ui #scheme-cell-color .button.hidden {
+.wp-core-ui #scheme-cell-color .button.hidden,
+.wp-core-ui #event-dialog-form .event-color .button.hidden {
   display: none;
 }
-.wp-core-ui #scheme-cell-color input {
+.wp-core-ui #scheme-cell-color input,
+.wp-core-ui #event-dialog-form .event-color input {
   display: inline;
 }
-.wp-core-ui #scheme-cell-color .ui-widget-content {
+.wp-core-ui #scheme-cell-color .ui-widget-content,
+.wp-core-ui #event-dialog-form .event-color .ui-widget-content {
   background: none;
   border: none;
 }
-.wp-core-ui #scheme-cell-color .ui-slider-vertical {
+.wp-core-ui #scheme-cell-color .ui-slider-vertical,
+.wp-core-ui #event-dialog-form .event-color .ui-slider-vertical {
   height: auto;
   width: 100%;
 }
-.wp-core-ui #scheme-cell-color .iris-picker .iris-slider-offset {
+.wp-core-ui #scheme-cell-color .iris-picker .iris-slider-offset,
+.wp-core-ui #event-dialog-form .event-color .iris-picker .iris-slider-offset {
   bottom: 5px;
   left: 0;
   position: absolute;
@@ -143,4 +148,38 @@
 }
 .bap-description {
   width: 50%;
+}
+/* events */
+#event-dialog-form {
+  display: none;
+}
+#event-dialog-form fieldset {
+  border: 1px solid #AAAAAA;
+  padding: 10px;
+  float: left;
+  width: 300px;
+  height: 425px;
+  margin-bottom: 10px;
+}
+#event-dialog-form fieldset.event-info {
+  margin-right: 20px;
+}
+#event-dialog-form fieldset.event-shortcode {
+  height: auto;
+  width: 642px;
+}
+#event-dialog-form label,
+#event-dialog-form input {
+  display: block;
+}
+#event-dialog-form input.text,
+#event-dialog-form textarea {
+  width: 95%;
+  padding: .4em;
+}
+.required {
+  color: #FF0000;
+}
+form .row {
+  margin-bottom: 10px;
 }

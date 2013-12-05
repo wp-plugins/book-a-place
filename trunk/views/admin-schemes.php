@@ -19,6 +19,12 @@
         require_once(BAP_DIR_PATH . 'views/admin-schemes-add.php');
         require_once(BAP_DIR_PATH . 'views/admin-schemes-list.php');
 
+    } elseif (isset($_GET['action']) && $_GET['action'] == 'duplicate') {
+
+        require_once(BAP_DIR_PATH . 'views/admin-schemes-duplicate.php');
+        require_once(BAP_DIR_PATH . 'views/admin-schemes-add.php');
+        require_once(BAP_DIR_PATH . 'views/admin-schemes-list.php');
+
     } else {
 
         require_once(BAP_DIR_PATH . 'views/admin-schemes-add.php');

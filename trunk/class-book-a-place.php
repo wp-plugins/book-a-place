@@ -56,15 +56,35 @@ class Book_A_Place
     protected $schemes_page_screen_hook_suffix = null;
     protected $orders_page_screen_hook_suffix = null;
     protected $settings_page_screen_hook_suffix = null;
+    protected $events_page_screen_hook_suffix = null;
 
     protected $page_url;
 
     protected $place_types = array('1' => 'seat',);
-    protected $place_statuses = array('1' => 'available', '2' => 'booked', '3' => 'in-cart', '4' => 'in-others-cart', '5' => 'unavailable');
-    protected $place_statuses_labels = array('1' => 'Available', '2' => 'Booked', '3' => 'In cart', '4' => 'In other\'s cart', '5' => 'Unavailable');
-    protected $order_statuses = array(0 => 'Not defined', 1 => 'Set', 2 => 'Paid', 3 => 'Cancelled',);
+    protected $place_statuses = array(
+        '1' => 'available',
+        '2' => 'booked',
+        '3' => 'in-cart',
+        '4' => 'in-others-cart',
+        '5' => 'unavailable'
+    );
+    protected $place_statuses_labels = array(
+        '1' => 'Available',
+        '2' => 'Booked',
+        '3' => 'In cart',
+        '4' => 'In other\'s cart',
+        '5' => 'Unavailable'
+    );
+    protected $order_statuses = array(
+        0 => 'Not defined',
+        1 => 'Set',
+        2 => 'Paid',
+        3 => 'Cancelled',
+    );
 
     protected $session_id;
+
+    protected $event_booking_open = null;
 
     /**
      * Initialize the plugin by setting localization, filters, and administration functions.
@@ -79,42 +99,147 @@ class Book_A_Place
         $this->page_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         // Load plugin text domain
-        add_action('init', array($this, 'load_plugin_textdomain'));
+        add_action('init', array(
+            $this,
+            'load_plugin_textdomain'
+        ));
 
         // Add the options page and menu item.
-        add_action('admin_menu', array($this, 'add_plugin_admin_menu'));
+        add_action('admin_menu', array(
+            $this,
+            'add_plugin_admin_menu'
+        ));
 
         // Load admin style sheet and JavaScript.
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        add_action('admin_enqueue_scripts', array(
+            $this,
+            'enqueue_admin_styles'
+        ));
+        add_action('admin_enqueue_scripts', array(
+            $this,
+            'enqueue_admin_scripts'
+        ));
 
         // Load public-facing style sheet and JavaScript.
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('wp_enqueue_scripts', array(
+            $this,
+            'enqueue_styles'
+        ));
+        add_action('wp_enqueue_scripts', array(
+            $this,
+            'enqueue_scripts'
+        ));
 
-        add_action('init', array('Book_A_Place', 'register_tables'), 1);
-        add_action('switch_blog', array('Book_A_Place', 'register_tables'));
+        add_action('init', array(
+            'Book_A_Place',
+            'register_tables'
+        ), 1);
+        add_action('switch_blog', array(
+            'Book_A_Place',
+            'register_tables'
+        ));
 
         // Custom functionality.
-        add_action('wp_ajax_set_place', array($this, 'set_place'));
-        add_action('wp_ajax_refresh_scheme', array($this, 'refresh_scheme_front'));
-        add_action('wp_ajax_nopriv_refresh_scheme', array($this, 'refresh_scheme_front'));
-        add_action('wp_ajax_unset_place', array($this, 'unset_place'));
-        add_action('wp_ajax_update_place', array($this, 'update_place'));
-        add_action('wp_ajax_edit_place', array($this, 'edit_place'));
-        add_action('wp_ajax_get_place_statuses', array($this, 'get_place_statuses'));
-        add_action('wp_ajax_update_place_status', array($this, 'ajax_update_place_status'));
-        add_action('wp_ajax_add_to_cart', array($this, 'add_to_cart'));
-        add_action('wp_ajax_nopriv_add_to_cart', array($this, 'add_to_cart'));
-        add_action('wp_ajax_refresh_cart', array($this, 'refresh_cart'));
-        add_action('wp_ajax_nopriv_refresh_cart', array($this, 'refresh_cart'));
-        add_shortcode('book_a_place', array($this, 'book_a_place_shortcode'));
-        add_action('wp_ajax_delete_from_cart', array($this, 'delete_from_cart'));
-        add_action('wp_ajax_nopriv_delete_from_cart', array($this, 'delete_from_cart'));
-        add_action('wp_ajax_checkout', array($this, 'ajax_checkout'));
-        add_action('wp_ajax_nopriv_checkout', array($this, 'ajax_checkout'));
-
-        add_filter('TODO', array($this, 'filter_method_name'));
+        add_action('wp_ajax_set_place', array(
+            $this,
+            'set_place'
+        ));
+        add_action('wp_ajax_refresh_scheme', array(
+            $this,
+            'refresh_scheme_front'
+        ));
+        add_action('wp_ajax_nopriv_refresh_scheme', array(
+            $this,
+            'refresh_scheme_front'
+        ));
+        add_action('wp_ajax_unset_place', array(
+            $this,
+            'unset_place'
+        ));
+        add_action('wp_ajax_update_place', array(
+            $this,
+            'update_place'
+        ));
+        add_action('wp_ajax_edit_place', array(
+            $this,
+            'edit_place'
+        ));
+        add_action('wp_ajax_get_place_statuses', array(
+            $this,
+            'get_place_statuses'
+        ));
+        add_action('wp_ajax_update_place_status', array(
+            $this,
+            'ajax_update_place_status'
+        ));
+        add_action('wp_ajax_add_to_cart', array(
+            $this,
+            'add_to_cart'
+        ));
+        add_action('wp_ajax_nopriv_add_to_cart', array(
+            $this,
+            'add_to_cart'
+        ));
+        add_action('wp_ajax_refresh_cart', array(
+            $this,
+            'refresh_cart'
+        ));
+        add_action('wp_ajax_nopriv_refresh_cart', array(
+            $this,
+            'refresh_cart'
+        ));
+        add_shortcode('book_a_place', array(
+            $this,
+            'book_a_place_shortcode'
+        ));
+        add_action('wp_ajax_delete_from_cart', array(
+            $this,
+            'delete_from_cart'
+        ));
+        add_action('wp_ajax_nopriv_delete_from_cart', array(
+            $this,
+            'delete_from_cart'
+        ));
+        add_action('wp_ajax_checkout', array(
+            $this,
+            'ajax_checkout'
+        ));
+        add_action('wp_ajax_nopriv_checkout', array(
+            $this,
+            'ajax_checkout'
+        ));
+        add_action('wp_ajax_add_event', array(
+            $this,
+            'add_event_ajax'
+        ));
+        add_action('wp_ajax_get_events_json', array(
+            $this,
+            'get_events_json_ajax'
+        ));
+        add_action('wp_ajax_move_event', array(
+            $this,
+            'move_event_ajax'
+        ));
+        add_action('wp_ajax_resize_event', array(
+            $this,
+            'resize_event_ajax'
+        ));
+        add_action('wp_ajax_get_event', array(
+            $this,
+            'get_event_ajax'
+        ));
+        add_action('wp_ajax_edit_event', array(
+            $this,
+            'edit_event_ajax'
+        ));
+        add_action('wp_ajax_delete_event', array(
+            $this,
+            'delete_event_ajax'
+        ));
+        add_shortcode('book_a_place_event', array(
+            $this,
+            'book_a_place_event_shortcode'
+        ));
 
     }
 
@@ -141,7 +266,7 @@ class Book_A_Place
      *
      * @since    0.1.0
      *
-     * @param    boolean $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
+     * @param    boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
      */
     public static function activate($network_wide)
     {
@@ -155,7 +280,7 @@ class Book_A_Place
      *
      * @since    0.1.0
      *
-     * @param    boolean $network_wide    True if WPMU superadmin uses "Network Deactivate" action, false if WPMU is disabled or plugin is deactivated on an individual blog.
+     * @param    boolean $network_wide True if WPMU superadmin uses "Network Deactivate" action, false if WPMU is disabled or plugin is deactivated on an individual blog.
      */
     public static function deactivate($network_wide)
     {
@@ -192,9 +317,15 @@ class Book_A_Place
         }
 
         $screen = get_current_screen();
-        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix) {
+        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix || $screen->id == $this->events_page_screen_hook_suffix) {
             wp_enqueue_style($this->plugin_slug . '-jquery-ui-theme', plugins_url('css/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css', __FILE__), array(), $this->version);
             wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('css/admin.css', __FILE__), array(), $this->version);
+            wp_enqueue_style('wp-color-picker');
+        }
+
+        if ($screen->id == $this->events_page_screen_hook_suffix) {
+            wp_enqueue_style($this->plugin_slug . '-fullcalendar', plugins_url('lib/fullcalendar/fullcalendar/fullcalendar.css', __FILE__), array(), $this->version);
+            wp_enqueue_style($this->plugin_slug . '-fullcalendar-print', plugins_url('lib/fullcalendar/fullcalendar/fullcalendar.print.css', __FILE__), array(), $this->version, 'print');
             wp_enqueue_style('wp-color-picker');
         }
 
@@ -216,7 +347,28 @@ class Book_A_Place
 
         $screen = get_current_screen();
         if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix) {
-            wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('js/admin.js', __FILE__), array('jquery', 'jquery-ui-core', 'jquery-ui-button', 'jquery-ui-dialog', 'wp-color-picker', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-tooltip', 'jquery-ui-tabs'), $this->version);
+            wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('js/admin.js', __FILE__), array(
+                    'jquery',
+                    'jquery-ui-core',
+                    'jquery-ui-button',
+                    'jquery-ui-dialog',
+                    'wp-color-picker',
+                    'jquery-ui-widget',
+                    'jquery-ui-position',
+                    'jquery-ui-tooltip',
+                    'jquery-ui-tabs'
+                ), $this->version);
+        }
+
+        if ($screen->id == $this->events_page_screen_hook_suffix) {
+            wp_enqueue_script($this->plugin_slug . '-fullcalendar', plugins_url('lib/fullcalendar/fullcalendar/fullcalendar.min.js', __FILE__), array(
+                    'jquery',
+                    'jquery-ui-core',
+                    'jquery-ui-draggable',
+                    'jquery-ui-resizable',
+                    'jquery-ui-dialog',
+                    'wp-color-picker',
+                ), $this->version);
         }
 
     }
@@ -241,7 +393,16 @@ class Book_A_Place
     {
         wp_register_script($this->plugin_slug . '-kkcountdown', plugins_url('js/kkcountdown.js', __FILE__), array('jquery',), $this->version);
         wp_register_script($this->plugin_slug . '-jquery-block-ui', plugins_url('js/jquery.blockUI.js', __FILE__), array('jquery',), $this->version);
-        wp_enqueue_script($this->plugin_slug . '-plugin-script', plugins_url('js/public.js', __FILE__), array($this->plugin_slug . '-kkcountdown', $this->plugin_slug . '-jquery-block-ui', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-tooltip', 'jquery-ui-button', 'jquery-ui-dialog'), $this->version);
+        wp_enqueue_script($this->plugin_slug . '-plugin-script', plugins_url('js/public.js', __FILE__), array(
+                $this->plugin_slug . '-kkcountdown',
+                $this->plugin_slug . '-jquery-block-ui',
+                'jquery-ui-core',
+                'jquery-ui-widget',
+                'jquery-ui-position',
+                'jquery-ui-tooltip',
+                'jquery-ui-button',
+                'jquery-ui-dialog'
+            ), $this->version);
         wp_localize_script($this->plugin_slug . '-plugin-script', 'bap_object', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
 
@@ -252,13 +413,32 @@ class Book_A_Place
      */
     public function add_plugin_admin_menu()
     {
-        $this->plugin_screen_hook_suffix = add_menu_page(__('Book a Place', $this->plugin_slug), __('Book a Place', $this->plugin_slug), 'read', $this->plugin_slug, array($this, 'display_plugin_admin_page'));
+        $this->plugin_screen_hook_suffix = add_menu_page(__('Book a Place', $this->plugin_slug), __('Book a Place', $this->plugin_slug), 'read', $this->plugin_slug, array(
+            $this,
+            'display_plugin_admin_page'
+        ));
 
-        $this->schemes_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Schemes', $this->plugin_slug), __('Schemes', $this->plugin_slug), 'read', $this->plugin_slug . '-schemes', array($this, 'display_plugin_admin_schemes_page'));
-        $this->orders_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Orders', $this->plugin_slug), __('Orders', $this->plugin_slug), 'read', $this->plugin_slug . '-orders', array($this, 'display_plugin_admin_orders_page'));
-        $this->settings_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Settings', $this->plugin_slug), __('Settings', $this->plugin_slug), 'read', $this->plugin_slug . '-settings', array($this, 'display_plugin_admin_settings_page'));
+        $this->schemes_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Schemes', $this->plugin_slug), __('Schemes', $this->plugin_slug), 'read', $this->plugin_slug . '-schemes', array(
+                $this,
+                'display_plugin_admin_schemes_page'
+            ));
+        $this->events_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Events', $this->plugin_slug), __('Events', $this->plugin_slug), 'read', $this->plugin_slug . '-events', array(
+                $this,
+                'display_plugin_admin_events_page'
+            ));
+        $this->orders_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Orders', $this->plugin_slug), __('Orders', $this->plugin_slug), 'read', $this->plugin_slug . '-orders', array(
+                $this,
+                'display_plugin_admin_orders_page'
+            ));
+        $this->settings_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Settings', $this->plugin_slug), __('Settings', $this->plugin_slug), 'read', $this->plugin_slug . '-settings', array(
+                $this,
+                'display_plugin_admin_settings_page'
+            ));
 
-        add_action( 'load-' . $this->schemes_page_screen_hook_suffix , array($this, 'custom_ob_start'));
+        add_action('load-' . $this->schemes_page_screen_hook_suffix, array(
+                $this,
+                'custom_ob_start'
+            ));
     }
 
     /**
@@ -291,6 +471,11 @@ class Book_A_Place
         include_once('views/admin-settings.php');
     }
 
+    public function display_plugin_admin_events_page()
+    {
+        include_once('views/admin-events.php');
+    }
+
     public static function register_tables()
     {
         global $wpdb;
@@ -298,6 +483,7 @@ class Book_A_Place
         $wpdb->bap_places = "{$wpdb->prefix}bap_places";
         $wpdb->bap_carts = "{$wpdb->prefix}bap_carts";
         $wpdb->bap_orders = "{$wpdb->prefix}bap_orders";
+        $wpdb->bap_events = "{$wpdb->prefix}bap_events";
     }
 
     public static function create_tables()
@@ -308,8 +494,8 @@ class Book_A_Place
         // Call this manually as we may have missed the init hook
         self::register_tables();
 
-        if ($wpdb->get_var("SHOW TABLES LIKE '$wpdb->bap_schemes'") != $wpdb->bap_schemes) {
-            $sql_create_table = "CREATE TABLE `{$wpdb->bap_schemes}` (
+        // bap_schemes
+        $sql_create_table = "CREATE TABLE `{$wpdb->bap_schemes}` (
                                   `scheme_id` int(11) NOT NULL AUTO_INCREMENT,
                                   `name` varchar(255) NOT NULL,
                                   `width` int(11) NOT NULL,
@@ -317,11 +503,10 @@ class Book_A_Place
                                   `description` varchar(255) DEFAULT NULL,
                                   PRIMARY  KEY (`scheme_id`)
                                 ) $charset_collate; ";
-            dbDelta($sql_create_table);
-        }
+        dbDelta($sql_create_table);
 
-        if ($wpdb->get_var("SHOW TABLES LIKE '$wpdb->bap_places'") != $wpdb->bap_places) {
-            $sql_create_table = "CREATE TABLE `{$wpdb->bap_places}` (
+        // bap_places
+        $sql_create_table = "CREATE TABLE `{$wpdb->bap_places}` (
                                   `place_id` int(11) NOT NULL AUTO_INCREMENT,
                                   `type` int(11) NOT NULL DEFAULT '0',
                                   `cells` text NOT NULL,
@@ -334,27 +519,25 @@ class Book_A_Place
                                   PRIMARY  KEY (`place_id`),
                                   KEY `scheme_id` (`scheme_id`)
                                 ) $charset_collate;";
-            dbDelta($sql_create_table);
-            $sql_add_constraint = "ALTER TABLE `{$wpdb->bap_places}`
+        dbDelta($sql_create_table);
+        $sql_add_constraint = "ALTER TABLE `{$wpdb->bap_places}`
                                     ADD CONSTRAINT `{$wpdb->bap_places}_ibfk_1` FOREIGN KEY (`scheme_id`) REFERENCES `{$wpdb->bap_schemes}` (`scheme_id`) ON DELETE CASCADE ON UPDATE CASCADE;";
-            dbDelta($sql_add_constraint);
-        }
+        dbDelta($sql_add_constraint);
 
-        if ($wpdb->get_var("SHOW TABLES LIKE '$wpdb->bap_carts'") != $wpdb->bap_carts) {
-            $sql_create_table = "CREATE TABLE `{$wpdb->bap_carts}` (
+        // bap_carts
+        $sql_create_table = "CREATE TABLE `{$wpdb->bap_carts}` (
                                   `session_id` varchar(255) NOT NULL,
                                   `place_id` int(11) NOT NULL,
                                   `date` datetime NOT NULL,
                                   KEY `place_id` (`place_id`)
                                 ) $charset_collate;";
-            dbDelta($sql_create_table);
-            $sql_add_constraint = "ALTER TABLE `{$wpdb->bap_carts}`
+        dbDelta($sql_create_table);
+        $sql_add_constraint = "ALTER TABLE `{$wpdb->bap_carts}`
                                     ADD CONSTRAINT `{$wpdb->bap_carts}_ibfk_1` FOREIGN KEY (`place_id`) REFERENCES `{$wpdb->bap_places}` (`place_id`) ON DELETE CASCADE ON UPDATE CASCADE;";
-            dbDelta($sql_add_constraint);
-        }
+        dbDelta($sql_add_constraint);
 
-        if ($wpdb->get_var("SHOW TABLES LIKE '$wpdb->bap_orders'") != $wpdb->bap_orders) {
-            $sql_create_table = "CREATE TABLE IF NOT EXISTS `{$wpdb->bap_orders}` (
+        // bap_orders
+        $sql_create_table = "CREATE TABLE IF NOT EXISTS `{$wpdb->bap_orders}` (
                                   `order_id` int(11) NOT NULL AUTO_INCREMENT,
                                   `first_name` varchar(255) DEFAULT NULL,
                                   `last_name` varchar(255) DEFAULT NULL,
@@ -367,10 +550,36 @@ class Book_A_Place
                                   `total_price` float NOT NULL DEFAULT '0',
                                   `status_id` int(11) NOT NULL DEFAULT '0',
                                   `admin_notes` text,
+                                  `event_id` int(11) DEFAULT NULL,
+                                  `event_name` varchar(255) DEFAULT NULL,
+                                  `event` text,
                                   PRIMARY KEY (`order_id`)
                                 ) $charset_collate; ";
-            dbDelta($sql_create_table);
-        }
+        dbDelta($sql_create_table);
+
+        // bap_events
+        $sql_create_table = "CREATE TABLE `{$wpdb->bap_events}` (
+                                  `event_id` int(11) NOT NULL AUTO_INCREMENT,
+                                  `scheme_id` int(11) DEFAULT NULL,
+                                  `name` varchar(255) NOT NULL,
+                                  `description` varchar(255) DEFAULT NULL,
+                                  `url` varchar(255) DEFAULT NULL,
+                                  `hours` float NOT NULL DEFAULT '0',
+                                  `background_color` varchar(255) DEFAULT NULL,
+                                  `border_color` varchar(255) DEFAULT NULL,
+                                  `text_color` varchar(255) DEFAULT NULL,
+                                  `start` datetime NOT NULL,
+                                  `end` datetime NOT NULL,
+                                  `timezone_offset` float NOT NULL DEFAULT '0',
+                                  `all_day` int(11) NOT NULL DEFAULT '1',
+                                  `status_id` int(11) NOT NULL,
+                                  PRIMARY  KEY (`event_id`),
+                                  KEY `scheme_id` (`scheme_id`)
+                                ) $charset_collate;";
+        dbDelta($sql_create_table);
+        $sql_add_constraint = "ALTER TABLE `{$wpdb->bap_events}`
+                                    ADD CONSTRAINT `{$wpdb->bap_events}_ibfk_1` FOREIGN KEY (`scheme_id`) REFERENCES `{$wpdb->bap_schemes}` (`scheme_id`) ON DELETE SET NULL ON UPDATE CASCADE;";
+        dbDelta($sql_add_constraint);
 
     }
 
@@ -394,7 +603,10 @@ Email - <email><br/>
 Phone - <phone><br/>
 Unique order ID - <code><br/>
 Status - <status>';
-        $default_options_admin = array('subject' => $default_subject_admin, 'message' => $default_message_admin,);
+        $default_options_admin = array(
+            'subject' => $default_subject_admin,
+            'message' => $default_message_admin,
+        );
         $options = get_option(BAP_EMAIL_NEW_ORDER_ADMIN);
         if (!$options) {
             $add_options = add_option(BAP_EMAIL_NEW_ORDER_ADMIN, $default_options_admin);
@@ -408,7 +620,10 @@ Phone - <phone><br/>
 
 <br/><br/>
 Regards';
-        $default_options_user = array('subject' => $default_subject_user, 'message' => $default_message_user,);
+        $default_options_user = array(
+            'subject' => $default_subject_user,
+            'message' => $default_message_user,
+        );
         $options = get_option(BAP_EMAIL_NEW_ORDER_USER);
         if (!$options) {
             $add_options = add_option(BAP_EMAIL_NEW_ORDER_USER, $default_options_user);
@@ -421,7 +636,17 @@ Regards';
     {
         global $wpdb;
 
-        return $wpdb->insert($wpdb->bap_schemes, array('name' => $data['scheme-name'], 'width' => $data['scheme-width'], 'height' => $data['scheme-height'], 'description' => stripcslashes($data['scheme-description']),), array('%s', '%d', '%d', '%s'));
+        return $wpdb->insert($wpdb->bap_schemes, array(
+            'name' => stripcslashes($data['scheme-name']),
+            'width' => $data['scheme-width'],
+            'height' => $data['scheme-height'],
+            'description' => stripcslashes($data['scheme-description']),
+        ), array(
+            '%s',
+            '%d',
+            '%d',
+            '%s'
+        ));
     }
 
     public function get_schemes()
@@ -437,11 +662,11 @@ Regards';
         return $schemes;
     }
 
-    public function get_scheme_by_id($id)
+    public function get_scheme_by_id($id, $output_type = OBJECT)
     {
         global $wpdb;
 
-        $scheme = $wpdb->get_row("SELECT * FROM $wpdb->bap_schemes WHERE scheme_id = " . (int)$id);
+        $scheme = $wpdb->get_row("SELECT * FROM $wpdb->bap_schemes WHERE scheme_id = " . (int)$id, $output_type);
 
         return $scheme;
     }
@@ -457,7 +682,17 @@ Regards';
     {
         global $wpdb;
 
-        return $wpdb->update($wpdb->bap_schemes, array('name' => $data['scheme-name'], 'width' => $data['scheme-width'], 'height' => $data['scheme-height'], 'description' => stripcslashes($data['scheme-description']),), array('scheme_id' => (int)$data['scheme-id']), array('%s', '%d', '%d', '%s'), array('%d'));
+        return $wpdb->update($wpdb->bap_schemes, array(
+            'name' => $data['scheme-name'],
+            'width' => $data['scheme-width'],
+            'height' => $data['scheme-height'],
+            'description' => stripcslashes($data['scheme-description']),
+        ), array('scheme_id' => (int)$data['scheme-id']), array(
+            '%s',
+            '%d',
+            '%d',
+            '%s'
+        ), array('%d'));
 
     }
 
@@ -534,9 +769,24 @@ Regards';
         return $html;
     }
 
-    public function display_scheme_front($id)
+    public function display_scheme_front($id, $event_id = false)
     {
         $this->delete_expired_carts();
+
+        if (is_null($this->event_booking_open) && $event_id) {
+            $event = $this->get_event_by_id($event_id);
+            $this->is_event_booking_open($event);
+        }
+
+        $html = '
+            <script type="text/javascript">
+                var bookAPLaceEventBookingOpen = ' . ($this->event_booking_open ? 1 : 0) . ';
+            </script>';
+
+        if ($this->event_booking_open === false) {
+            $html .= '<p>Booking is closed.</p>';
+            return $html;
+        }
 
         $id = (int)trim($id);
         $scheme = $this->get_scheme_by_id($id);
@@ -547,8 +797,7 @@ Regards';
         $width = $scheme->width * 30;
 
         $tooltip_content = '';
-        $html = '';
-        $html .= '<ul id="scheme" data-scheme-id="' . $id . '" style="width: ' . $width . 'px;">';
+        $html .= '<ul id="scheme" data-event-id="' . $event_id . '" data-scheme-id="' . $id . '" style="width: ' . $width . 'px;">';
         $places = array();
 
         for ($i = 1; $i <= $scheme->height; ++$i) {
@@ -611,7 +860,25 @@ Regards';
     {
         global $wpdb;
 
-        $save = $wpdb->insert($wpdb->bap_places, array('type' => $_POST['type'], 'cells' => serialize($_POST['cells']), 'name' => stripslashes($_POST['name']), 'description' => stripslashes($_POST['description']), 'price' => $_POST['price'], 'scheme_id' => $_POST['scheme_id'], 'status_id' => 1, 'color' => $_POST['color'],), array('%d', '%s', '%s', '%s', '%f', '%d', '%d', '%s',));
+        $save = $wpdb->insert($wpdb->bap_places, array(
+            'type' => $_POST['type'],
+            'cells' => serialize($_POST['cells']),
+            'name' => stripslashes($_POST['name']),
+            'description' => stripslashes($_POST['description']),
+            'price' => $_POST['price'],
+            'scheme_id' => $_POST['scheme_id'],
+            'status_id' => 1,
+            'color' => $_POST['color'],
+        ), array(
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%f',
+            '%d',
+            '%d',
+            '%s',
+        ));
 
         $this->refresh_scheme();
         die();
@@ -631,7 +898,17 @@ Regards';
     {
         global $wpdb;
 
-        $update = $wpdb->update($wpdb->bap_places, array('name' => stripslashes($_POST['name']), 'description' => stripslashes($_POST['description']), 'price' => $_POST['price'], 'color' => $_POST['color'],), array('place_id' => (int)$_POST['place_id']), array('%s', '%s', '%f', '%s',), array('%d'));
+        $update = $wpdb->update($wpdb->bap_places, array(
+            'name' => stripslashes($_POST['name']),
+            'description' => stripslashes($_POST['description']),
+            'price' => $_POST['price'],
+            'color' => $_POST['color'],
+        ), array('place_id' => (int)$_POST['place_id']), array(
+            '%s',
+            '%s',
+            '%f',
+            '%s',
+        ), array('%d'));
 
         $this->refresh_scheme();
         die();
@@ -644,11 +921,20 @@ Regards';
         die();
     }
 
-    public function get_places($scheme_id)
+    public function get_places_with_carts($scheme_id, $output_type = OBJECT)
     {
         global $wpdb;
 
-        $places = $wpdb->get_results("SELECT p.*, c.session_id FROM $wpdb->bap_places AS p LEFT JOIN $wpdb->bap_carts AS c ON c.place_id=p.place_id WHERE scheme_id = " . (int)$scheme_id);
+        $places = $wpdb->get_results("SELECT p.*, c.session_id FROM $wpdb->bap_places AS p LEFT JOIN $wpdb->bap_carts AS c ON c.place_id=p.place_id WHERE scheme_id = " . (int)$scheme_id, $output_type);
+
+        return $places;
+    }
+
+    public function get_places($scheme_id, $output_type = OBJECT)
+    {
+        global $wpdb;
+
+        $places = $wpdb->get_results("SELECT * FROM $wpdb->bap_places WHERE scheme_id = " . (int)$scheme_id, $output_type);
 
         return $places;
     }
@@ -664,7 +950,7 @@ Regards';
 
     public function get_cells($scheme_id)
     {
-        $places = $this->get_places($scheme_id);
+        $places = $this->get_places_with_carts($scheme_id);
 
         $cells_by_id = array();
 
@@ -689,8 +975,9 @@ Regards';
     public function refresh_scheme_front()
     {
         $id = $_POST['scheme_id'];
+        $event_id = $_POST['event_id'];
 
-        $scheme = $this->display_scheme_front($id);
+        $scheme = $this->display_scheme_front($id, $event_id);
 
         echo $scheme;
         die();
@@ -826,7 +1113,7 @@ Regards';
 
         $html = '<h3>Cart</h3>
     <p id="bap-countdown-container">
-        The cart will be cleared in: <span id="cart-expiration-time" class="kkcount-down" data-time-left="'.$time_left.'" data-time="1"></span>
+        The cart will be cleared in: <span id="cart-expiration-time" class="kkcount-down" data-time-left="' . $time_left . '" data-time="1"></span>
     </p>
     <table class="table">
     <thead>
@@ -929,7 +1216,15 @@ Regards';
             die();
         }
 
-        $save = $wpdb->insert($wpdb->bap_carts, array('session_id' => $session_id, 'place_id' => (int)$_POST['place_id'], 'date' => current_time('mysql'),), array('%s', '%d', '%s'));
+        $save = $wpdb->insert($wpdb->bap_carts, array(
+            'session_id' => $session_id,
+            'place_id' => (int)$_POST['place_id'],
+            'date' => current_time('mysql'),
+        ), array(
+            '%s',
+            '%d',
+            '%s'
+        ));
 
         $this->update_cart_time($session_id);
 
@@ -942,8 +1237,13 @@ Regards';
     public function refresh_shortcode_content()
     {
         $id = $_POST['scheme_id'];
+        $event_id = $_POST['event_id'];
 
-        $content = $this->book_a_place_shortcode(array('scheme' => $id));
+        if ($event_id == 0) {
+            $content = $this->book_a_place_shortcode(array('scheme' => $id));
+        } else {
+            $content = $this->book_a_place_event_shortcode(array('id' => $event_id));
+        }
 
         echo $content;
         die();
@@ -955,7 +1255,13 @@ Regards';
 
         $session_id = $this->session_id;
 
-        $delete = $wpdb->delete($wpdb->bap_carts, array('session_id' => $session_id, 'place_id' => (int)$_POST['place_id'],), array('%s', '%d'));
+        $delete = $wpdb->delete($wpdb->bap_carts, array(
+            'session_id' => $session_id,
+            'place_id' => (int)$_POST['place_id'],
+        ), array(
+            '%s',
+            '%d'
+        ));
 
         $this->update_cart_time($session_id);
 
@@ -969,7 +1275,11 @@ Regards';
     {
         global $wpdb;
 
+        $event = $this->get_event_by_id($_POST['event_id'], ARRAY_A);
+
         // TODO: add verification
+
+        if ($this->is_event_booking_open($event)) return false;
 
         $places_in_cart = $this->get_places_in_cart();
         $places_list = array();
@@ -977,14 +1287,47 @@ Regards';
 
         if ($places_in_cart && is_array($places_in_cart)) {
             foreach ($places_in_cart as $place) {
-                $places_list[$place['place_id']] = array('place_name' => $place['place_name'], 'place_price' => $place['place_price'],);
+                $places_list[$place['place_id']] = array(
+                    'place_name' => $place['place_name'],
+                    'place_price' => $place['place_price'],
+                );
                 $total_price += $place['place_price'];
             }
         } else {
             return false;
         }
 
-        $save_order = $wpdb->insert($wpdb->bap_orders, array('first_name' => stripslashes($_POST['first_name']), 'last_name' => stripslashes($_POST['last_name']), 'email' => stripslashes($_POST['email']), 'phone' => stripslashes($_POST['phone']), 'notes' => stripslashes($_POST['notes']), 'date' => current_time('mysql'), 'places' => serialize($places_list), 'total_price' => $total_price, 'status_id' => 1), array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%d'));
+        $event_id = '';
+        $event_name = '';
+        if ($event) {
+            $event_id = $event['event_id'];
+            $event_name = $event['name'];
+        }
+
+        $save_order = $wpdb->insert($wpdb->bap_orders, array(
+            'first_name' => stripslashes($_POST['first_name']),
+            'last_name' => stripslashes($_POST['last_name']),
+            'email' => stripslashes($_POST['email']),
+            'phone' => stripslashes($_POST['phone']),
+            'notes' => stripslashes($_POST['notes']),
+            'date' => current_time('mysql'),
+            'places' => serialize($places_list),
+            'total_price' => $total_price,
+            'status_id' => 1,
+            'event_id' => $event_id,
+            'event_name' => $event_name,
+            'event' => serialize($event),
+        ), array(
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%f',
+            '%d'
+        ));
 
         if ($save_order) {
             $order_id = $wpdb->insert_id;
@@ -1059,7 +1402,10 @@ Regards';
     public function update_order($order_id)
     {
         global $wpdb;
-        $update = $wpdb->update($wpdb->bap_orders, array('admin_notes' => strip_tags(stripslashes($_POST['order-admin-notes'])), 'status_id' => strip_tags(stripslashes($_POST['order-status'])),), array('order_id' => $order_id), array('%s',), array('%d'));
+        $update = $wpdb->update($wpdb->bap_orders, array(
+            'admin_notes' => strip_tags(stripslashes($_POST['order-admin-notes'])),
+            'status_id' => strip_tags(stripslashes($_POST['order-status'])),
+        ), array('order_id' => $order_id), array('%s',), array('%d'));
         return $update;
     }
 
@@ -1092,12 +1438,18 @@ Regards';
 
         $headers = 'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>' . "\r\n";
 
-        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
+        add_filter('wp_mail_content_type', array(
+            $this,
+            'set_html_content_type'
+        ));
 
         $send_mail = wp_mail($email_to, $compiled_template['subject'], $compiled_template['message'], $headers);
 
         // Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
-        remove_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
+        remove_filter('wp_mail_content_type', array(
+            $this,
+            'set_html_content_type'
+        ));
 
         return $send_mail;
     }
@@ -1120,9 +1472,31 @@ Regards';
             }
         }
 
-        $search = array('<first_name>', '<last_name>', '<email>', '<phone>', '<notes>', '<date>', '<code>', '<places>', '<total_price>', '<status>',);
+        $search = array(
+            '<first_name>',
+            '<last_name>',
+            '<email>',
+            '<phone>',
+            '<notes>',
+            '<date>',
+            '<code>',
+            '<places>',
+            '<total_price>',
+            '<status>',
+        );
 
-        $replace = array($data->first_name, $data->last_name, $data->email, $data->phone, $data->notes, $data->date, $data->code, $places_html, $this->places_money_format($data->total_price), $this->order_statuses[$data->status_id],);
+        $replace = array(
+            $data->first_name,
+            $data->last_name,
+            $data->email,
+            $data->phone,
+            $data->notes,
+            $data->date,
+            $data->code,
+            $places_html,
+            $this->places_money_format($data->total_price),
+            $this->order_statuses[$data->status_id],
+        );
 
         $text = str_replace($search, $replace, $template);
 
@@ -1144,7 +1518,7 @@ Regards';
         if (!empty($places_in_cart) && is_array($places_in_cart)) {
             $p = current($places_in_cart);
             $time = strtotime($p['date']);
-            $time_left = $cart_expiration_time - (time()-$time);
+            $time_left = $cart_expiration_time - (time() - $time);
         }
 
         return $time_left;
@@ -1195,6 +1569,476 @@ Regards';
     public function custom_ob_start()
     {
         ob_start();
+    }
+
+    private function redirect_to_schemes_list($get_url = false)
+    {
+        $redirect_to_page = explode('_page_', $this->schemes_page_screen_hook_suffix);
+        $url = admin_url('admin.php?page=' . $redirect_to_page[1]);
+        if ($get_url) {
+            return $url;
+        } else {
+            wp_redirect($url);
+        }
+        exit;
+    }
+
+    private function duplicate_scheme($scheme_id)
+    {
+        $scheme = $this->get_scheme_by_id($scheme_id, ARRAY_A);
+
+        $copy_scheme_id = $this->copy_scheme($scheme);
+
+        if ($copy_scheme_id) {
+            $this->copy_places($scheme_id, $copy_scheme_id);
+        }
+
+        return true;
+    }
+
+    private function copy_scheme($scheme)
+    {
+        global $wpdb;
+
+        if (!empty($scheme) && is_array($scheme)) {
+            $scheme['scheme_id'] = '';
+            $scheme['name'] .= ' - copy';
+            $insert = $wpdb->insert($wpdb->bap_schemes, $scheme);
+            return $wpdb->insert_id;
+        } else {
+            return false;
+        }
+    }
+
+    private function copy_places($from_scheme_id, $to_scheme_id = false)
+    {
+        $places = $this->get_places($from_scheme_id, ARRAY_A);
+
+        if (!empty($places) && is_array($places)) {
+            foreach ($places as $place) {
+                $this->copy_place($place, $to_scheme_id);
+            }
+        }
+
+        return true;
+    }
+
+    private function copy_place($place, $to_scheme_id = false)
+    {
+        global $wpdb;
+
+        if (!empty($place) && is_array($place)) {
+            $place['place_id'] = '';
+            if ($to_scheme_id) {
+                $place['scheme_id'] = $to_scheme_id;
+            }
+            $insert = $wpdb->insert($wpdb->bap_places, $place);
+            return $wpdb->insert_id;
+        } else {
+            return false;
+        }
+    }
+
+    public function add_event_ajax()
+    {
+        $event_id = $this->add_event(array(
+            'scheme_id' => $_POST['scheme_id'],
+            'name' => $_POST['name'],
+            'description' => $_POST['description'],
+            'url' => $_POST['url'],
+            'start' => $_POST['start'],
+            'end' => $_POST['end'],
+            'timezone_offset' => $_POST['timezone_offset'],
+            'all_day' => $_POST['all_day'],
+            'hours' => $_POST['hours'],
+            'background_color' => $_POST['background_color'],
+            'border_color' => $_POST['border_color'],
+            'text_color' => $_POST['text_color']
+        ));
+
+        if ($event_id) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+
+        echo json_encode(array(
+            'error' => $error,
+            'event' => array(
+                'name' => stripcslashes($_POST['name']),
+                'url' => $_POST['url'],
+                'id' => $event_id,
+                'background_color' => $_POST['background_color'],
+                'border_color' => $_POST['border_color'],
+                'text_color' => $_POST['text_color']
+            ),
+        ));
+
+        die();
+    }
+
+    private function add_event($data)
+    {
+        global $wpdb;
+
+        $scheme = $wpdb->get_row("SELECT * FROM $wpdb->bap_schemes WHERE scheme_id = '" . (int)$data['scheme_id'] . "'");
+        if (!$scheme) return false;
+
+        $save = $wpdb->insert($wpdb->bap_events, array(
+            'scheme_id' => (int)$data['scheme_id'],
+            'name' => stripslashes($data['name']),
+            'description' => stripslashes($data['description']),
+            'url' => $data['url'],
+            'start' => $this->convert_calendar_date($data['start'], $data['timezone_offset']),
+            'end' => $this->convert_calendar_date($data['end'], $data['timezone_offset']),
+            'timezone_offset' => $data['timezone_offset'],
+            'all_day' => (int)$data['all_day'],
+            'status_id' => isset($data['status_id']) ? $data['status_id'] : 1,
+            'hours' => $data['hours'],
+            'background_color' => $data['background_color'],
+            'border_color' => $data['border_color'],
+            'text_color' => $data['text_color']
+        ), array(
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%d',
+            '%d',
+            '%d',
+            '%f',
+            '%s',
+            '%s',
+            '%s',
+        ));
+
+        return $wpdb->insert_id;
+    }
+
+    public function get_events_json_ajax()
+    {
+        $start = $this->convert_calendar_date($_POST['start'], $_POST['timezone_offset']);
+        $end = $this->convert_calendar_date($_POST['end'], $_POST['timezone_offset']);
+
+        echo $this->get_events_json($start, $end);
+
+        die();
+    }
+
+    private function get_events_json($start = null, $end = null)
+    {
+        $events = $this->get_events($start, $end);
+        $events_arr = array();
+        if (!empty($events) && is_array($events)) {
+            foreach ($events as $event) {
+                $events_arr[] = array(
+                    'id' => $event->event_id,
+                    'title' => $event->name,
+                    'start' => $event->start,
+                    'end' => $event->end,
+                    //'url' => $event->url,
+                    'allDay' => $event->all_day == 1 ? true : false,
+                    'backgroundColor' => $event->background_color,
+                    'borderColor' => $event->border_color,
+                    'textColor' => $event->text_color,
+                );
+            }
+
+        }
+
+        return json_encode($events_arr);
+    }
+
+    private function get_events($start = null, $end = null)
+    {
+        global $wpdb;
+
+        if ($start && $end) {
+            $where = "WHERE `start` <= '$end' AND `end` >= '$start'";
+        } else {
+            $where = "WHERE 1";
+        }
+
+        $events = $wpdb->get_results("
+        SELECT *
+        FROM $wpdb->bap_events
+        {$where}
+	    ");
+
+        return $events;
+    }
+
+    private function convert_calendar_date($ts, $timezone_offset)
+    {
+        return date("Y-m-d H:i:s", $ts - $timezone_offset * 3600);
+    }
+
+    protected function get_schemes_list()
+    {
+        $schemes = $this->get_schemes();
+
+        $html = '<option value="0">Select Scheme</option>';
+
+        if (!empty($schemes) && is_array($schemes)) {
+            foreach ($schemes as $scheme) {
+                $html .= '<option value="' . $scheme->scheme_id . '">' . $scheme->name . '</option>';
+            }
+        }
+
+        return $html;
+    }
+
+    public function move_event_ajax()
+    {
+        $move = $this->move_event($_POST['event_id'], $_POST['day_delta'], $_POST['minute_delta'], $_POST['all_day']);
+        if ($move) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+        echo json_encode(array('error' => $error));
+        die();
+    }
+
+    private function move_event($id, $day_delta, $minute_delta, $all_day)
+    {
+        $event = $this->get_event_by_id($id);
+
+        $delta = $day_delta * 86400 + $minute_delta * 60;
+        $start_ts = strtotime($event->start) + $delta;
+        $end_ts = strtotime($event->end) + $delta;
+
+        $update = array(
+            'start' => date("Y-m-d H:i:s", $start_ts),
+            'end' => date("Y-m-d H:i:s", $end_ts),
+            'all_day' => (int)$all_day,
+        );
+
+        $format = array(
+            '%s',
+            '%s',
+            '%d',
+        );
+
+        $move = $this->update_event($id, $update, $format);
+
+        return $move;
+    }
+
+    protected function update_event($id, $update, $format)
+    {
+        global $wpdb;
+
+        return $wpdb->update($wpdb->bap_events, $update, array('event_id' => (int)$id), $format, array('%d'));
+    }
+
+    protected function delete_event($id)
+    {
+        global $wpdb;
+
+        return $wpdb->delete($wpdb->bap_events, array('event_id' => $id), array('%d'));;
+    }
+
+    public function get_event_by_id($id, $output_type = OBJECT)
+    {
+        global $wpdb;
+        $event = $wpdb->get_row("SELECT * FROM $wpdb->bap_events WHERE event_id = " . (int)$id, $output_type);
+        return $event;
+    }
+
+    public function resize_event_ajax()
+    {
+        $resize = $this->resize_event($_POST['event_id'], $_POST['day_delta'], $_POST['minute_delta']);
+        if ($resize) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+        echo json_encode(array('error' => $error));
+        die();
+    }
+
+    private function resize_event($id, $day_delta, $minute_delta)
+    {
+        $event = $this->get_event_by_id($id);
+
+        $delta = $day_delta * 86400 + $minute_delta * 60;
+        $end_ts = strtotime($event->end) + $delta;
+
+        $update = array(
+            'end' => date("Y-m-d H:i:s", $end_ts),
+        );
+
+        $format = array(
+            '%s',
+        );
+
+        $resize = $this->update_event($id, $update, $format);
+
+        return $resize;
+    }
+
+    public function get_event_ajax()
+    {
+        $event = $this->get_event_by_id($_POST['event_id']);
+        $event->shortcode = '[book_a_place_event id="' . $event->event_id . '"]';
+        if ($event) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+        echo json_encode(array(
+            'error' => $error,
+            'event' => $event
+        ));
+        die();
+    }
+
+    public function edit_event_ajax()
+    {
+        $id = (int)$_POST['event_id'];
+
+        $update = array(
+            'name' => stripslashes($_POST['name']),
+            'description' => stripslashes($_POST['description']),
+            'url' => $_POST['url'],
+            'hours' => $_POST['hours'],
+            'scheme_id' => (int)$_POST['scheme_id'],
+            'background_color' => $_POST['background_color'],
+            'border_color' => $_POST['border_color'],
+            'text_color' => $_POST['text_color'],
+        );
+
+        $format = array(
+            '%s',
+            '%s',
+            '%s',
+            '%f',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+        );
+
+        $edit = $this->update_event($id, $update, $format);
+
+        if ($edit) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+
+        echo json_encode(array(
+            'error' => $error,
+            'event' => array(
+                'name' => $_POST['name'],
+                'background_color' => $_POST['background_color'],
+                'border_color' => $_POST['border_color'],
+                'text_color' => $_POST['text_color'],
+            )
+        ));
+        die();
+    }
+
+    public function delete_event_ajax()
+    {
+        $id = (int)$_POST['event_id'];
+
+        $delete = $this->delete_event($id);
+
+        if ($delete) {
+            $error = false;
+        } else {
+            $error = true;
+        }
+
+        echo json_encode(array('error' => $error));
+        die();
+    }
+
+    public function book_a_place_event_shortcode($atts)
+    {
+        extract(shortcode_atts(array('id' => 1), $atts));
+
+        $event = $this->get_event_by_id($id);
+
+        $this->is_event_booking_open($event);
+
+        $scheme = $event->scheme_id;
+
+        $scheme_details = $this->get_scheme_by_id($scheme);
+
+        if (!$scheme_details) {
+            $html = '<div id="book-a-place-scheme">';
+            $html .= '<h2>There is no such scheme</h2>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        $html = '<div id="book-a-place-scheme">';
+
+        $html .= '<h2>' . $event->name . '</h2>';
+
+        $html .= '<p>Start: ' . $event->start . '<br>End: ' . $event->end . '</p>';
+
+        $html .= '<p>' . $event->description . '</p>';
+
+        $html .= '<p><a href="' . $event->url . '">' . $event->url . '</a></p>';
+
+        $html .= '<p><strong>' . $scheme_details->name . '</strong></p>';
+
+        $html .= '<p>' . $scheme_details->description . '</p>';
+
+        $html .= '<div id="scheme-container">';
+
+        $html .= $this->display_scheme_front($scheme, $id);
+
+        $html .= '</div>';
+
+        $html .= '<div id="shopping-cart-container">';
+        if ($this->event_booking_open) {
+            $html .= $this->display_cart();
+        }
+        $html .= '</div>';
+
+        $html .= '<div id="shopping-cart-controls-container">';
+        if ($this->event_booking_open) {
+            $html .= $this->display_cart_controls();
+        }
+        $html .= '</div>';
+
+        $html .= '
+        <div id="scheme-warning-message" title="Warning!">
+        <p>
+        Sorry, you can not add this place to your cart!
+        </p>
+        </div>
+        ';
+
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    private function is_event_booking_open($event)
+    {
+        if (is_array($event)) {
+            $event = json_decode(json_encode($event), FALSE);
+        }
+
+        $ts_close_booking = strtotime($event->start) - $event->hours * 3600;
+        $ts_now = time() - $event->timezone_offset * 3600;
+
+        if ($ts_now < $ts_close_booking) {
+            $this->event_booking_open = true;
+            return true;
+        } else {
+            $this->event_booking_open = false;
+            return false;
+        }
     }
 
 }

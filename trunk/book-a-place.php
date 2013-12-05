@@ -36,7 +36,10 @@ if (!defined('WPINC')) {
     die;
 }
 
+date_default_timezone_set('UTC');
+
 define('BAP_DIR_PATH', plugin_dir_path(__FILE__));
+define('BAP_DIR_URL', plugin_dir_url(__FILE__));
 define('BAP_OPTIONS', 'bap_plugin_options');
 define('BAP_EMAIL_NEW_ORDER_ADMIN', 'bap_email_new_order_admin');
 define('BAP_EMAIL_NEW_ORDER_USER', 'bap_email_new_order_user');

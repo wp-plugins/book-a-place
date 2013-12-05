@@ -68,7 +68,8 @@ $schemes = $this->get_schemes();
 
                         <div class="row-actions">
                             <span class="edit"><a title="Edit this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit">Edit</a> | </span>
-                            <span class="view"><a rel="permalink" title="View this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view">View</a> | </span>
+                            <span class="view"><a title="View this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view">View</a> | </span>
+                            <span class="duplicate"><a title="Duplicate this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=duplicate">Duplicate</a> | </span>
                             <span class="trash"><a href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=delete" title="Delete this item" class="submitdelete">Delete</a></span>
                         </div>
                     </td>
