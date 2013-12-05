@@ -27,7 +27,7 @@ So what you get with Book a Place plugin:
 
 == Installation ==
 
-=Simple=
+= Simple =
 
 1. Go to Plugins section.
 2. Click to Add New.
@@ -35,7 +35,7 @@ So what you get with Book a Place plugin:
 4. Find our plugin and click Install Now.
 5. Activate it.
 
-=Advanced=
+= Advanced =
 
 1. Upload Book a Place plugin to your blog (/wp-content/plugins/).
 2. Activate it through the administration panel.
@@ -46,7 +46,7 @@ So what you get with Book a Place plugin:
 
 There are two possible variants of using our plugin:
 
-=If you just want to show the booking scheme=
+= If you just want to show the booking scheme =
 1. You should go to Schemes section and create a new scheme there. Scheme is just a scheme of your theatre, cinema or restaurant. There you should input name, description, width and height.
 
 Name is just a name.
@@ -60,7 +60,7 @@ Are you confused now? Don’t worry, we are almost there ;)
 3. Here you can set places, prices etc. Use colors to group similar things. Create different places using several cells.
 4. You can find a shortcode for each scheme in Schemes section. This shortcode can be embedded to any post or page.
 
-=If you want to use the event manager=
+= If you want to use the event manager =
 1. You should create a scheme as we described above.
 2. Then go to Events section and create an event there. There are three possible types of great calendars: month, week, day. You can choose one or several cells to create an event for. We created three color options for each event: background, border and text. Enjoy!
 3. When you added, just click on event to find a shortcode.
