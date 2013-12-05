@@ -21,6 +21,9 @@ $orders = $this->get_orders();
                 ID
             </th>
             <th style="" class="" scope="col">
+                Event Name
+            </th>
+            <th style="" class="" scope="col">
                 First Name
             </th>
             <th style="" class="" scope="col">
@@ -53,6 +56,9 @@ $orders = $this->get_orders();
 
             <th style="" class="" scope="col">
                 ID
+            </th>
+            <th style="" class="" scope="col">
+                Event Name
             </th>
             <th style="" class="" scope="col">
                 First Name
@@ -97,6 +103,9 @@ $orders = $this->get_orders();
                             <span class="view"><a rel="permalink" title="View this item" href="<?php echo $this->page_url; ?>&order=<?php echo $order->order_id; ?>&action=view">View</a>  </span>
 <!--                            <span class="trash"><a href="--><?php //echo $this->page_url; ?><!--&order=--><?php //echo $order->order_id; ?><!--&action=delete" title="Delete this item" class="submitdelete">Delete</a></span>-->
                         </div>
+                    </td>
+                    <td class="author column-author">
+                        <?php echo $order->event_name; ?>
                     </td>
                     <td class="author column-author">
                         <?php echo $order->first_name; ?>

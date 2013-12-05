@@ -33,6 +33,11 @@ $places = unserialize($order->places);
         </tr>
 
         <tr valign="top">
+            <th scope="row">Event Name</th>
+            <td><?php echo $order->event_name; ?></td>
+        </tr>
+
+        <tr valign="top">
             <th scope="row">First Name</th>
             <td><?php echo $order->first_name; ?></td>
         </tr>

@@ -2,9 +2,12 @@
     "use strict";
     $(function () {
 
+        if($('#book-a-place-scheme').length == 0) return;
+
         $.blockUI.defaults.message = '<p style="margin: 0;">Please wait...</p>';
 
         var scheme_id = $('#scheme').data('scheme-id'),
+            event_id = $('#scheme').data('event-id'),
             checkoutSubmitHandler = function () {
 
                 var checkoutFirstName = $('#checkout-first-name'),
@@ -53,7 +56,8 @@
                         email: checkoutEmail.val(),
                         phone: checkoutPhone.val(),
                         notes: checkoutNotes.val(),
-                        scheme_id: scheme_id
+                        scheme_id: scheme_id,
+                        event_id: event_id
                     };
 
                 $(dialog).dialog("close");
@@ -142,13 +146,22 @@
 
         function refreshScheme() {
 
+            if (!bookAPLaceEventBookingOpen) {
+                return;
+            }
+
             var data = {
                 action: 'refresh_scheme',
-                scheme_id: scheme_id
+                scheme_id: scheme_id,
+                event_id: event_id
             };
 
             $.post(bap_object.ajaxurl, data, function (response) {
                 $('#scheme-container').empty().append(response);
+                if (!bookAPLaceEventBookingOpen) {
+                    $('#shopping-cart-container').empty();
+                    $('#shopping-cart-controls-container').empty();
+                }
             });
 
         }
@@ -199,6 +212,7 @@
                 var data = {
                     action: 'add_to_cart',
                     scheme_id: scheme_id,
+                    event_id: event_id,
                     place_id: $(this).data('place-id')
                 };
 
@@ -227,6 +241,7 @@
                 var data = {
                     action: 'delete_from_cart',
                     scheme_id: scheme_id,
+                    event_id: event_id,
                     place_id: $(this).data('place-id')
                 };
 

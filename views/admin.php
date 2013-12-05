@@ -17,14 +17,27 @@
     <div class="bap-description">
 
         <p>
+            Create a scheme of your theatre, cinema, restaurant etc. Use our event manager. Online booking!
+        </p>
+
+        <p>
             Booking places, seats, tickets… In theatres, cinemas, restaurants etc. It’s really convenient, when people are able to book a place online. With our plugin it’s possible.
         </p>
 
         <p>
-            Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. We created our plugin as simple as possible. And we are ready to continue working on it to make it better.
+            Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. Moreover, there you will find powerful event manager. We created our plugin as simple as possible. And we are ready to continue working on it to make
+            it better.
         </p>
 
         <h3>How to</h3>
+
+        <p>
+            There are two possible variants of using our plugin:
+        </p>
+
+        <p>
+            <strong>If you just want to show the booking scheme </strong>
+        </p>
 
         <ol>
             <li>
@@ -45,6 +58,26 @@
                 You can find a <strong>shortcode</strong> for each scheme in Schemes section. This shortcode can be embedded to any post or page.
             </li>
         </ol>
+
+        <p>
+            <strong>If you want to use the event manager</strong>
+        </p>
+
+        <ol>
+            <li>
+                You should create a <strong>scheme</strong> as we described above.
+            </li>
+            <li>
+                Then go to <strong>Events</strong> section and create an event there. There are three possible types of great calendars: month, week, day. You can choose one or several cells to create an event for. We created three color options for each event: background, border and text. Enjoy!
+            </li>
+            <li>
+                When you added, just click on event to find a <strong>shortcode</strong>.
+            </li>
+        </ol>
+
+        <p>
+            As you understand, if you use event manager, then your booking will be closed automatically.
+        </p>
 
         <p>
             That’s it! Now everybody can book a place. You will get an email about this as administrator and user will get an email too. Email templates can be edited in <strong>Settings</strong> section (‘<strong>E-mail templates</strong>’ tab). In section <strong>Orders</strong> administrator will find information
