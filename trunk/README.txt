@@ -1,9 +1,9 @@
 ﻿=== Book a Place ===
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
-Requires at least: 3.5.2
+Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.2.1 =
+* Fixed a problem with booking in 0.2.0 version.
+
 = 0.2.0 =
 * Created event manager.
 * Scheme reusing for different events.
@@ -92,6 +95,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.2.1 =
+We fixed the problem with booking in 0.2.0 version. Please update.
 
 = 0.2.0 = 
 Use our new event manager. Duplicate schemes and reuse them for different events. With event manager your bookings will be closed automatically. We've also fixed the bug with scheme refreshing.

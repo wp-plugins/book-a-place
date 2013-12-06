@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.2.0';
+    protected $version = '0.2.1';
 
     /**
      * Unique identifier for plugin.
@@ -1279,7 +1279,7 @@ Regards';
 
         // TODO: add verification
 
-        if ($this->is_event_booking_open($event)) return false;
+        if (!$this->is_event_booking_open($event)) return false;
 
         $places_in_cart = $this->get_places_in_cart();
         $places_list = array();
