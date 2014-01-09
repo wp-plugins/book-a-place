@@ -31,7 +31,7 @@
     </form>
 </div>
 
-<div id="scheme-controls">
+<div id="scheme-controls" class="ui-widget-header ui-corner-all">
     <a id="scheme-set-place" href="#"><?php _e("Set", $this->plugin_slug); ?></a>
     <a id="scheme-edit-place" href="#"><?php _e("Edit", $this->plugin_slug); ?></a>
     <a id="scheme-unset-place" href="#"><?php _e("Unset", $this->plugin_slug); ?></a>
