@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Book a Place package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Book a Place 0.2.1\n"
+"Project-Id-Version: Book a Place 0.3.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
 "POT-Creation-Date: 2014-01-08 16:30+0200\n"
 "PO-Revision-Date: 2014-01-08 16:43+0200\n"
