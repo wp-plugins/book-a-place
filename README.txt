@@ -107,5 +107,5 @@ And now you can delete some order or clear orders at all.
 = 0.2.1 =
 We fixed the problem with booking in 0.2.0 version. Please update.
 
-= 0.2.0 = 
+= 0.2.0 =
 Use our new event manager. Duplicate schemes and reuse them for different events. With event manager your bookings will be closed automatically. We've also fixed the bug with scheme refreshing.
