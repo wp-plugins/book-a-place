@@ -33,6 +33,12 @@
 }
 #scheme-controls {
   margin-top: 10px;
+  position: fixed;
+  padding: 5px;
+  z-index: 99;
+}
+#scheme-container {
+  margin-top: 60px;
 }
 .wp-core-ui #scheme-cell-color .button.hidden,
 .wp-core-ui #event-dialog-form .event-color .button.hidden {

@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.2.1';
+    protected $version = '0.3.0';
 
     /**
      * Unique identifier for plugin.
