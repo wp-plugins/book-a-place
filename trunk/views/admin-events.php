@@ -30,10 +30,10 @@
             clearEventDialogFields();
 
             eventDialog.dialog({
-                title: 'Add an event',
+                title: '<?php _e("Add an event", $this->plugin_slug); ?>',
                 buttons: {
-                    "Add": dialogAddButtonHandler,
-                    Cancel: dialogCancelButtonHandler
+                    '<?php _e("Add", $this->plugin_slug); ?>': dialogAddButtonHandler,
+                    '<?php _e("Cancel", $this->plugin_slug); ?>': dialogCancelButtonHandler
                 }
             });
 
@@ -92,11 +92,11 @@
                 };
 
             eventDialog.dialog({
-                title: 'Edit an event',
+                title: '<?php _e("Edit an event", $this->plugin_slug); ?>',
                 buttons: [
-                    { text: "Delete", click: dialogDeleteButtonHandler, icons: { primary: "ui-icon-trash" } },
-                    { text: "Edit", click: dialogEditButtonHandler },
-                    { text: "Cancel", click: dialogCancelButtonHandler }
+                    { text: "<?php _e("Delete", $this->plugin_slug); ?>", click: dialogDeleteButtonHandler, icons: { primary: "ui-icon-trash" } },
+                    { text: "<?php _e("Edit", $this->plugin_slug); ?>", click: dialogEditButtonHandler },
+                    { text: "<?php _e("Cancel", $this->plugin_slug); ?>", click: dialogCancelButtonHandler }
                 ]
             });
 
@@ -236,7 +236,7 @@
 
         var dialogDeleteButtonHandler = function () {
 
-            if (!confirm('Are you sure you want to delete this event?')) {
+            if (!confirm('<?php _e("Are you sure you want to delete this event?", $this->plugin_slug); ?>')) {
                 return false;
             }
 
@@ -355,57 +355,57 @@
 
 </div>
 
-<div id="event-dialog-form" title="Add an event">
-    <p class="validateTips">Fields with <span class="required">*</span> are required.</p>
+<div id="event-dialog-form" title="<?php _e("Add an event", $this->plugin_slug); ?>">
+    <p class="validateTips"><?php printf(__('Fields with %s are required.', $this->plugin_slug), '<span class="required">*</span>'); ?></p>
 
     <form>
         <fieldset class="event-info">
-            <legend>Event Info</legend>
+            <legend><?php _e("Event Info", $this->plugin_slug); ?></legend>
             <div class="row">
-                <label for="event-name">Name <span class="required">*</span></label>
+                <label for="event-name"><?php _e("Name", $this->plugin_slug); ?> <span class="required">*</span></label>
                 <input type="text" name="event-name" id="event-name" class="text"/>
             </div>
             <div class="row">
-                <label for="event-scheme">Scheme <span class="required">*</span></label>
+                <label for="event-scheme"><?php _e("Scheme", $this->plugin_slug); ?> <span class="required">*</span></label>
                 <select name="event-scheme" id="event-scheme">
                     <?php echo $this->get_schemes_list(); ?>
                 </select>
             </div>
             <div class="row">
-                <label for="event-description">Description</label>
+                <label for="event-description"><?php _e("Description", $this->plugin_slug); ?></label>
                 <textarea name="event-description" id="event-description" class="text"></textarea>
             </div>
             <div class="row">
-                <label for="event-url">Url</label>
+                <label for="event-url"><?php _e("Url", $this->plugin_slug); ?></label>
                 <input type="text" name="event-url" id="event-url" class="text"/>
             </div>
             <div class="row">
-                <label for="event-hours">Hours</label>
+                <label for="event-hours"><?php _e("Hours", $this->plugin_slug); ?></label>
                 <input type="text" name="event-hours" id="event-hours" class="text"/>
 
-                <p class="description">Number of hours to close booking before event start.</p>
+                <p class="description"><?php _e("Number of hours to close booking before event start.", $this->plugin_slug); ?></p>
             </div>
         </fieldset>
         <fieldset>
-            <legend>Colors</legend>
+            <legend><?php _e("Colors", $this->plugin_slug); ?></legend>
             <div class="row event-color">
-                <label for="event-color-background">Background Color</label>
+                <label for="event-color-background"><?php _e("Background Color", $this->plugin_slug); ?></label>
                 <input id="event-color-background" type="text" value="#3A87AD" class="event-color-field" data-default-color="#3A87AD"/>
             </div>
             <div class="row event-color">
-                <label for="event-color-border">Border Color</label>
+                <label for="event-color-border"><?php _e("Border Color", $this->plugin_slug); ?></label>
                 <input id="event-color-border" type="text" value="#3A87AD" class="event-color-field" data-default-color="#3A87AD"/>
             </div>
             <div class="row event-color">
-                <label for="event-color-text">Text Color</label>
+                <label for="event-color-text"><?php _e("Text Color", $this->plugin_slug); ?></label>
                 <input id="event-color-text" type="text" value="#FFFFFF" class="event-color-field" data-default-color="#FFFFFF"/>
             </div>
         </fieldset>
         <div class="clear"></div>
         <fieldset class="event-shortcode">
-            <legend>Shortcode</legend>
+            <legend><?php _e("Shortcode", $this->plugin_slug); ?></legend>
             <div id="event-shortcode">
-                <code data-default-text="Here will be shortcode for this event.">Here will be shortcode for this event.</code>
+                <code data-default-text="<?php _e("Here will be shortcode for this event.", $this->plugin_slug); ?>"><?php _e("Here will be shortcode for this event.", $this->plugin_slug); ?></code>
             </div>
         </fieldset>
     </form>

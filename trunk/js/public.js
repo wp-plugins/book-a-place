@@ -4,7 +4,7 @@
 
         if($('#book-a-place-scheme').length == 0) return;
 
-        $.blockUI.defaults.message = '<p style="margin: 0;">Please wait...</p>';
+        $.blockUI.defaults.message = '<p style="margin: 0;">' + bap_object.loc_strings.please_wait + '</p>';
 
         var scheme_id = $('#scheme').data('scheme-id'),
             event_id = $('#scheme').data('event-id'),
@@ -109,31 +109,35 @@
             }
         });
 
+
         $("#cart-checkout").button();
 
+
+        var bapCartFormDialogButtonsObj = {};
+        bapCartFormDialogButtonsObj[bap_object.loc_strings.checkout] = checkoutSubmitHandler;
+        bapCartFormDialogButtonsObj[bap_object.loc_strings.cancel] = function () {
+            $(this).dialog("close");
+        };
         $("#bap-cart-form-dialog").dialog({
             dialogClass: "bap-dialog",
             autoOpen: false,
             height: 500,
             width: 500,
             modal: true,
-            buttons: {
-                "Checkout": checkoutSubmitHandler,
-                Cancel: function () {
-                    $(this).dialog("close");
-                }
-            }
+            buttons: bapCartFormDialogButtonsObj
         });
 
+
+        var schemeWarningMessageButtonsObj = {};
+        schemeWarningMessageButtonsObj[bap_object.loc_strings.ok] = function () {
+            $(this).dialog("close");
+        };
         $("#scheme-warning-message").dialog({
             autoOpen: false,
             modal: true,
-            buttons: {
-                Ok: function () {
-                    $(this).dialog("close");
-                }
-            }
+            buttons: schemeWarningMessageButtonsObj
         });
+
 
         $("#cart-checkout").click(function (e) {
             e.preventDefault();

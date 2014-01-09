@@ -3,14 +3,15 @@
 $message = '';
 $error = '';
 
-if (isset($_GET['scheme']) && !empty($_GET['scheme'])) {
+if (isset($_GET['order']) && !empty($_GET['order'])) {
 
-    if ($this->delete_scheme($_GET['scheme'])) {
-        $message = __('Scheme has been successfully deleted.', $this->plugin_slug);
+    if ($this->delete_order($_GET['order'])) {
+        $message = __('Order has been successfully deleted.', $this->plugin_slug);
+        $this->redirect_to_orders_list();
     }
 
 } else {
-    $error = __('Scheme id is not specified.', $this->plugin_slug);
+    $error = __('Order id is not specified.', $this->plugin_slug);
 }
 
 ?>

@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 3.7.1
-Stable tag: 0.2.1
+Tested up to: 3.8
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.3.0 =
+* Added an ability to translate the plugin.
+* Now orders can be deleted.
+
 = 0.2.1 =
 * Fixed a problem with booking in 0.2.0 version.
 
@@ -95,6 +99,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.3.0 =
+Added a .pot file, so you will be able to translate our plugin. 
+And now you can delete some order or clear orders at all.
 
 = 0.2.1 =
 We fixed the problem with booking in 0.2.0 version. Please update.

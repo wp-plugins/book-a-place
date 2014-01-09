@@ -11,7 +11,17 @@
 
         require_once(BAP_DIR_PATH . 'views/admin-orders-view.php');
 
-    }  else {
+    } elseif (isset($_GET['action']) && $_GET['action'] == 'delete') {
+
+        require_once(BAP_DIR_PATH . 'views/admin-orders-delete.php');
+        require_once(BAP_DIR_PATH . 'views/admin-orders-list.php');
+
+    } elseif (isset($_GET['action']) && $_GET['action'] == 'clear') {
+
+        require_once(BAP_DIR_PATH . 'views/admin-orders-clear.php');
+        require_once(BAP_DIR_PATH . 'views/admin-orders-list.php');
+
+    } else {
 
         require_once(BAP_DIR_PATH . 'views/admin-orders-list.php');
 

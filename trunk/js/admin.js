@@ -106,6 +106,7 @@
             }
         });
 
+
         $("#scheme-set-place").click(function (e) {
             e.preventDefault();
             var schemePlaceDialogForm = $("#scheme-place-dialog-form");
