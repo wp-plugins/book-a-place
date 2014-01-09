@@ -183,3 +183,7 @@
 form .row {
   margin-bottom: 10px;
 }
+.orders-actions {
+  margin: 10px 0;
+  text-align: right;
+}

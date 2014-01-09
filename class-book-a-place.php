@@ -68,19 +68,8 @@ class Book_A_Place
         '4' => 'in-others-cart',
         '5' => 'unavailable'
     );
-    protected $place_statuses_labels = array(
-        '1' => 'Available',
-        '2' => 'Booked',
-        '3' => 'In cart',
-        '4' => 'In other\'s cart',
-        '5' => 'Unavailable'
-    );
-    protected $order_statuses = array(
-        0 => 'Not defined',
-        1 => 'Set',
-        2 => 'Paid',
-        3 => 'Cancelled',
-    );
+    protected $place_statuses_labels = array();
+    protected $order_statuses = array();
 
     protected $session_id;
 
@@ -93,6 +82,21 @@ class Book_A_Place
      */
     private function __construct()
     {
+        $this->place_statuses_labels = array(
+            '1' => __('Available', $this->plugin_slug),
+            '2' => __('Booked', $this->plugin_slug),
+            '3' => __('In cart', $this->plugin_slug),
+            '4' => __('In other\'s cart', $this->plugin_slug),
+            '5' => __('Unavailable', $this->plugin_slug),
+        );
+
+        $this->order_statuses = array(
+            0 => __('Not defined', $this->plugin_slug),
+            1 => __('Set', $this->plugin_slug),
+            2 => __('Paid', $this->plugin_slug),
+            3 => __('Cancelled', $this->plugin_slug),
+        );
+
         session_start();
         $this->session_id = session_id();
 
@@ -270,9 +274,33 @@ class Book_A_Place
      */
     public static function activate($network_wide)
     {
+        if (self::book_a_place_plugin_verification()) {
+            trigger_error('Another version of the plugin is activated. Please deactivate it first.', E_USER_ERROR);
+        }
+
         // activation functionality
         self::create_tables();
         self::add_options();
+    }
+
+    /**
+     * Verifies whether the other version of the plugin is activated
+     *
+     * @return bool
+     * @since 0.2.1
+     */
+    public static function book_a_place_plugin_verification()
+    {
+        $installedplugins = get_option('active_plugins');
+        $found = false;
+        foreach ($installedplugins as $key => $value) {
+            $pos = strpos($value, 'book-a-place.php');
+            if ($pos === false) {
+            } else {
+                $found = true;
+            }
+        }
+        return $found;
     }
 
     /**
@@ -294,12 +322,10 @@ class Book_A_Place
      */
     public function load_plugin_textdomain()
     {
-
         $domain = $this->plugin_slug;
         $locale = apply_filters('plugin_locale', get_locale(), $domain);
-
-        load_textdomain($domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo');
-        load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)) . '/lang/');
+        load_textdomain($domain, trailingslashit(WP_LANG_DIR) . $domain . '/' . $domain . '-' . $locale . '.mo');
+        load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -317,7 +343,7 @@ class Book_A_Place
         }
 
         $screen = get_current_screen();
-        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix || $screen->id == $this->events_page_screen_hook_suffix) {
+        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix || $screen->id == $this->events_page_screen_hook_suffix || $screen->id == $this->orders_page_screen_hook_suffix) {
             wp_enqueue_style($this->plugin_slug . '-jquery-ui-theme', plugins_url('css/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css', __FILE__), array(), $this->version);
             wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('css/admin.css', __FILE__), array(), $this->version);
             wp_enqueue_style('wp-color-picker');
@@ -403,7 +429,16 @@ class Book_A_Place
                 'jquery-ui-button',
                 'jquery-ui-dialog'
             ), $this->version);
-        wp_localize_script($this->plugin_slug . '-plugin-script', 'bap_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+        wp_localize_script($this->plugin_slug . '-plugin-script', 'bap_object', array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'loc_strings' => array(
+                    'please_wait' => __('Please wait...', $this->plugin_slug),
+                    'checkout' => __('Checkout', $this->plugin_slug),
+                    'cancel' => __('Cancel', $this->plugin_slug),
+                    'ok' => __('Ok', $this->plugin_slug),
+
+                ),
+            ));
     }
 
     /**
@@ -429,6 +464,10 @@ class Book_A_Place
         $this->orders_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Orders', $this->plugin_slug), __('Orders', $this->plugin_slug), 'read', $this->plugin_slug . '-orders', array(
                 $this,
                 'display_plugin_admin_orders_page'
+            ));
+        add_action('load-' . $this->orders_page_screen_hook_suffix, array(
+                $this,
+                'custom_ob_start'
             ));
         $this->settings_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Settings', $this->plugin_slug), __('Settings', $this->plugin_slug), 'read', $this->plugin_slug . '-settings', array(
                 $this,
@@ -744,7 +783,7 @@ Regards';
                     $place_status_class = ' scheme-place-' . $this->place_statuses[$place_status_id] . ' ';
 
                     if (!in_array($place['place_id'], $places)) {
-                        $tooltip_content .= '<div id="tooltip-scheme-place-' . $place['place_id'] . '">Status: ' . $this->place_statuses_labels[$place_status_id];
+                        $tooltip_content .= '<div id="tooltip-scheme-place-' . $place['place_id'] . '">' . __('Status', $this->plugin_slug) . ': ' . $this->place_statuses_labels[$place_status_id];
                         $tooltip_content .= '<br>' . $place['name'];
                         if ($place['status_id'] != 5) {
                             $tooltip_content .= ': ' . $this->places_money_format($place['price']);
@@ -830,7 +869,7 @@ Regards';
                     $place_status_class = ' scheme-place-' . $this->place_statuses[$place_status_id] . ' ';
 
                     if (!in_array($place['place_id'], $places)) {
-                        $tooltip_content .= '<div id="tooltip-scheme-place-' . $place['place_id'] . '">Status: ' . $this->place_statuses_labels[$place_status_id];
+                        $tooltip_content .= '<div id="tooltip-scheme-place-' . $place['place_id'] . '">' . __('Status', $this->plugin_slug) . ': ' . $this->place_statuses_labels[$place_status_id];
                         $tooltip_content .= '<br>' . $place['name'];
                         if ($place['status_id'] != 5) {
                             $tooltip_content .= ': ' . $this->places_money_format($place['price']);
@@ -1026,9 +1065,9 @@ Regards';
         $html .= '</div>';
 
         $html .= '
-        <div id="scheme-warning-message" title="Warning!">
+        <div id="scheme-warning-message" title="' . __("Warning!", $this->plugin_slug) . '">
         <p>
-        Sorry, you can not add this place to your cart!
+        ' . __("Sorry, you can not add this place to your cart!", $this->plugin_slug) . '
         </p>
         </div>
         ';
@@ -1111,16 +1150,16 @@ Regards';
 
         $time_left = $this->calculate_time_left($places_in_cart);
 
-        $html = '<h3>Cart</h3>
+        $html = '<h3>' . __("Cart", $this->plugin_slug) . '</h3>
     <p id="bap-countdown-container">
-        The cart will be cleared in: <span id="cart-expiration-time" class="kkcount-down" data-time-left="' . $time_left . '" data-time="1"></span>
+        ' . __("The cart will be cleared in", $this->plugin_slug) . ': <span id="cart-expiration-time" class="kkcount-down" data-time-left="' . $time_left . '" data-time="1"></span>
     </p>
     <table class="table">
     <thead>
     <tr>
         <th>#</th>
-        <th>Name</th>
-        <th>Price</th>
+        <th>' . __("Name", $this->plugin_slug) . '</th>
+        <th>' . __("Price", $this->plugin_slug) . '</th>
         <th></th>
     </tr>
     </thead>
@@ -1135,20 +1174,20 @@ Regards';
         <td>$key</td>
         <td>{$place['place_name']}</td>
         <td>{$this->places_money_format($place['place_price'])}</td>
-        <td><a class='delete_from_cart' data-place-id='{$place['place_id']}' href='#'>Delete</a></td>
+        <td><a class='delete_from_cart' data-place-id='{$place['place_id']}' href='#'>" . __('Delete', $this->plugin_slug) . "</a></td>
     </tr>";
             }
 
         } else {
             $html .= '<tr>
-        <td colspan="4">There are no places in the cart.</td>
+        <td colspan="4">' . __("There are no places in the cart.", $this->plugin_slug) . '</td>
     </tr>';
         }
 
         $html .= "</tbody>
     <tfoot>
     <tr>
-        <th colspan=\"2\">Total Price</th>
+        <th colspan=\"2\">" . __('Total Price', $this->plugin_slug) . "</th>
         <th colspan=\"2\">{$this->places_money_format($total_price)}</th>
     </tr>
     </tfoot>
@@ -1160,32 +1199,32 @@ Regards';
     public function display_cart_controls()
     {
         $html = '<div id="cart-controls">
-    <a id="cart-checkout" href="#">Checkout</a>
+    <a id="cart-checkout" href="#">' . __("Checkout", $this->plugin_slug) . '</a>
 </div>';
 
-        $html .= '<div id="bap-cart-form-dialog" title="Checkout">
-    <p class="validateTips">Fields with <span class="required">*</span> are required.</p>
+        $html .= '<div id="bap-cart-form-dialog" title="' . __("Checkout", $this->plugin_slug) . '">
+    <p class="validateTips">' . sprintf(__('Fields with %s are required.', $this->plugin_slug), '<span class="required">*</span>') . '</p>
 
     <form>
         <fieldset>
             <input type="hidden" name="action" value=""/>
             <div class="field">
-            <label for="checkout-first-name">First Name <span class="required">*</span></label>
+            <label for="checkout-first-name">' . __("First Name", $this->plugin_slug) . ' <span class="required">*</span></label>
             <input type="text" name="checkout-first-name" id="checkout-first-name" class="text"/>
             </div>
             <div class="field">
-            <label for="checkout-last-name">Last Name <span class="required">*</span></label>
+            <label for="checkout-last-name">' . __("Last Name", $this->plugin_slug) . ' <span class="required">*</span></label>
             <input type="text" name="checkout-last-name" id="checkout-last-name" value="" class="text"/>
             </div>
             <div class="field">
-            <label for="checkout-email">Email <span class="required">*</span></label>
+            <label for="checkout-email">' . __("Email", $this->plugin_slug) . ' <span class="required">*</span></label>
             <input type="text" name="checkout-email" id="checkout-email" value="" class="text"/>
             </div>
             <div class="field">
-            <label for="checkout-phone">Phone <span class="required">*</span></label>
+            <label for="checkout-phone">' . __("Phone", $this->plugin_slug) . ' <span class="required">*</span></label>
             <input type="text" name="checkout-phone" id="checkout-phone" value="" class="text"/>
             </div>
-            <label for="checkout-notes">Notes</label>
+            <label for="checkout-notes">' . __("Notes", $this->plugin_slug) . '</label>
             <textarea name="checkout-notes" id="checkout-notes" class="text"></textarea>
 
         </fieldset>
@@ -1275,11 +1314,11 @@ Regards';
     {
         global $wpdb;
 
-        $event = $this->get_event_by_id($_POST['event_id'], ARRAY_A);
-
-        // TODO: add verification
-
-        if (!$this->is_event_booking_open($event)) return false;
+        // event verifications
+        if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
+            $event = $this->get_event_by_id($_POST['event_id'], ARRAY_A);
+            if (!$this->is_event_booking_open($event)) return false;
+        }
 
         $places_in_cart = $this->get_places_in_cart();
         $places_list = array();
@@ -1779,7 +1818,7 @@ Regards';
     {
         $schemes = $this->get_schemes();
 
-        $html = '<option value="0">Select Scheme</option>';
+        $html = '<option value="0">' . __("Select Scheme", $this->plugin_slug) . '</option>';
 
         if (!empty($schemes) && is_array($schemes)) {
             foreach ($schemes as $scheme) {
@@ -1982,7 +2021,7 @@ Regards';
 
         $html .= '<h2>' . $event->name . '</h2>';
 
-        $html .= '<p>Start: ' . $event->start . '<br>End: ' . $event->end . '</p>';
+        $html .= '<p>' . __("Start", $this->plugin_slug) . ': ' . $event->start . '<br>' . __("End", $this->plugin_slug) . ': ' . $event->end . '</p>';
 
         $html .= '<p>' . $event->description . '</p>';
 
@@ -2011,9 +2050,9 @@ Regards';
         $html .= '</div>';
 
         $html .= '
-        <div id="scheme-warning-message" title="Warning!">
+        <div id="scheme-warning-message" title="' . __("Warning!", $this->plugin_slug) . '">
         <p>
-        Sorry, you can not add this place to your cart!
+        ' . __("Sorry, you can not add this place to your cart!", $this->plugin_slug) . '
         </p>
         </div>
         ';
@@ -2040,5 +2079,47 @@ Regards';
             return false;
         }
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @since 0.3.0
+     */
+    public function delete_order($id)
+    {
+        global $wpdb;
+
+        return $wpdb->delete($wpdb->bap_orders, array('order_id' => (int)$id), array('%d'));
+    }
+
+    /**
+     * @param bool $get_url
+     * @return string|void
+     * @since 0.3.0
+     */
+    private function redirect_to_orders_list($get_url = false)
+    {
+        $redirect_to_page = explode('_page_', $this->orders_page_screen_hook_suffix);
+        $url = admin_url('admin.php?page=' . $redirect_to_page[1]);
+        if ($get_url) {
+            return $url;
+        } else {
+            wp_redirect($url);
+        }
+        exit;
+    }
+
+
+    /**
+     * @return mixed
+     * @since 0.3.0
+     */
+    public function clear_orders()
+    {
+        global $wpdb;
+        $delete = $wpdb->get_results("DELETE FROM $wpdb->bap_orders WHERE 1");
+        return $delete;
+    }
+
 
 }

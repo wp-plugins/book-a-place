@@ -33,7 +33,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
         }
 
         if (!$error) {
-            $message = 'Settings saved.';
+            $message = __('Settings saved.', $this->plugin_slug);
         }
     }
 
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
             $cmp_message = strcmp($email_template_new_order_admin_exist['message'], $email_template_new_order_admin['message']);
             if ($cmp_subject !== 0 || $cmp_message !== 0) {
                 if (update_option(BAP_EMAIL_NEW_ORDER_ADMIN, $email_template_new_order_admin) === false) {
-                    $error = 'Error.';
+                    $error = __('Error.', $this->plugin_slug);
                 }
             }
         }
@@ -71,13 +71,13 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
             $cmp_message = strcmp($email_template_new_order_user_exist['message'], $email_template_new_order_user['message']);
             if ($cmp_subject !== 0 || $cmp_message !== 0) {
                 if (update_option(BAP_EMAIL_NEW_ORDER_USER, $email_template_new_order_user) === false) {
-                    $error = 'Error.';
+                    $error = __('Error.', $this->plugin_slug);
                 }
             }
         }
 
         if (!$error) {
-            $message = 'Settings saved.';
+            $message = __('Settings saved.', $this->plugin_slug);
         }
     }
 }
@@ -100,8 +100,8 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
         <div id="settings-tabs">
 
             <ul>
-                <li><a href="#tabs-1">General</a></li>
-                <li><a href="#tabs-2">E-mail templates</a></li>
+                <li><a href="#tabs-1"><?php _e("General", $this->plugin_slug); ?></a></li>
+                <li><a href="#tabs-2"><?php _e("E-mail templates", $this->plugin_slug); ?></a></li>
             </ul>
 
             <div id="tabs-1">

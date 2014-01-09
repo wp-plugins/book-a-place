@@ -19,17 +19,17 @@ $schemes = $this->get_schemes();
 
             <th style="" class="manage-column column-title sortable desc" id="title" scope="col">
                 <a href="">
-                    <span>Name</span><span class="sorting-indicator"></span>
+                    <span><?php _e("Name", $this->plugin_slug); ?></span><span class="sorting-indicator"></span>
                 </a>
             </th>
             <th style="" class="manage-column column-author" id="author" scope="col">
-                Width
+                <?php _e("Width", $this->plugin_slug); ?>
             </th>
             <th style="" class="manage-column column-categories" id="categories" scope="col">
-                Height
+                <?php _e("Height", $this->plugin_slug); ?>
             </th>
             <th style="" class="manage-column column-tags" id="tags" scope="col">
-                Shortcode
+                <?php _e("Shortcode", $this->plugin_slug); ?>
             </th>
 
         </tr>
@@ -40,17 +40,17 @@ $schemes = $this->get_schemes();
 
             <th style="" class="manage-column column-title sortable desc" scope="col">
                 <a href="">
-                    <span>Name</span><span class="sorting-indicator"></span>
+                    <span><?php _e("Name", $this->plugin_slug); ?></span><span class="sorting-indicator"></span>
                 </a>
             </th>
             <th style="" class="manage-column column-author" scope="col">
-                Width
+                <?php _e("Width", $this->plugin_slug); ?>
             </th>
             <th style="" class="manage-column column-categories" scope="col">
-                Height
+                <?php _e("Height", $this->plugin_slug); ?>
             </th>
             <th style="" class="manage-column column-tags" scope="col">
-                Shortcode
+                <?php _e("Shortcode", $this->plugin_slug); ?>
             </th>
 
         </tr>
@@ -64,13 +64,13 @@ $schemes = $this->get_schemes();
                 <tr valign="top" class="post-1 type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self" id="post-1">
 
                     <td class="post-title page-title column-title">
-                        <strong><a title="Edit" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit" class="row-title"><?php echo $scheme->name; ?></a></strong>
+                        <strong><a title="<?php _e("Edit", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit" class="row-title"><?php echo $scheme->name; ?></a></strong>
 
                         <div class="row-actions">
-                            <span class="edit"><a title="Edit this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit">Edit</a> | </span>
-                            <span class="view"><a title="View this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view">View</a> | </span>
-                            <span class="duplicate"><a title="Duplicate this item" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=duplicate">Duplicate</a> | </span>
-                            <span class="trash"><a href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=delete" title="Delete this item" class="submitdelete">Delete</a></span>
+                            <span class="edit"><a title="<?php _e("Edit this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit"><?php _e("Edit", $this->plugin_slug); ?></a> | </span>
+                            <span class="view"><a title="<?php _e("View this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view"><?php _e("View", $this->plugin_slug); ?></a> | </span>
+                            <span class="duplicate"><a title="<?php _e("Duplicate this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=duplicate"><?php _e("Duplicate", $this->plugin_slug); ?></a> | </span>
+                            <span class="trash submitdelete"><a href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=delete" title="<?php _e("Delete this item", $this->plugin_slug); ?>"><?php _e("Delete", $this->plugin_slug); ?></a></span>
                         </div>
                     </td>
                     <td class="author column-author">
@@ -92,7 +92,7 @@ $schemes = $this->get_schemes();
 
             <tr valign="top" class="post-1 type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self" id="post-1">
                 <td colspan="4">
-                    There are no schemes yet.
+                    <?php _e("There are no schemes yet.", $this->plugin_slug); ?>
                 </td>
             </tr>
 

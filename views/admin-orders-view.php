@@ -2,11 +2,11 @@
 
 $message = '';
 $error = '';
-if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
+if (isset($_POST['submit'])) {
     if ($this->update_order($_GET['order']) === false) {
-        $error = 'Error.';
+        $error = __('Error.', $this->plugin_slug);
     } else {
-        $message = 'Order has been successfully updated.';
+        $message = __('Order has been successfully updated.', $this->plugin_slug);
     }
 }
 
@@ -21,54 +21,54 @@ $places = unserialize($order->places);
     </div>
 <?php endif; ?>
 
-<h3 class="title">Order details</h3>
+<h3 class="title"><?php _e("Order details", $this->plugin_slug); ?></h3>
 
 <form action="" method="post">
     <table class="form-table">
         <tbody>
 
         <tr valign="top">
-            <th scope="row">ID</th>
+            <th scope="row"><?php _e("ID", $this->plugin_slug); ?></th>
             <td><?php echo $order->order_id; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Event Name</th>
+            <th scope="row"><?php _e("Event Name", $this->plugin_slug); ?></th>
             <td><?php echo $order->event_name; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">First Name</th>
+            <th scope="row"><?php _e("First Name", $this->plugin_slug); ?></th>
             <td><?php echo $order->first_name; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Last Name</th>
+            <th scope="row"><?php _e("Last Name", $this->plugin_slug); ?></th>
             <td><?php echo $order->last_name; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Email</th>
+            <th scope="row"><?php _e("Email", $this->plugin_slug); ?></th>
             <td><?php echo $order->email; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Phone</th>
+            <th scope="row"><?php _e("Phone", $this->plugin_slug); ?></th>
             <td><?php echo $order->phone; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Notes</th>
+            <th scope="row"><?php _e("Notes", $this->plugin_slug); ?></th>
             <td><?php echo $order->notes; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Code</th>
+            <th scope="row"><?php _e("Code", $this->plugin_slug); ?></th>
             <td><?php echo $order->code; ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row"><label for="order-status">Status</label></th>
+            <th scope="row"><label for="order-status"><?php _e("Status", $this->plugin_slug); ?></label></th>
             <td>
                 <select name="order-status" id="order-status">
 
@@ -79,12 +79,12 @@ $places = unserialize($order->places);
         </tr>
 
         <tr valign="top">
-            <th scope="row">Total Price</th>
+            <th scope="row"><?php _e("Total Price", $this->plugin_slug); ?></th>
             <td><?php echo $this->places_money_format($order->total_price); ?></td>
         </tr>
 
         <tr valign="top">
-            <th scope="row">Places</th>
+            <th scope="row"><?php _e("Places", $this->plugin_slug); ?></th>
             <td>
                 <?php foreach ($places as $place_id => $place): ?>
                     <p>#<?php echo $place_id; ?>: <?php echo $place['place_name']; ?> (<?php echo $this->places_money_format($place['place_price']); ?>)</p>
@@ -93,7 +93,7 @@ $places = unserialize($order->places);
         </tr>
 
         <tr valign="top">
-            <th scope="row"><label for="order-admin-notes">Admin notes</label></th>
+            <th scope="row"><label for="order-admin-notes"><?php _e("Admin notes", $this->plugin_slug); ?></label></th>
             <td>
                 <textarea name="order-admin-notes" id="order-admin-notes" cols="50" rows="5"><?php echo esc_textarea($order->admin_notes); ?></textarea>
             </td>
@@ -104,7 +104,7 @@ $places = unserialize($order->places);
 
 
     <p class="submit">
-        <input type="submit" value="Save Changes" class="button button-primary" id="submit" name="submit">
-        <a class="button" href="?page=<?php echo str_replace($this->plugin_slug . '_page_', '', $this->orders_page_screen_hook_suffix); ?>">Cancel</a>
+        <input type="submit" value="<?php _e("Save Changes", $this->plugin_slug); ?>" class="button button-primary" id="submit" name="submit">
+        <a class="button" href="?page=<?php echo str_replace($this->plugin_slug . '_page_', '', $this->orders_page_screen_hook_suffix); ?>"><?php _e("Cancel", $this->plugin_slug); ?></a>
     </p>
 </form>

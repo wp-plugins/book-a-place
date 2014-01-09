@@ -8,6 +8,9 @@ $orders = $this->get_orders();
 
 ?>
 
+<div class="orders-actions">
+    <a href="<?php echo $this->page_url; ?>&action=clear" title="<?php _e("Clear table", $this->plugin_slug); ?>" class="button orders-clear-submit"><?php _e("Clear", $this->plugin_slug); ?></a>
+</div>
 
 <!--    Order List-->
 <form method="get" action="" id="posts-filter">
@@ -18,34 +21,34 @@ $orders = $this->get_orders();
         <tr>
 
             <th style="" class="" scope="col">
-                ID
+                <?php _e("ID", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Event Name
+                <?php _e("Event Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                First Name
+                <?php _e("First Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Last Name
+                <?php _e("Last Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Email
+                <?php _e("Email", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Phone
+                <?php _e("Phone", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Date
+                <?php _e("Date", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Code
+                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Total price
+                <?php _e("Total price", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Status
+                <?php _e("Status", $this->plugin_slug); ?>
             </th>
 
         </tr>
@@ -55,34 +58,34 @@ $orders = $this->get_orders();
         <tr>
 
             <th style="" class="" scope="col">
-                ID
+                <?php _e("ID", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Event Name
+                <?php _e("Event Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                First Name
+                <?php _e("First Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Last Name
+                <?php _e("Last Name", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Email
+                <?php _e("Email", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Phone
+                <?php _e("Phone", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Date
+                <?php _e("Date", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Code
+                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Total price
+                <?php _e("Total price", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
-                Status
+                <?php _e("Status", $this->plugin_slug); ?>
             </th>
 
         </tr>
@@ -99,9 +102,8 @@ $orders = $this->get_orders();
                         <strong><?php echo $order->order_id; ?></strong>
 
                         <div class="row-actions">
-<!--                            <span class="edit"><a title="Edit this item" href="--><?php //echo $this->page_url; ?><!--&order=--><?php //echo $order->order_id; ?><!--&action=edit">Edit</a> | </span>-->
-                            <span class="view"><a rel="permalink" title="View this item" href="<?php echo $this->page_url; ?>&order=<?php echo $order->order_id; ?>&action=view">View</a>  </span>
-<!--                            <span class="trash"><a href="--><?php //echo $this->page_url; ?><!--&order=--><?php //echo $order->order_id; ?><!--&action=delete" title="Delete this item" class="submitdelete">Delete</a></span>-->
+                            <span class="view"><a rel="permalink" title="<?php _e("View this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&order=<?php echo $order->order_id; ?>&action=view"><?php _e("View", $this->plugin_slug); ?></a>  </span> |
+                            <span class="trash submitdelete"><a href="<?php echo $this->page_url; ?>&order=<?php echo $order->order_id; ?>&action=delete" title="<?php _e("Delete this item", $this->plugin_slug); ?>"><?php _e("Delete", $this->plugin_slug); ?></a></span>
                         </div>
                     </td>
                     <td class="author column-author">
@@ -140,8 +142,8 @@ $orders = $this->get_orders();
         <?php else : ?>
 
         <tr valign="top" class="post-1 type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self" id="post-1">
-            <td colspan="9">
-                There are no orders yet.
+            <td colspan="10">
+                <?php _e("There are no orders yet.", $this->plugin_slug); ?>
             </td>
         </tr>
 
@@ -154,3 +156,21 @@ $orders = $this->get_orders();
 
 </form>
 <!--    End Order List-->
+
+<div class="orders-actions">
+    <a href="<?php echo $this->page_url; ?>&action=clear" title="<?php _e("Clear table", $this->plugin_slug); ?>" class="button orders-clear-submit"><?php _e("Clear", $this->plugin_slug); ?></a>
+</div>
+
+<script type="text/javascript">
+    jQuery('.submitdelete').click(function() {
+        if (!confirm('<?php _e("Are you sure you want to delete this item?", $this->plugin_slug); ?>')) {
+            return false;
+        }
+    });
+
+    jQuery('.orders-clear-submit').click(function() {
+        if (!confirm('<?php _e("Are you sure you want to clear this list?", $this->plugin_slug); ?>')) {
+            return false;
+        }
+    });
+</script>

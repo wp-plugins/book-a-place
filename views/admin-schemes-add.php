@@ -10,17 +10,17 @@ $error = '';
 if (isset($_POST['submit-scheme'])) {
     if (isset($_POST['scheme-name']) && !empty($_POST['scheme-name']) && isset($_POST['scheme-width']) && !empty($_POST['scheme-width']) && isset($_POST['scheme-height']) && !empty($_POST['scheme-height'])) {
         if ($this->add_scheme($_POST)) {
-            $message = 'Scheme has been successfully added.';
+            $message = __('Scheme has been successfully added.', $this->plugin_slug);
         } else {
-            $error = 'Error.';
+            $error = __('Error.', $this->plugin_slug);
         }
     } else {
-        $error = 'All fields are required.';
+        $error = __('All fields are required.', $this->plugin_slug);
     }
 }
 
-$form_title = 'Add New Scheme';
-$submit_button_name = 'Add';
+$form_title = __('Add New Scheme', $this->plugin_slug);
+$submit_button_name = __('Add', $this->plugin_slug);
 
 ?>
 

@@ -22,23 +22,23 @@ if (isset($scheme) && !empty($scheme)) {
     <table class="form-table">
         <tbody>
         <tr valign="top">
-            <th scope="row"><label for="scheme-name">Name</label></th>
+            <th scope="row"><label for="scheme-name"><?php _e("Name", $this->plugin_slug); ?></label></th>
             <td><input type="text" class="regular-text" id="scheme-name" name="scheme-name" value="<?php echo $scheme_name ? $scheme_name : ''; ?>"></td>
         </tr>
         <tr valign="top">
-            <th scope="row"><label for="scheme-description">Description</label></th>
+            <th scope="row"><label for="scheme-description"><?php _e("Description", $this->plugin_slug); ?></label></th>
             <td>
                 <textarea name="scheme-description" id="scheme-description" cols="50" rows="5"><?php echo esc_textarea($scheme_description); ?></textarea>
-                <p class="description">Describe the event: mention the date, time and other important info.</p>
+                <p class="description"><?php _e("Describe the event: mention the date, time and other important info.", $this->plugin_slug); ?></p>
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row"><label for="scheme-width">Width</label></th>
-            <td><input type="text" class="small-text" id="scheme-width" name="scheme-width" value="<?php echo $scheme_width ? $scheme_width : ''; ?>"> cells horizontally</td>
+            <th scope="row"><label for="scheme-width"><?php _e("Width", $this->plugin_slug); ?></label></th>
+            <td><input type="text" class="small-text" id="scheme-width" name="scheme-width" value="<?php echo $scheme_width ? $scheme_width : ''; ?>"> <?php _e("cells horizontally", $this->plugin_slug); ?></td>
         </tr>
         <tr valign="top">
-            <th scope="row"><label for="scheme-height">Height</label></th>
-            <td><input type="text" class="small-text" id="scheme-height" name="scheme-height" value="<?php echo $scheme_height ? $scheme_height : ''; ?>"> cells vertically</td>
+            <th scope="row"><label for="scheme-height"><?php _e("Height", $this->plugin_slug); ?></label></th>
+            <td><input type="text" class="small-text" id="scheme-height" name="scheme-height" value="<?php echo $scheme_height ? $scheme_height : ''; ?>"> <?php _e("cells vertically", $this->plugin_slug); ?></td>
         </tr>
         </tbody>
     </table>
