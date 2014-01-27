@@ -5,7 +5,8 @@
         var placeName = $("#scheme-place-name"),
             placeDescription = $("#scheme-place-description"),
             placePrice = $("#scheme-place-price"),
-            scheme_id = $('#scheme').data('scheme-id');
+            scheme_id = $('#scheme').data('scheme-id'),
+            buttonsObj;
 
         var dialogSubmitButtonHandler = function () {
             var cells = [],
@@ -80,30 +81,30 @@
             }
         });
 
+        buttonsObj = {};
+        buttonsObj[bap_object.loc_strings.set_a_place] = dialogSubmitButtonHandler;
+        buttonsObj[bap_object.loc_strings.cancel] = function () {
+            $(this).dialog("close");
+        };
         $("#scheme-place-dialog-form").dialog({
             autoOpen: false,
             height: 425,
             width: 350,
             modal: true,
-            buttons: {
-                "Set a place": dialogSubmitButtonHandler,
-                Cancel: function () {
-                    $(this).dialog("close");
-                }
-            }
+            buttons: buttonsObj
         });
 
+        buttonsObj = {};
+        buttonsObj[bap_object.loc_strings.change_place_status] = statusSubmitButtonHandler;
+        buttonsObj[bap_object.loc_strings.cancel] = function () {
+            $(this).dialog("close");
+        };
         $("#scheme-place-status-form").dialog({
             autoOpen: false,
             height: 200,
             width: 350,
             modal: true,
-            buttons: {
-                "Change place status": statusSubmitButtonHandler,
-                Cancel: function () {
-                    $(this).dialog("close");
-                }
-            }
+            buttons: buttonsObj
         });
 
 
@@ -113,14 +114,15 @@
             schemePlaceDialogForm.find("input[name=action]").val('set_place');
 
             clearSchemePlaceDialogForm();
+
+            buttonsObj = {};
+            buttonsObj[bap_object.loc_strings.set_a_place] = dialogSubmitButtonHandler;
+            buttonsObj[bap_object.loc_strings.cancel] = function () {
+                $(this).dialog("close");
+            };
             schemePlaceDialogForm.dialog("option", {
-                title: 'Set a place',
-                buttons: {
-                    "Set a place": dialogSubmitButtonHandler,
-                    Cancel: function () {
-                        $(this).dialog("close");
-                    }
-                }
+                title: bap_object.loc_strings.set_a_place,
+                buttons: buttonsObj
             });
             schemePlaceDialogForm.dialog("open");
 
@@ -129,7 +131,7 @@
 
         $("#scheme-unset-place").click(function (e) {
             e.preventDefault();
-            if (!confirm('Are you sure you want to unset this place?')) return false;
+            if (!confirm(bap_object.loc_strings.unset_this_place)) return false;
 
             var data = {
                 action: 'unset_place',
@@ -156,14 +158,14 @@
 
             dialog.find("input[name=action]").val('update_place');
 
+            buttonsObj = {};
+            buttonsObj[bap_object.loc_strings.update_a_place] = dialogSubmitButtonHandler;
+            buttonsObj[bap_object.loc_strings.cancel] = function () {
+                $(this).dialog("close");
+            };
             dialog.dialog("option", {
-                title: 'Update a place',
-                buttons: {
-                    "Update a place": dialogSubmitButtonHandler,
-                    Cancel: function () {
-                        $(this).dialog("close");
-                    }
-                }
+                title: bap_object.loc_strings.update_a_place,
+                buttons: buttonsObj
             });
 
             $.post(ajaxurl, data, function (response) {
@@ -202,7 +204,7 @@
         $( "#settings-tabs" ).tabs();
 
         $('.submitdelete').click(function() {
-            if (!confirm('Are you sure you want to delete this item?')) {
+            if (!confirm(bap_object.loc_strings.delete_this_item)) {
                 return false;
             }
         });

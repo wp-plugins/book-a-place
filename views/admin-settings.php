@@ -21,11 +21,16 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
             }
         }
 
+        if (isset($_POST['currency-symbol'])) {
+            $options['currency-symbol'] = strip_tags(stripslashes($_POST['currency-symbol']));
+        }
+
         $options_exist = get_option(BAP_OPTIONS);
         if ($options_exist !== false) {
             $cmp_email = strcmp($options_exist['email'], $options['email']);
             $cmp_cart_expiration_time = strcmp($options_exist['cart-expiration-time'], $options['cart-expiration-time']);
-            if ($cmp_email !== 0 || $cmp_cart_expiration_time !== 0) {
+            $cmp_currency_symbol = strcmp($options_exist['currency-symbol'], $options['currency-symbol']);
+            if ($cmp_email !== 0 || $cmp_cart_expiration_time !== 0 || $cmp_currency_symbol !== 0) {
                 if (update_option(BAP_OPTIONS, $options) === false) {
                     $error = 'Error.';
                 }

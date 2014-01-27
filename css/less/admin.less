@@ -40,11 +40,12 @@
   margin-top: 10px;
   position: fixed;
   padding: 5px;
+  background: #CCCCCC;
   z-index: 99;
 }
 
 #scheme-container {
-  margin-top: 60px;
+  margin-top: 90px;
 }
 
 .wp-core-ui {
@@ -245,4 +246,16 @@ form .row {
 .orders-actions {
   margin: 10px 0;
   text-align: right;
+}
+
+@media only screen and (max-width: 782px) {
+
+  #scheme-controls {
+    position: static;
+  }
+
+  #scheme-container {
+    margin-top: 0;
+  }
+
 }

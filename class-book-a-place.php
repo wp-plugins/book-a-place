@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.3.0';
+    protected $version = '0.3.1';
 
     /**
      * Unique identifier for plugin.
@@ -75,6 +75,38 @@ class Book_A_Place
 
     protected $event_booking_open = null;
 
+    protected $options;
+
+    /**
+     * @since    0.3.0
+     * @var array
+     */
+    private $currency_symbols = array(
+        '1' => '&#164;',
+        '2' => '&#36;',
+        '3' => '&#162;',
+        '4' => '&#163;',
+        '5' => '&#165;',
+        '6' => '&#8355;',
+        '7' => '&#8356;',
+        '8' => '&#8359;',
+        '9' => '&#128;',
+        '10' => '&#8361;',
+        '11' => '&#8372;',
+        '12' => '&#8367;',
+        '13' => '&#8366;',
+        '14' => '&#8368;',
+        '15' => '&#8370;',
+        '16' => '&#8369;',
+        '17' => '&#8371;',
+        '18' => '&#8373;',
+        '19' => '&#8365;',
+        '20' => '&#8362;',
+        '21' => '&#8363;',
+        '22' => '&#37;',
+        '23' => '&#137;',
+    );
+
     /**
      * Initialize the plugin by setting localization, filters, and administration functions.
      *
@@ -96,6 +128,9 @@ class Book_A_Place
             2 => __('Paid', $this->plugin_slug),
             3 => __('Cancelled', $this->plugin_slug),
         );
+
+        self::add_options();
+        $this->options = get_option(BAP_OPTIONS);
 
         session_start();
         $this->session_id = session_id();
@@ -384,6 +419,11 @@ class Book_A_Place
                     'jquery-ui-tooltip',
                     'jquery-ui-tabs'
                 ), $this->version);
+
+            wp_localize_script($this->plugin_slug . '-admin-script', 'bap_object', array(
+                    'ajaxurl' => admin_url('admin-ajax.php'),
+                    'loc_strings' => $this->get_loc_strings(),
+                ));
         }
 
         if ($screen->id == $this->events_page_screen_hook_suffix) {
@@ -431,13 +471,7 @@ class Book_A_Place
             ), $this->version);
         wp_localize_script($this->plugin_slug . '-plugin-script', 'bap_object', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
-                'loc_strings' => array(
-                    'please_wait' => __('Please wait...', $this->plugin_slug),
-                    'checkout' => __('Checkout', $this->plugin_slug),
-                    'cancel' => __('Cancel', $this->plugin_slug),
-                    'ok' => __('Ok', $this->plugin_slug),
-
-                ),
+                'loc_strings' => $this->get_loc_strings(),
             ));
     }
 
@@ -625,11 +659,24 @@ class Book_A_Place
     public static function add_options()
     {
         $default_options = array(
+            'email' => '',
             'cart-expiration-time' => 5,
+            'currency-symbol' => 2,
         );
         $options = get_option(BAP_OPTIONS);
         if (!$options) {
             $add_options = add_option(BAP_OPTIONS, $default_options);
+        } else {
+            if (!isset($options['email'])) {
+                $options['email'] = $default_options['email'];
+            }
+            if (!isset($options['cart-expiration-time'])) {
+                $options['cart-expiration-time'] = $default_options['cart-expiration-time'];
+            }
+            if (!isset($options['currency-symbol'])) {
+                $options['currency-symbol'] = $default_options['currency-symbol'];
+            }
+            $update_options = update_option(BAP_OPTIONS, $options);
         }
 
         $default_subject_admin = 'New booking <total_price>';
@@ -815,12 +862,19 @@ Regards';
         if (is_null($this->event_booking_open) && $event_id) {
             $event = $this->get_event_by_id($event_id);
             $this->is_event_booking_open($event);
-        }
 
-        $html = '
+            $html = '
             <script type="text/javascript">
                 var bookAPLaceEventBookingOpen = ' . ($this->event_booking_open ? 1 : 0) . ';
             </script>';
+        }
+
+        if (!$event_id) {
+            $html = '
+            <script type="text/javascript">
+                var bookAPLaceEventBookingOpen = 1;
+            </script>';
+        }
 
         if ($this->event_booking_open === false) {
             $html .= '<p>Booking is closed.</p>';
@@ -1079,7 +1133,8 @@ Regards';
 
     public function places_money_format($number)
     {
-        return '$' . number_format($number, 2, '.', ',');
+        $currency_symbols = $this->get_currency_symbols();
+        return $currency_symbols[$this->options['currency-symbol']] . number_format($number, 2, '.', ',');
     }
 
     public function get_place_statuses()
@@ -1258,7 +1313,7 @@ Regards';
         $save = $wpdb->insert($wpdb->bap_carts, array(
             'session_id' => $session_id,
             'place_id' => (int)$_POST['place_id'],
-            'date' => current_time('mysql'),
+            'date' => date('Y-m-d H:i:s'),
         ), array(
             '%s',
             '%d',
@@ -1545,7 +1600,7 @@ Regards';
     private function update_cart_time($session_id)
     {
         global $wpdb;
-        $update = $wpdb->update($wpdb->bap_carts, array('date' => current_time('mysql')), array('session_id' => $session_id), array('%s'), array('%s'));
+        $update = $wpdb->update($wpdb->bap_carts, array('date' => date('Y-m-d H:i:s')), array('session_id' => $session_id), array('%s'), array('%s'));
         return $update;
     }
 
@@ -2121,5 +2176,34 @@ Regards';
         return $delete;
     }
 
+    /**
+     * @return array
+     * @since 0.3.0
+     */
+    private function get_loc_strings()
+    {
+        return array(
+            'please_wait' => __('Please wait...', $this->plugin_slug),
+            'checkout' => __('Checkout', $this->plugin_slug),
+            'cancel' => __('Cancel', $this->plugin_slug),
+            'ok' => __('Ok', $this->plugin_slug),
+            'set_a_place' => __('Set a place', $this->plugin_slug),
+            'change_place_status' => __('Change place status', $this->plugin_slug),
+            'change_place_price' => __('Change place price', $this->plugin_slug),
+            'update_a_place' => __('Update a place', $this->plugin_slug),
+            'unset_this_place' => __('Are you sure you want to unset this place?', $this->plugin_slug),
+            'delete_this_item' => __('Are you sure you want to delete this item?', $this->plugin_slug),
+
+        );
+    }
+
+    /**
+     * @return array
+     * @since 0.3.0
+     */
+    public function get_currency_symbols()
+    {
+        return $this->currency_symbols;
+    }
 
 }

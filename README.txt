@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 0.3.0
+Tested up to: 3.8.1
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.3.1 =
+* Fixed the problem with cart expiration.
+* Added an ability to change currency symbol.
+
 = 0.3.0 =
 * Added an ability to translate the plugin.
 * Now orders can be deleted.
@@ -94,11 +98,14 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Scheme reusing for different events.
 * Fixed a bug with scheme refreshing.
 
-
 = 0.1.0 =
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.3.1 =
+Fixed the problem with cart expiration.
+Added an ability to change currency symbol.
 
 = 0.3.0 =
 Added a .pot file, so you will be able to translate our plugin. 
