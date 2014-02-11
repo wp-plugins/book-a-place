@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.3.1';
+    protected $version = '0.3.2';
 
     /**
      * Unique identifier for plugin.
@@ -131,6 +131,13 @@ class Book_A_Place
 
         self::add_options();
         $this->options = get_option(BAP_OPTIONS);
+
+        // run version dependent functions
+        if ($this->options['plugin_version'] != $this->version) {
+            self::create_tables();
+            $this->options['plugin_version'] = $this->version;
+            update_option(BAP_OPTIONS, $this->options);
+        }
 
         session_start();
         $this->session_id = session_id();
@@ -563,6 +570,9 @@ class Book_A_Place
     {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         global $wpdb;
+
+        $wpdb->hide_errors();
+
         global $charset_collate;
         // Call this manually as we may have missed the init hook
         self::register_tables();
@@ -610,7 +620,7 @@ class Book_A_Place
         dbDelta($sql_add_constraint);
 
         // bap_orders
-        $sql_create_table = "CREATE TABLE IF NOT EXISTS `{$wpdb->bap_orders}` (
+        $sql_create_table = "CREATE TABLE `{$wpdb->bap_orders}` (
                                   `order_id` int(11) NOT NULL AUTO_INCREMENT,
                                   `first_name` varchar(255) DEFAULT NULL,
                                   `last_name` varchar(255) DEFAULT NULL,
@@ -626,7 +636,7 @@ class Book_A_Place
                                   `event_id` int(11) DEFAULT NULL,
                                   `event_name` varchar(255) DEFAULT NULL,
                                   `event` text,
-                                  PRIMARY KEY (`order_id`)
+                                  PRIMARY  KEY (`order_id`)
                                 ) $charset_collate; ";
         dbDelta($sql_create_table);
 
@@ -654,11 +664,13 @@ class Book_A_Place
                                     ADD CONSTRAINT `{$wpdb->bap_events}_ibfk_1` FOREIGN KEY (`scheme_id`) REFERENCES `{$wpdb->bap_schemes}` (`scheme_id`) ON DELETE SET NULL ON UPDATE CASCADE;";
         dbDelta($sql_add_constraint);
 
+        $wpdb->show_errors();
     }
 
     public static function add_options()
     {
         $default_options = array(
+            'plugin_version' => 0,
             'email' => '',
             'cart-expiration-time' => 5,
             'currency-symbol' => 2,
@@ -667,6 +679,9 @@ class Book_A_Place
         if (!$options) {
             $add_options = add_option(BAP_OPTIONS, $default_options);
         } else {
+            if (!isset($options['plugin_version'])) {
+                $options['plugin_version'] = $default_options['plugin_version'];
+            }
             if (!isset($options['email'])) {
                 $options['email'] = $default_options['email'];
             }
@@ -859,18 +874,22 @@ Regards';
     {
         $this->delete_expired_carts();
 
+        $html = '';
+
         if (is_null($this->event_booking_open) && $event_id) {
             $event = $this->get_event_by_id($event_id);
             $this->is_event_booking_open($event);
+        }
 
-            $html = '
+        if (!is_null($this->event_booking_open)) {
+            $html .= '
             <script type="text/javascript">
                 var bookAPLaceEventBookingOpen = ' . ($this->event_booking_open ? 1 : 0) . ';
             </script>';
         }
 
         if (!$event_id) {
-            $html = '
+            $html .= '
             <script type="text/javascript">
                 var bookAPLaceEventBookingOpen = 1;
             </script>';
