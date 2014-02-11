@@ -87,6 +87,8 @@
                     oneDayClass : 'one-day',
                     callback : function () {
                         $('#bap-countdown-container').hide();
+                        refreshScheme();
+                        refreshCart();
                     }
                 });
             };
