@@ -58,6 +58,20 @@
             });
         };
 
+        $( "#orders-search-date-from, #orders-search-date-to" ).datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1
+        });
+
+        $("#orders-search-toggle").click(function(e) {
+            e.preventDefault();
+            $('#orders-search').toggle();
+            var text = $(this).text(),
+                altText = $(this).data('alt-text');
+            $(this).data('alt-text', text);
+            $(this).text(altText);
+        });
+
         $('#scheme-container').tooltip({
             items: '.scheme-cell',
             position: {

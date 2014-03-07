@@ -13,6 +13,10 @@ if (isset($_POST['submit'])) {
 $order = $this->get_order_by_id($_GET['order']);
 $places = unserialize($order->places);
 
+// get scheme
+$place_ids = array_keys($places);
+$scheme = $this->get_scheme_by_id($place_ids[0]);
+
 ?>
 
 <?php if ($message || $error) : ?>
@@ -32,10 +36,17 @@ $places = unserialize($order->places);
             <td><?php echo $order->order_id; ?></td>
         </tr>
 
-        <tr valign="top">
-            <th scope="row"><?php _e("Event Name", $this->plugin_slug); ?></th>
-            <td><?php echo $order->event_name; ?></td>
-        </tr>
+        <?php if ($order->event_name) : ?>
+            <tr valign="top">
+                <th scope="row"><?php _e("Event Name", $this->plugin_slug); ?></th>
+                <td><?php echo $order->event_name; ?></td>
+            </tr>
+        <?php else : ?>
+            <tr valign="top">
+                <th scope="row"><?php _e("Scheme Name", $this->plugin_slug); ?></th>
+                <td><?php echo ($scheme) ? $scheme->name : __('Scheme not found', $this->plugin_slug); ?></td>
+            </tr>
+        <?php endif; ?>
 
         <tr valign="top">
             <th scope="row"><?php _e("First Name", $this->plugin_slug); ?></th>

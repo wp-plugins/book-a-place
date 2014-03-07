@@ -3,7 +3,7 @@ Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 0.3.2
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.4.0 =
+* Implemented search in orders section.
+* Added booking success message.
+
 = 0.3.2 =
 * Fixed the cart expiration problem.
 
@@ -105,6 +109,11 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.4.0 =
+According to requests from our users, we:
+- Implemented search in orders section.
+- Added booking success message.
 
 = 0.3.2 =
 Fixed the cart expiration problem.
