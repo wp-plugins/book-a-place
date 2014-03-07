@@ -64,7 +64,16 @@
                 $.blockUI();
 
                 $.post(bap_object.ajaxurl, data, function (response) {
-                    refreshSchemeAndCartCallback(response);
+
+                    var currLocation = window.location.href;
+                    if (currLocation.indexOf('?') != -1) {
+                        window.location = currLocation + '&s_msg=1';
+                    } else {
+                        window.location = currLocation + '?s_msg=1';
+                    }
+
+                    refreshSchemeAndCartCallback(response.content);
+
                     $.unblockUI();
                 });
             },

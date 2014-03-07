@@ -1,6 +1,5 @@
 #book-a-place-scheme {
   /*** Bootstrap Tables ***/
-
 }
 #book-a-place-scheme h2 {
   font-size: 24px;
@@ -111,7 +110,6 @@
 #book-a-place-scheme #scheme .scheme-row .scheme-cell.scheme-cell-seat {
   opacity: 1;
   /*background-color: #D9EDF7;*/
-
 }
 #book-a-place-scheme #scheme .scheme-row .scheme-cell.scheme-place-booked {
   position: relative;
@@ -217,10 +215,16 @@
 #bap-cart-form-dialog {
   display: none;
 }
+#bap-cart-form-dialog .input-notice {
+  font-size: 12px;
+  color: #757575;
+  margin-top: 2px;
+}
 #bap-cart-form-dialog .field {
   width: 47%;
   float: left;
   padding-right: 10px;
+  margin-bottom: 12px;
 }
 #bap-cart-form-dialog .required {
   color: #B94A48;
@@ -237,7 +241,6 @@
 }
 #bap-cart-form-dialog input.text,
 #bap-cart-form-dialog textarea {
-  margin-bottom: 12px;
   width: 95%;
   padding: .4em;
 }

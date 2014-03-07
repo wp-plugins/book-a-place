@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.3.2';
+    protected $version = '0.4.0';
 
     /**
      * Unique identifier for plugin.
@@ -107,6 +107,9 @@ class Book_A_Place
         '23' => '&#137;',
     );
 
+    private $success_user_messages = array();
+    private $error_user_messages = array();
+
     /**
      * Initialize the plugin by setting localization, filters, and administration functions.
      *
@@ -127,6 +130,14 @@ class Book_A_Place
             1 => __('Set', $this->plugin_slug),
             2 => __('Paid', $this->plugin_slug),
             3 => __('Cancelled', $this->plugin_slug),
+        );
+
+        $this->success_user_messages = array(
+            1 => __('Places has been successfully booked.', $this->plugin_slug),
+        );
+
+        $this->error_user_messages = array(
+            1 => __('Error. Places has not been booked.', $this->plugin_slug),
         );
 
         self::add_options();
@@ -414,7 +425,7 @@ class Book_A_Place
         }
 
         $screen = get_current_screen();
-        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix) {
+        if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix || $screen->id == $this->orders_page_screen_hook_suffix) {
             wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('js/admin.js', __FILE__), array(
                     'jquery',
                     'jquery-ui-core',
@@ -424,7 +435,8 @@ class Book_A_Place
                     'jquery-ui-widget',
                     'jquery-ui-position',
                     'jquery-ui-tooltip',
-                    'jquery-ui-tabs'
+                    'jquery-ui-tabs',
+                    'jquery-ui-datepicker',
                 ), $this->version);
 
             wp_localize_script($this->plugin_slug . '-admin-script', 'bap_object', array(
@@ -1121,6 +1133,16 @@ Regards';
 
         $html = '<div id="book-a-place-scheme">';
 
+        // feedback after offline booking
+        if (isset($_GET['s_msg']) && !empty($_GET['s_msg'])) {
+            $msg_id = (int) $_GET['s_msg'];
+            $html .= '<div id="payment-success">' . $this->success_user_messages[$msg_id] . '</div>';
+        }
+        if (isset($_GET['e_msg']) && !empty($_GET['e_msg'])) {
+            $msg_id = (int) $_GET['e_msg'];
+            $html .= '<div id="payment-error">' . $this->error_user_messages[$msg_id] . '</div>';
+        }
+
         $html .= '<h2>' . $scheme_details->name . '</h2>';
 
         $html .= '<p>' . $scheme_details->description . '</p>';
@@ -1297,6 +1319,7 @@ Regards';
             <div class="field">
             <label for="checkout-phone">' . __("Phone", $this->plugin_slug) . ' <span class="required">*</span></label>
             <input type="text" name="checkout-phone" id="checkout-phone" value="" class="text"/>
+            <p class="input-notice">Only digits, e.g. 15417543010</p>
             </div>
             <label for="checkout-notes">' . __("Notes", $this->plugin_slug) . '</label>
             <textarea name="checkout-notes" id="checkout-notes" class="text"></textarea>
@@ -1347,7 +1370,7 @@ Regards';
         die();
     }
 
-    public function refresh_shortcode_content()
+    public function refresh_shortcode_content($return = false)
     {
         $id = $_POST['scheme_id'];
         $event_id = $_POST['event_id'];
@@ -1358,8 +1381,12 @@ Regards';
             $content = $this->book_a_place_event_shortcode(array('id' => $event_id));
         }
 
-        echo $content;
-        die();
+        if ($return) {
+            return $content;
+        } else {
+            echo $content;
+            die();
+        }
     }
 
     public function delete_from_cart()
@@ -1457,9 +1484,17 @@ Regards';
 
     public function ajax_checkout()
     {
-        $this->checkout();
+        $checkout = $this->checkout();
 
-        $this->refresh_shortcode_content();
+        $out = $this->refresh_shortcode_content(true);
+
+        if (!$checkout) {
+            $out['msg'] = 'e_msg=1';
+        } else {
+            $out['msg'] = 's_msg=1';
+        }
+
+        echo json_encode($out);
         die();
     }
 
@@ -2093,6 +2128,16 @@ Regards';
 
         $html = '<div id="book-a-place-scheme">';
 
+        // feedback after offline booking
+        if (isset($_GET['s_msg']) && !empty($_GET['s_msg'])) {
+            $msg_id = (int) $_GET['s_msg'];
+            $html .= '<div id="payment-success">' . $this->success_user_messages[$msg_id] . '</div>';
+        }
+        if (isset($_GET['e_msg']) && !empty($_GET['e_msg'])) {
+            $msg_id = (int) $_GET['e_msg'];
+            $html .= '<div id="payment-error">' . $this->error_user_messages[$msg_id] . '</div>';
+        }
+
         $html .= '<h2>' . $event->name . '</h2>';
 
         $html .= '<p>' . __("Start", $this->plugin_slug) . ': ' . $event->start . '<br>' . __("End", $this->plugin_slug) . ': ' . $event->end . '</p>';
@@ -2223,6 +2268,81 @@ Regards';
     public function get_currency_symbols()
     {
         return $this->currency_symbols;
+    }
+
+    /**
+     * @param $fields
+     * @return mixed
+     * @since 0.3.2
+     */
+    public function search_orders($fields)
+    {
+        global $wpdb;
+
+        $where = 'WHERE 1';
+        $params = array();
+
+        if ($fields && is_array($fields)) {
+            foreach ($fields as $field => $value) {
+                if ($field == 'email' && !empty($value)) {
+                    $where .= " AND email = %s";
+                    $params[] = $value;
+                }
+                if ($field == 'phone' && !empty($value)) {
+                    $where .= " AND phone = %s";
+                    $params[] = $value;
+                }
+                if ($field == 'code' && !empty($value)) {
+                    $where .= " AND code = %s";
+                    $params[] = $value;
+                }
+                if ($field == 'status_id' && $value != '') {
+                    $where .= " AND status_id = %d";
+                    $params[] = $value;
+                }
+                if ($field == 'price_from' && !empty($value)) {
+                    $where .= " AND total_price >= %f";
+                    $params[] = $value;
+                }
+                if ($field == 'price_to' && !empty($value)) {
+                    $where .= " AND total_price <= %f";
+                    $params[] = $value;
+                }
+                if ($field == 'date_from' && !empty($value)) {
+                    $ts = strtotime($value);
+                    if ($ts) {
+                        $date = date('Y-m-d H:i:s', $ts);
+                        $where .= " AND date >= %s";
+                        $params[] = $date;
+                    }
+                }
+                if ($field == 'date_to' && !empty($value)) {
+                    $ts = strtotime($value);
+                    if ($ts) {
+                        $date = date('Y-m-d H:i:s', $ts);
+                        $where .= " AND date <= %s";
+                        $params[] = $date;
+                    }
+                }
+                if ($field == 'first_name' && !empty($value)) {
+                    $where .= " AND first_name LIKE %s";
+                    $params[] = $value . '%';
+                }
+                if ($field == 'last_name' && !empty($value)) {
+                    $where .= " AND last_name LIKE %s";
+                    $params[] = $value . '%';
+                }
+
+            }
+        }
+
+        $sql = $wpdb->prepare("SELECT *
+        FROM $wpdb->bap_orders
+        {$where}", $params);
+
+        $orders = $wpdb->get_results($sql);
+
+        return $orders;
     }
 
 }
