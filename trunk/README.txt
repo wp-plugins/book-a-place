@@ -18,12 +18,14 @@ Booking places, seats, tickets… In theatres, cinemas, restaurants etc. It’s 
 Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. Moreover, there you will find powerful event manager. We created our plugin as simple as possible. And we are ready to continue working on it to make it better.
 
 So what you get with Book a Place plugin:
+
 * Event manager.
 * Easy tool to create a scheme of your placement.
 * You will get emails about new bookings (email addresses and templates can be managed).
 * Orders section with a lot of important and useful data.
 
 We are happy to propose you our Book a Place Pro plugin:
+
 * Paypal payments.
 * Coupon/discount system.
 * Photo gallery for each place.
