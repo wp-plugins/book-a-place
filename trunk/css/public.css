@@ -73,6 +73,9 @@
 }
 #book-a-place-scheme #scheme li {
   margin: 0;
+  background: none;
+  padding: 0;
+  list-style-type: none;
 }
 #book-a-place-scheme #scheme .scheme-row {
   display: block;
@@ -251,6 +254,9 @@
 }
 #bap-countdown-container {
   display: none;
+}
+.bap-dialog {
+  z-index: 999;
 }
 .bap-dialog .ui-button:active {
   padding: 0;
