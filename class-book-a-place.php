@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.4.0';
+    protected $version = '0.4.1';
 
     /**
      * Unique identifier for plugin.
@@ -185,7 +185,7 @@ class Book_A_Place
         add_action('wp_enqueue_scripts', array(
             $this,
             'enqueue_scripts'
-        ));
+        ), 999);
 
         add_action('init', array(
             'Book_A_Place',
@@ -1295,7 +1295,7 @@ Regards';
     public function display_cart_controls()
     {
         $html = '<div id="cart-controls">
-    <a id="cart-checkout" href="#">' . __("Checkout", $this->plugin_slug) . '</a>
+    <input type="submit" id="cart-checkout" value="' . __("Checkout", $this->plugin_slug) . '" />
 </div>';
 
         $html .= '<div id="bap-cart-form-dialog" title="' . __("Checkout", $this->plugin_slug) . '">

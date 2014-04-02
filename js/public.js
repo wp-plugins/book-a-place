@@ -121,7 +121,7 @@
         });
 
 
-        $("#cart-checkout").button();
+        //$("#cart-checkout").button();
 
 
         var bapCartFormDialogButtonsObj = {};
@@ -135,7 +135,8 @@
             height: 500,
             width: 500,
             modal: true,
-            buttons: bapCartFormDialogButtonsObj
+            buttons: bapCartFormDialogButtonsObj,
+            draggable: false
         });
 
 
@@ -146,11 +147,12 @@
         $("#scheme-warning-message").dialog({
             autoOpen: false,
             modal: true,
-            buttons: schemeWarningMessageButtonsObj
+            buttons: schemeWarningMessageButtonsObj,
+            draggable: false
         });
 
 
-        $("#cart-checkout").click(function (e) {
+        $("#cart-checkout").unbind('click').click(function (e) {
             e.preventDefault();
 
             $("#bap-cart-form-dialog").dialog("open");

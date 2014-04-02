@@ -198,7 +198,41 @@
 }
 
 .bap-description {
-  width: 50%;
+  width: 48%;
+}
+
+.bap-description-right {
+  width: 48%;
+  float: right;
+  .codecanyon-thumb {
+    float: left;
+    margin-top: 13px;
+  }
+  ol {
+    float: left;
+    margin-bottom: 0;
+  }
+}
+
+.bap-description-left {
+  width: 48%;
+  float: left;
+  margin-right: 4%;
+}
+
+@media only screen and (max-width: 782px) {
+  .bap-description {
+    width: 95%;
+  }
+  .bap-description-right {
+    width: 95%;
+    float: none;
+  }
+  .bap-description-left {
+    width: 95%;
+    float: none;
+    margin: 0;
+  }
 }
 
 

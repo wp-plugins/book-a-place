@@ -13,8 +13,7 @@
     <?php screen_icon('options-general'); ?>
     <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
 
-
-    <div class="bap-description">
+    <div class="bap-description-left">
 
         <p>
             Create a scheme of your theatre, cinema, restaurant etc. Use our event manager. Online booking!
@@ -28,6 +27,33 @@
             Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. Moreover, there you will find powerful event manager. We created our plugin as simple as possible. And we are ready to continue working on it to make
             it better.
         </p>
+
+    </div>
+
+    <div class="bap-description-right">
+
+        <h3>We are happy to propose you our Book a Place Pro plugin:</h3>
+
+        <a target="_blank" class="codecanyon-thumb" href="http://codecanyon.net/item/book-a-place-pro-wordpress-plugin/7127218">
+            <img src="<?php echo BAP_DIR_URL; ?>/img/codecanyon-thumb.jpg" alt="Book a Place Pro - Wordpress Plugin" width="80" height="80"/>
+        </a>
+
+        <ol>
+            <li>Paypal payments.</li>
+            <li>Coupon/discount system.</li>
+            <li>Photo gallery for each place.</li>
+            <li>Bulk actions in scheme editor.</li>
+        </ol>
+
+        <div style="clear: both;"></div>
+
+        <p>
+            You can find the Pro version <a target="_blank" href="http://codecanyon.net/item/book-a-place-pro-wordpress-plugin/7127218">here</a>.
+        </p>
+
+    </div>
+
+    <div class="bap-description">
 
         <h3>How to</h3>
 

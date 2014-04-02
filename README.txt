@@ -3,7 +3,7 @@ Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,11 +18,18 @@ Booking places, seats, tickets… In theatres, cinemas, restaurants etc. It’s 
 Book a Place plugin is very easy to use by both parties: users, who want to book a place, and administrators, who create a scheme, add places, set prices etc. Moreover, there you will find powerful event manager. We created our plugin as simple as possible. And we are ready to continue working on it to make it better.
 
 So what you get with Book a Place plugin:
-
 * Event manager.
 * Easy tool to create a scheme of your placement.
 * You will get emails about new bookings (email addresses and templates can be managed).
 * Orders section with a lot of important and useful data.
+
+We are happy to propose you our Book a Place Pro plugin:
+* Paypal payments.
+* Coupon/discount system.
+* Photo gallery for each place.
+* Bulk actions in theme editor.
+
+You can find the Pro version <a href="http://codecanyon.net/item/book-a-place-pro-wordpress-plugin/7127218" target="_blank">here</a>.
 
 
 == Installation ==
@@ -82,6 +89,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.4.1 =
+* Tested plugin with several themes. Fixed CSS and Javascript problems.
+
 = 0.4.0 =
 * Implemented search in orders section.
 * Added booking success message.
@@ -109,6 +119,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.4.1 =
+* Tested plugin with several themes. Fixed CSS and Javascript problems.
+* We are happy to propose you our Book a Place Pro plugin.
 
 = 0.4.0 =
 According to requests from our users, we:
