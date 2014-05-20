@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.4.1';
+    protected $version = '0.4.2';
 
     /**
      * Unique identifier for plugin.
@@ -784,6 +784,17 @@ Regards';
         return $scheme;
     }
 
+    public function get_scheme_by_place_id($id, $output_type = OBJECT)
+    {
+        global $wpdb;
+
+        $place = $this->get_place_by_id($id);
+
+        $scheme = $wpdb->get_row("SELECT * FROM $wpdb->bap_schemes WHERE scheme_id = " . (int)$place['scheme_id'], $output_type);
+
+        return $scheme;
+    }
+
     public function delete_scheme($id)
     {
         global $wpdb;
@@ -1266,7 +1277,7 @@ Regards';
             foreach ($places_in_cart as $key => $place) {
                 ++$key;
                 $total_price += $place['place_price'];
-                $html .= "<tr>
+                $html .= "<tr class='bap-place-in-cart'>
         <td>$key</td>
         <td>{$place['place_name']}</td>
         <td>{$this->places_money_format($place['place_price'])}</td>
@@ -1327,6 +1338,10 @@ Regards';
         </fieldset>
     </form>
 </div>';
+
+        $html .= '<div id="bap-empty-cart-dialog" title="' . __("Checkout", $this->plugin_slug) . '">
+    <p class="validateTips">' . __('Please add to your cart at least one place.', $this->plugin_slug) . '</p>
+    </div>';
 
         return $html;
     }
@@ -1620,6 +1635,15 @@ Regards';
             }
         }
 
+        $place_ids = array_keys($places);
+        $scheme = $this->get_scheme_by_place_id($place_ids[0]);
+
+        if ($data->event_id) {
+            $event = $this->get_event_by_id($data->event_id);
+        }
+
+        $order_url = str_replace('admin-ajax.php', 'admin.php', $this->page_url) . '?page=' . $this->plugin_slug . '-orders&order=' . $data->order_id . '&action=view';
+
         $search = array(
             '<first_name>',
             '<last_name>',
@@ -1631,6 +1655,11 @@ Regards';
             '<places>',
             '<total_price>',
             '<status>',
+            '<event_name>',
+            '<event_start>',
+            '<event_end>',
+            '<scheme_name>',
+            '<order_url>',
         );
 
         $replace = array(
@@ -1644,6 +1673,11 @@ Regards';
             $places_html,
             $this->places_money_format($data->total_price),
             $this->order_statuses[$data->status_id],
+            $data->event_name,
+            isset($event) ? $event->start : '',
+            isset($event) ? $event->end : '',
+            $scheme->name,
+            $order_url,
         );
 
         $text = str_replace($search, $replace, $template);
@@ -2343,6 +2377,43 @@ Regards';
         $orders = $wpdb->get_results($sql);
 
         return $orders;
+    }
+
+    /*
+     * Generates csv file with order details
+     */
+    public function orders_to_csv($orders)
+    {
+        ob_clean();
+
+        $csvout = 'N,First Name,Last Name,Email,Phone,Notes,Date,Code,Places,Price,Status,Admin Notes,Event Name' . "\n";
+
+        foreach ($orders as $key => $order) {
+
+            $places_array = unserialize($order->places);
+            $places = '';
+            if (is_array($places_array)) {
+                foreach ($places_array as $place) {
+                    $places .= $place['place_name'] . ' (' . number_format($place['place_price'], 2, '.', ',') . '); ';
+                }
+
+            }
+
+            $csvout .= ($key + 1) . ',' . $order->first_name . ',' . $order->last_name . ',' . $order->email . ',' . $order->phone . ',' . $order->notes . ',' . $order->date . ',' . $order->code . ',' . $places . ',' . number_format($order->total_price, 2, '.', ',') . ',' . $this->order_statuses[$order->status_id] . ',' . $order->admin_notes . ',' . $order->event_name . "\n";
+
+        }
+
+        $filename = "Orders_" . date("d-m-Y_H-i", time());
+
+        header("Content-type: application/vnd.ms-excel");
+
+        header("Content-disposition: csv" . date("Y-m-d") . ".csv");
+
+        header("Content-disposition: filename=" . $filename . ".csv");
+
+        print $csvout;
+
+        exit;
     }
 
 }

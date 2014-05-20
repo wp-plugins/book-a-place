@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 0.4.1
+Tested up to: 3.9.1
+Stable tag: 0.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,11 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.4.2 =
+* Created cart validation. So this disable possibility to checkout an empty cart now.
+* Created an ability to export orders to CSV.
+* Added new placeholders to email templates: event_name, event_start, event_end, scheme_name, order_url.
+
 = 0.4.1 =
 * Tested plugin with several themes. Fixed CSS and Javascript problems.
 
@@ -121,6 +126,11 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.4.2 =
+* Created cart validation. So this disable possibility to checkout an empty cart now.
+* Created an ability to export orders to CSV.
+* Added new placeholders to email templates: event_name, event_start, event_end, scheme_name, order_url.
 
 = 0.4.1 =
 * Tested plugin with several themes. Fixed CSS and Javascript problems.
