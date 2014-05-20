@@ -2394,12 +2394,12 @@ Regards';
             $places = '';
             if (is_array($places_array)) {
                 foreach ($places_array as $place) {
-                    $places .= $place['place_name'] . ' (' . number_format($place['place_price'], 2, '.', ',') . '); ';
+                    $places .= $place['place_name'] . ' (' . number_format($place['place_price'], 2, '.', ' ') . '); ';
                 }
 
             }
 
-            $csvout .= ($key + 1) . ',' . $order->first_name . ',' . $order->last_name . ',' . $order->email . ',' . $order->phone . ',' . $order->notes . ',' . $order->date . ',' . $order->code . ',' . $places . ',' . number_format($order->total_price, 2, '.', ',') . ',' . $this->order_statuses[$order->status_id] . ',' . $order->admin_notes . ',' . $order->event_name . "\n";
+            $csvout .= ($key + 1) . ',' . $order->first_name . ',' . $order->last_name . ',' . $order->email . ',' . $order->phone . ',' . $order->notes . ',' . $order->date . ',' . $order->code . ',' . $places . ',' . number_format($order->total_price, 2, '.', ' ') . ',' . $this->order_statuses[$order->status_id] . ',' . $order->admin_notes . ',' . $order->event_name . "\n";
 
         }
 
