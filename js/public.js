@@ -145,6 +145,7 @@
             $(this).dialog("close");
         };
         $("#scheme-warning-message").dialog({
+            dialogClass: "bap-dialog",
             autoOpen: false,
             modal: true,
             buttons: schemeWarningMessageButtonsObj,
@@ -152,10 +153,27 @@
         });
 
 
+        var schemeEmptyCartDialogButtonsObj = {};
+        schemeEmptyCartDialogButtonsObj[bap_object.loc_strings.ok] = function () {
+            $(this).dialog("close");
+        };
+        $("#bap-empty-cart-dialog").dialog({
+            dialogClass: "bap-dialog",
+            autoOpen: false,
+            modal: true,
+            buttons: schemeEmptyCartDialogButtonsObj,
+            draggable: false
+        });
+
+
         $("#cart-checkout").unbind('click').click(function (e) {
             e.preventDefault();
 
-            $("#bap-cart-form-dialog").dialog("open");
+            if ($('.bap-place-in-cart').length) {
+                $("#bap-cart-form-dialog").dialog("open");
+            } else {
+                $("#bap-empty-cart-dialog").dialog("open");
+            }
 
             return false;
         });

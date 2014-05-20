@@ -15,7 +15,7 @@ $places = unserialize($order->places);
 
 // get scheme
 $place_ids = array_keys($places);
-$scheme = $this->get_scheme_by_id($place_ids[0]);
+$scheme = $this->get_scheme_by_place_id($place_ids[0]);
 
 ?>
 

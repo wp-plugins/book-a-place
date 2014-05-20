@@ -29,7 +29,12 @@
                     &lt;code&gt;,
                     &lt;places&gt;,
                     &lt;total_price&gt;,
-                    &lt;status&gt;
+                    &lt;status&gt;,
+                    &lt;event_name&gt;,
+                    &lt;event_start&gt;,
+                    &lt;event_end&gt;,
+                    &lt;scheme_name&gt;,
+                    &lt;order_url&gt;
                 </span>
             </td>
         </tr>
@@ -65,7 +70,11 @@
                     &lt;code&gt;,
                     &lt;places&gt;,
                     &lt;total_price&gt;,
-                    &lt;status&gt;
+                    &lt;status&gt;,
+                    &lt;event_name&gt;,
+                    &lt;event_start&gt;,
+                    &lt;event_end&gt;,
+                    &lt;scheme_name&gt;
                 </span>
             </td>
         </tr>
