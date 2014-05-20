@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <div class="orders-actions">
-    <a id="export-to-pdf" href="<?php echo $this->page_url; ?>&action=export" title="<?php _e("Export to csv", $this->plugin_slug); ?>" class="button"><?php _e("Export to csv", $this->plugin_slug); ?></a>
+    <a href="<?php echo $this->page_url; ?>&action=export" title="<?php _e("Export to csv", $this->plugin_slug); ?>" class="button export-to-pdf"><?php _e("Export to csv", $this->plugin_slug); ?></a>
     <a href="<?php echo $this->page_url; ?>&action=clear" title="<?php _e("Clear table", $this->plugin_slug); ?>" class="button orders-clear-submit"><?php _e("Clear", $this->plugin_slug); ?></a>
 </div>
 
@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!--    End Order List-->
 
 <div style="margin-top: 10px;" class="orders-actions">
-    <a id="export-to-pdf" href="<?php echo $this->page_url; ?>&action=export" title="<?php _e("Export to csv", $this->plugin_slug); ?>" class="button"><?php _e("Export to csv", $this->plugin_slug); ?></a>
+    <a href="<?php echo $this->page_url; ?>&action=export" title="<?php _e("Export to csv", $this->plugin_slug); ?>" class="button export-to-pdf"><?php _e("Export to csv", $this->plugin_slug); ?></a>
     <a href="<?php echo $this->page_url; ?>&action=clear" title="<?php _e("Clear table", $this->plugin_slug); ?>" class="button orders-clear-submit"><?php _e("Clear", $this->plugin_slug); ?></a>
 </div>
 
