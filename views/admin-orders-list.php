@@ -155,10 +155,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <tr>
 
             <th style="" class="" scope="col">
-                <?php _e("ID", $this->plugin_slug); ?>
+                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Event Name", $this->plugin_slug); ?>
+            </th>
+            <th style="" class="" scope="col">
+                <?php _e("Scheme Name", $this->plugin_slug); ?>
+            </th>
+            <th style="" class="" scope="col">
+                <?php _e("Places", $this->plugin_slug); ?> <span title="<?php _e("NAME", $this->plugin_slug); ?>" style="display: inline-block; vertical-align: middle;" class="ui-icon ui-icon-info places-info-tooltip"></span>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("First Name", $this->plugin_slug); ?>
@@ -174,9 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Date", $this->plugin_slug); ?>
-            </th>
-            <th style="" class="" scope="col">
-                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Total price", $this->plugin_slug); ?>
@@ -192,10 +195,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <tr>
 
             <th style="" class="" scope="col">
-                <?php _e("ID", $this->plugin_slug); ?>
+                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Event Name", $this->plugin_slug); ?>
+            </th>
+            <th style="" class="" scope="col">
+                <?php _e("Scheme Name", $this->plugin_slug); ?>
+            </th>
+            <th style="" class="" scope="col">
+                <?php _e("Places", $this->plugin_slug); ?> <span title="<?php _e("NAME", $this->plugin_slug); ?>" style="display: inline-block; vertical-align: middle;" class="ui-icon ui-icon-info places-info-tooltip"></span>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("First Name", $this->plugin_slug); ?>
@@ -211,9 +220,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Date", $this->plugin_slug); ?>
-            </th>
-            <th style="" class="" scope="col">
-                <?php _e("Code", $this->plugin_slug); ?>
             </th>
             <th style="" class="" scope="col">
                 <?php _e("Total price", $this->plugin_slug); ?>
@@ -230,10 +236,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if ($orders && is_array($orders)): ?>
             <?php foreach ($orders as $order) : ?>
 
+                <?php
+                $places = unserialize($order->places);
+                $scheme = $this->get_scheme_by_place_id(key($places));
+                ?>
+
                 <tr valign="top" class="post-1 type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self" id="post-1">
 
                     <td class="post-title page-title column-title">
-                        <strong><?php echo $order->order_id; ?></strong>
+                        <strong><?php echo $order->code; ?></strong>
 
                         <div class="row-actions">
                             <span class="view"><a rel="permalink" title="<?php _e("View this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&order=<?php echo $order->order_id; ?>&action=view"><?php _e("View", $this->plugin_slug); ?></a>  </span> |
@@ -242,6 +253,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </td>
                     <td class="author column-author">
                         <?php echo $order->event_name; ?>
+                    </td>
+                    <td class="author column-author">
+                        <?php echo $scheme->name; ?>
+                    </td>
+                    <td class="author column-author">
+                        <?php if ($places && is_array($places)): ?>
+                            <?php foreach ($places as $place_id => $place) : ?>
+                                -&nbsp;<?php echo $place['place_name'] ? $place['place_name'] : __("Unnamed", $this->plugin_slug); ?><br/>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </td>
                     <td class="author column-author">
                         <?php echo $order->first_name; ?>
@@ -257,9 +278,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </td>
                     <td class="tags column-tags">
                         <?php echo $order->date; ?>
-                    </td>
-                    <td class="tags column-tags">
-                        <?php echo $order->code; ?>
                     </td>
                     <td class="tags column-tags">
                         <?php echo $this->places_money_format($order->total_price); ?>
@@ -309,4 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     });
 
+    jQuery(function() {
+        jQuery('.places-info-tooltip').tooltip();
+    });
 </script>

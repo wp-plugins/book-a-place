@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.4.2';
+    protected $version = '0.5.0';
 
     /**
      * Unique identifier for plugin.
@@ -117,29 +117,6 @@ class Book_A_Place
      */
     private function __construct()
     {
-        $this->place_statuses_labels = array(
-            '1' => __('Available', $this->plugin_slug),
-            '2' => __('Booked', $this->plugin_slug),
-            '3' => __('In cart', $this->plugin_slug),
-            '4' => __('In other\'s cart', $this->plugin_slug),
-            '5' => __('Unavailable', $this->plugin_slug),
-        );
-
-        $this->order_statuses = array(
-            0 => __('Not defined', $this->plugin_slug),
-            1 => __('Set', $this->plugin_slug),
-            2 => __('Paid', $this->plugin_slug),
-            3 => __('Cancelled', $this->plugin_slug),
-        );
-
-        $this->success_user_messages = array(
-            1 => __('Places has been successfully booked.', $this->plugin_slug),
-        );
-
-        $this->error_user_messages = array(
-            1 => __('Error. Places has not been booked.', $this->plugin_slug),
-        );
-
         self::add_options();
         $this->options = get_option(BAP_OPTIONS);
 
@@ -328,12 +305,19 @@ class Book_A_Place
     public static function activate($network_wide)
     {
         if (self::book_a_place_plugin_verification()) {
+            set_error_handler ('self::bap_error_handler', E_USER_ERROR);
             trigger_error('Another version of the plugin is activated. Please deactivate it first.', E_USER_ERROR);
         }
 
         // activation functionality
         self::create_tables();
         self::add_options();
+    }
+
+    public static function bap_error_handler($errno, $errstr, $errfile, $errline, $errcontext)
+    {
+        echo '<strong>' . $errstr . '</strong>';
+        die();
     }
 
     /**
@@ -379,6 +363,8 @@ class Book_A_Place
         $locale = apply_filters('plugin_locale', get_locale(), $domain);
         load_textdomain($domain, trailingslashit(WP_LANG_DIR) . $domain . '/' . $domain . '-' . $locale . '.mo');
         load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)) . '/languages/');
+
+        $this->set_texts();
     }
 
     /**
@@ -1546,8 +1532,9 @@ Regards';
 
         $orders = $wpdb->get_results("
         SELECT *
-        FROM $wpdb->bap_orders
+        FROM `{$wpdb->bap_orders}`
         WHERE 1
+        ORDER BY `order_id` DESC
 	    ");
 
         return $orders;
@@ -2414,6 +2401,33 @@ Regards';
         print $csvout;
 
         exit;
+    }
+
+    private function set_texts()
+    {
+        $this->place_statuses_labels = array(
+            '1' => __('Available', $this->plugin_slug),
+            '2' => __('Booked', $this->plugin_slug),
+            '3' => __('In cart', $this->plugin_slug),
+            '4' => __('In other\'s cart', $this->plugin_slug),
+            '5' => __('Unavailable', $this->plugin_slug),
+        );
+
+        $this->order_statuses = array(
+            0 => __('Not defined', $this->plugin_slug),
+            1 => __('Set', $this->plugin_slug),
+            2 => __('Paid', $this->plugin_slug),
+            3 => __('Cancelled', $this->plugin_slug),
+        );
+
+        $this->success_user_messages = array(
+            1 => __('Places has been successfully booked.', $this->plugin_slug),
+        );
+
+        $this->error_user_messages = array(
+            1 => __('Error. Places has not been booked.', $this->plugin_slug),
+        );
+
     }
 
 }

@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Book a Place package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Book a Place 0.4.2\n"
+"Project-Id-Version: Book a Place 0.5.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
-"POT-Creation-Date: 2014-05-20 15:56+0200\n"
-"PO-Revision-Date: 2014-05-20 15:56+0200\n"
+"POT-Creation-Date: 2014-07-18 12:28+0200\n"
+"PO-Revision-Date: 2014-07-18 12:28+0200\n"
 "Last-Translator: Alexander <askemailbox@gmail.com>\n"
 "Language-Team: LANGUAGE <translations@example.com >\n"
 "Language: en_US\n"
@@ -63,155 +63,155 @@ msgstr ""
 msgid "Error. Places has not been booked."
 msgstr ""
 
-#: class-book-a-place.php:504
+#: class-book-a-place.php:511
 msgid "Book a Place"
 msgstr ""
 
-#: class-book-a-place.php:509
+#: class-book-a-place.php:516
 msgid "Schemes"
 msgstr ""
 
-#: class-book-a-place.php:513
+#: class-book-a-place.php:520
 msgid "Events"
 msgstr ""
 
-#: class-book-a-place.php:517
+#: class-book-a-place.php:524
 msgid "Orders"
 msgstr ""
 
-#: class-book-a-place.php:525
+#: class-book-a-place.php:532
 msgid "Settings"
 msgstr ""
 
-#: class-book-a-place.php:871 class-book-a-place.php:968
-#: views/admin-orders-list.php:185 views/admin-orders-list.php:222
-#: views/admin-orders-view.php:82
+#: class-book-a-place.php:878 class-book-a-place.php:975
+#: views/admin-orders-list.php:188 views/admin-orders-list.php:228
+#: views/admin-orders-view.php:87
 msgid "Status"
 msgstr ""
 
-#: class-book-a-place.php:1174 class-book-a-place.php:2206
+#: class-book-a-place.php:1181 class-book-a-place.php:2214
 msgid "Warning!"
 msgstr ""
 
-#: class-book-a-place.php:1176 class-book-a-place.php:2208
+#: class-book-a-place.php:1183 class-book-a-place.php:2216
 msgid "Sorry, you can not add this place to your cart!"
 msgstr ""
 
-#: class-book-a-place.php:1260
+#: class-book-a-place.php:1267
 msgid "Cart"
 msgstr ""
 
-#: class-book-a-place.php:1262
+#: class-book-a-place.php:1269
 msgid "The cart will be cleared in"
 msgstr ""
 
-#: class-book-a-place.php:1268 views/admin-events.php:365
+#: class-book-a-place.php:1275 views/admin-events.php:365
 #: views/admin-schemes-list.php:22 views/admin-schemes-list.php:43
 #: views/admin-schemes-view.php:6 views/includes/admin-schemes-form.php:25
 msgid "Name"
 msgstr ""
 
-#: class-book-a-place.php:1269 views/admin-schemes-view.php:10
+#: class-book-a-place.php:1276 views/admin-schemes-view.php:10
 msgid "Price"
 msgstr ""
 
-#: class-book-a-place.php:1284 views/admin-events.php:97
-#: views/admin-orders-list.php:240 views/admin-schemes-list.php:73
+#: class-book-a-place.php:1291 views/admin-events.php:97
+#: views/admin-orders-list.php:251 views/admin-schemes-list.php:73
 msgid "Delete"
 msgstr ""
 
-#: class-book-a-place.php:1290
+#: class-book-a-place.php:1297
 msgid "There are no places in the cart."
 msgstr ""
 
-#: class-book-a-place.php:1297 views/admin-orders-view.php:93
+#: class-book-a-place.php:1304 views/admin-orders-view.php:98
 msgid "Total Price"
 msgstr ""
 
-#: class-book-a-place.php:1309 class-book-a-place.php:1312
-#: class-book-a-place.php:1342 class-book-a-place.php:2285
+#: class-book-a-place.php:1316 class-book-a-place.php:1319
+#: class-book-a-place.php:1349 class-book-a-place.php:2293
 msgid "Checkout"
 msgstr ""
 
-#: class-book-a-place.php:1313 views/admin-events.php:359
+#: class-book-a-place.php:1320 views/admin-events.php:359
 #, php-format
 msgid "Fields with %s are required."
 msgstr ""
 
-#: class-book-a-place.php:1319 views/admin-orders-list.php:164
-#: views/admin-orders-list.php:201 views/admin-orders-view.php:52
+#: class-book-a-place.php:1326 views/admin-orders-list.php:170
+#: views/admin-orders-list.php:210 views/admin-orders-view.php:57
 msgid "First Name"
 msgstr ""
 
-#: class-book-a-place.php:1323 views/admin-orders-list.php:167
-#: views/admin-orders-list.php:204 views/admin-orders-view.php:57
+#: class-book-a-place.php:1330 views/admin-orders-list.php:173
+#: views/admin-orders-list.php:213 views/admin-orders-view.php:62
 msgid "Last Name"
 msgstr ""
 
-#: class-book-a-place.php:1327 views/admin-orders-list.php:170
-#: views/admin-orders-list.php:207 views/admin-orders-view.php:62
+#: class-book-a-place.php:1334 views/admin-orders-list.php:176
+#: views/admin-orders-list.php:216 views/admin-orders-view.php:67
 msgid "Email"
 msgstr ""
 
-#: class-book-a-place.php:1331 views/admin-orders-list.php:173
-#: views/admin-orders-list.php:210 views/admin-orders-view.php:67
+#: class-book-a-place.php:1338 views/admin-orders-list.php:179
+#: views/admin-orders-list.php:219 views/admin-orders-view.php:72
 msgid "Phone"
 msgstr ""
 
-#: class-book-a-place.php:1335 views/admin-orders-view.php:72
+#: class-book-a-place.php:1342 views/admin-orders-view.php:77
 msgid "Notes"
 msgstr ""
 
-#: class-book-a-place.php:1343
+#: class-book-a-place.php:1350
 msgid "Please add to your cart at least one place."
 msgstr ""
 
-#: class-book-a-place.php:1964
+#: class-book-a-place.php:1972
 msgid "Select Scheme"
 msgstr ""
 
-#: class-book-a-place.php:2177
+#: class-book-a-place.php:2185
 msgid "Start"
 msgstr ""
 
-#: class-book-a-place.php:2177
+#: class-book-a-place.php:2185
 msgid "End"
 msgstr ""
 
-#: class-book-a-place.php:2284
+#: class-book-a-place.php:2292
 msgid "Please wait..."
 msgstr ""
 
-#: class-book-a-place.php:2286 views/admin-events.php:36
-#: views/admin-events.php:99 views/admin-orders-view.php:119
+#: class-book-a-place.php:2294 views/admin-events.php:36
+#: views/admin-events.php:99 views/admin-orders-view.php:127
 msgid "Cancel"
 msgstr ""
 
-#: class-book-a-place.php:2287
+#: class-book-a-place.php:2295
 msgid "Ok"
 msgstr ""
 
-#: class-book-a-place.php:2288 views/admin-schemes-view.php:1
+#: class-book-a-place.php:2296 views/admin-schemes-view.php:1
 msgid "Set a place"
 msgstr ""
 
-#: class-book-a-place.php:2289 views/admin-schemes-view.php:19
+#: class-book-a-place.php:2297 views/admin-schemes-view.php:19
 msgid "Change place status"
 msgstr ""
 
-#: class-book-a-place.php:2290
+#: class-book-a-place.php:2298
 msgid "Change place price"
 msgstr ""
 
-#: class-book-a-place.php:2291
+#: class-book-a-place.php:2299
 msgid "Update a place"
 msgstr ""
 
-#: class-book-a-place.php:2292
+#: class-book-a-place.php:2300
 msgid "Are you sure you want to unset this place?"
 msgstr ""
 
-#: class-book-a-place.php:2293 views/admin-orders-list.php:301
+#: class-book-a-place.php:2301 views/admin-orders-list.php:319
 msgid "Are you sure you want to delete this item?"
 msgstr ""
 
@@ -355,58 +355,72 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: views/admin-orders-list.php:145 views/admin-orders-list.php:295
+#: views/admin-orders-list.php:145 views/admin-orders-list.php:313
 msgid "Export to csv"
 msgstr ""
 
-#: views/admin-orders-list.php:146 views/admin-orders-list.php:296
+#: views/admin-orders-list.php:146 views/admin-orders-list.php:314
 msgid "Clear table"
 msgstr ""
 
-#: views/admin-orders-list.php:146 views/admin-orders-list.php:296
+#: views/admin-orders-list.php:146 views/admin-orders-list.php:314
 msgid "Clear"
 msgstr ""
 
-#: views/admin-orders-list.php:158 views/admin-orders-list.php:195
+#: views/admin-orders-list.php:158 views/admin-orders-list.php:198
 #: views/admin-orders-view.php:35
-msgid "ID"
-msgstr ""
-
-#: views/admin-orders-list.php:161 views/admin-orders-list.php:198
-#: views/admin-orders-view.php:41
-msgid "Event Name"
-msgstr ""
-
-#: views/admin-orders-list.php:176 views/admin-orders-list.php:213
-msgid "Date"
-msgstr ""
-
-#: views/admin-orders-list.php:179 views/admin-orders-list.php:216
-#: views/admin-orders-view.php:77
 msgid "Code"
 msgstr ""
 
-#: views/admin-orders-list.php:182 views/admin-orders-list.php:219
+#: views/admin-orders-list.php:161 views/admin-orders-list.php:201
+#: views/admin-orders-view.php:46
+msgid "Event Name"
+msgstr ""
+
+#: views/admin-orders-list.php:164 views/admin-orders-list.php:204
+#: views/admin-orders-view.php:51
+msgid "Scheme Name"
+msgstr ""
+
+#: views/admin-orders-list.php:167 views/admin-orders-list.php:207
+#: views/admin-orders-view.php:104
+msgid "Places"
+msgstr ""
+
+#: views/admin-orders-list.php:167 views/admin-orders-list.php:207
+msgid "NAME"
+msgstr ""
+
+#: views/admin-orders-list.php:182 views/admin-orders-list.php:222
+#: views/admin-orders-view.php:40
+msgid "Date"
+msgstr ""
+
+#: views/admin-orders-list.php:185 views/admin-orders-list.php:225
 msgid "Total price"
 msgstr ""
 
-#: views/admin-orders-list.php:239 views/admin-schemes-list.php:71
+#: views/admin-orders-list.php:250 views/admin-schemes-list.php:71
 msgid "View this item"
 msgstr ""
 
-#: views/admin-orders-list.php:239 views/admin-schemes-list.php:71
+#: views/admin-orders-list.php:250 views/admin-schemes-list.php:71
 msgid "View"
 msgstr ""
 
-#: views/admin-orders-list.php:240 views/admin-schemes-list.php:73
+#: views/admin-orders-list.php:251 views/admin-schemes-list.php:73
 msgid "Delete this item"
 msgstr ""
 
-#: views/admin-orders-list.php:280
+#: views/admin-orders-list.php:263 views/admin-orders-view.php:109
+msgid "Unnamed"
+msgstr ""
+
+#: views/admin-orders-list.php:298
 msgid "There are no orders yet."
 msgstr ""
 
-#: views/admin-orders-list.php:307
+#: views/admin-orders-list.php:325
 msgid "Are you sure you want to clear this list?"
 msgstr ""
 
@@ -424,23 +438,23 @@ msgstr ""
 msgid "Order details"
 msgstr ""
 
-#: views/admin-orders-view.php:46
-msgid "Scheme Name"
-msgstr ""
-
-#: views/admin-orders-view.php:47
+#: views/admin-orders-view.php:52
 msgid "Scheme not found"
 msgstr ""
 
-#: views/admin-orders-view.php:98
-msgid "Places"
+#: views/admin-orders-view.php:82
+msgid "Database ID"
 msgstr ""
 
-#: views/admin-orders-view.php:107
+#: views/admin-orders-view.php:105
+msgid "NAME: PRICE"
+msgstr ""
+
+#: views/admin-orders-view.php:115
 msgid "Admin notes"
 msgstr ""
 
-#: views/admin-orders-view.php:118
+#: views/admin-orders-view.php:126
 #: views/includes/admin-settings-tab-email-templates.php:87
 #: views/includes/admin-settings-tab-general.php:39
 msgid "Save Changes"
