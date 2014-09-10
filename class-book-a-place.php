@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.0';
+    protected $version = '0.5.1';
 
     /**
      * Unique identifier for plugin.
@@ -487,20 +487,20 @@ class Book_A_Place
      */
     public function add_plugin_admin_menu()
     {
-        $this->plugin_screen_hook_suffix = add_menu_page(__('Book a Place', $this->plugin_slug), __('Book a Place', $this->plugin_slug), 'read', $this->plugin_slug, array(
+        $this->plugin_screen_hook_suffix = add_menu_page(__('Book a Place', $this->plugin_slug), __('Book a Place', $this->plugin_slug), 'manage_options', $this->plugin_slug, array(
             $this,
             'display_plugin_admin_page'
         ));
 
-        $this->schemes_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Schemes', $this->plugin_slug), __('Schemes', $this->plugin_slug), 'read', $this->plugin_slug . '-schemes', array(
+        $this->schemes_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Schemes', $this->plugin_slug), __('Schemes', $this->plugin_slug), 'manage_options', $this->plugin_slug . '-schemes', array(
                 $this,
                 'display_plugin_admin_schemes_page'
             ));
-        $this->events_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Events', $this->plugin_slug), __('Events', $this->plugin_slug), 'read', $this->plugin_slug . '-events', array(
+        $this->events_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Events', $this->plugin_slug), __('Events', $this->plugin_slug), 'manage_options', $this->plugin_slug . '-events', array(
                 $this,
                 'display_plugin_admin_events_page'
             ));
-        $this->orders_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Orders', $this->plugin_slug), __('Orders', $this->plugin_slug), 'read', $this->plugin_slug . '-orders', array(
+        $this->orders_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Orders', $this->plugin_slug), __('Orders', $this->plugin_slug), 'manage_options', $this->plugin_slug . '-orders', array(
                 $this,
                 'display_plugin_admin_orders_page'
             ));
@@ -508,7 +508,7 @@ class Book_A_Place
                 $this,
                 'custom_ob_start'
             ));
-        $this->settings_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Settings', $this->plugin_slug), __('Settings', $this->plugin_slug), 'read', $this->plugin_slug . '-settings', array(
+        $this->settings_page_screen_hook_suffix = add_submenu_page($this->plugin_slug, __('Settings', $this->plugin_slug), __('Settings', $this->plugin_slug), 'manage_options', $this->plugin_slug . '-settings', array(
                 $this,
                 'display_plugin_admin_settings_page'
             ));

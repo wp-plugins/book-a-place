@@ -40,7 +40,9 @@
 
         <ol>
             <li>Paypal payments.</li>
+            <li> Plugin permissions.</li>
             <li>Coupon/discount system.</li>
+            <li>Custom scheme numbering.</li>
             <li>Photo gallery for each place.</li>
             <li>Bulk actions in scheme editor.</li>
         </ol>
