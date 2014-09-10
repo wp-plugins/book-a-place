@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 0.5.0
+Tested up to: 4.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ So what you get with Book a Place plugin:
 We are happy to propose you our Book a Place Pro plugin:
 
 * Paypal payments.
+* Plugin permissions.
 * Coupon/discount system.
 * Custom scheme numbering.
 * Photo gallery for each place.
@@ -92,6 +93,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.5.1 =
+* Fixed security problem with permissions. Now Administrators only will be able to work with this plugin functionality.
+
 = 0.5.0 =
 * Re-worked and improved the orders section.
 * Fixed problems with translating.
@@ -131,6 +135,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.5.1 =
+* Fixed security problem with permissions. Now Administrators only will be able to work with this plugin functionality.
 
 = 0.5.0 =
 * Re-worked and improved the orders section.
