@@ -3,7 +3,7 @@ Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.5.2 =
+* Fixed an issue with one scheme for multiple dates/events. Now it is possible to split events using different pages: booking carts and checkout orders will be separated.
+
 = 0.5.1 =
 * Fixed security problem with permissions. Now Administrators only will be able to work with this plugin functionality.
 
@@ -135,6 +138,9 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.5.2 =
+* Fixed an issue with one scheme for multiple dates/events. Now it is possible to split events using different pages: booking carts and checkout orders will be separated.
 
 = 0.5.1 =
 * Fixed security problem with permissions. Now Administrators only will be able to work with this plugin functionality.

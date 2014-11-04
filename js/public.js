@@ -204,7 +204,8 @@
         function refreshCart() {
 
             var data = {
-                action: 'refresh_cart'
+                action: 'refresh_cart',
+                scheme_id: scheme_id
             };
 
             $.post(bap_object.ajaxurl, data, function (response) {

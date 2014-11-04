@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.1';
+    protected $version = '0.5.2';
 
     /**
      * Unique identifier for plugin.
@@ -1149,7 +1149,7 @@ Regards';
         $html .= '</div>';
 
         $html .= '<div id="shopping-cart-container">';
-        $html .= $this->display_cart();
+        $html .= $this->display_cart($scheme);
         $html .= '</div>';
 
         $html .= '<div id="shopping-cart-controls-container">';
@@ -1237,9 +1237,9 @@ Regards';
         die();
     }
 
-    public function display_cart()
+    public function display_cart($scheme_id)
     {
-        $places_in_cart = $this->get_places_in_cart();
+        $places_in_cart = $this->get_places_in_cart($scheme_id);
 
         $time_left = $this->calculate_time_left($places_in_cart);
 
@@ -1334,7 +1334,8 @@ Regards';
 
     public function refresh_cart()
     {
-        $cart = $this->display_cart();
+        $scheme_id = (int) $_POST['scheme_id'];
+        $cart = $this->display_cart($scheme_id);
 
         echo $cart;
         die();
@@ -1363,7 +1364,11 @@ Regards';
             '%s'
         ));
 
-        $this->update_cart_time($session_id);
+        $scheme_id = (int) $_POST['scheme_id'];
+
+        $places_ids = $this->get_places_ids_in_cart_by_scheme_id($scheme_id);
+
+        $this->update_cart_time($session_id, $places_ids);
 
         $update = $this->update_place_status($_POST['place_id'], 3);
 
@@ -1404,7 +1409,11 @@ Regards';
             '%d'
         ));
 
-        $this->update_cart_time($session_id);
+        $scheme_id = (int) $_POST['scheme_id'];
+
+        $places_ids = $this->get_places_ids_in_cart_by_scheme_id($scheme_id);
+
+        $this->update_cart_time($session_id, $places_ids);
 
         $update = $this->update_place_status($_POST['place_id'], 1);
 
@@ -1422,7 +1431,9 @@ Regards';
             if (!$this->is_event_booking_open($event)) return false;
         }
 
-        $places_in_cart = $this->get_places_in_cart();
+        $scheme_id = (int) $_POST['scheme_id'];
+
+        $places_in_cart = $this->get_places_in_cart($scheme_id);
         $places_list = array();
         $total_price = 0;
 
@@ -1474,7 +1485,7 @@ Regards';
             $order_id = $wpdb->insert_id;
             $this->generate_order_code($order_id);
             $update_place_status = $this->update_place_status($places_list, 2);
-            $clear_cart = $this->clear_cart();
+            $clear_cart = $this->clear_cart(array_keys($places_list));
             $order = $this->get_order_by_id($order_id);
             $this->send_mail(BAP_EMAIL_NEW_ORDER_ADMIN, $order);
             $this->send_mail(BAP_EMAIL_NEW_ORDER_USER, $order, $order->email);
@@ -1499,15 +1510,17 @@ Regards';
         die();
     }
 
-    public function get_places_in_cart()
+    public function get_places_in_cart($scheme_id)
     {
         global $wpdb;
-        $places_in_cart = $wpdb->get_results($wpdb->prepare("SELECT c.place_id, p.name AS place_name, p.price AS place_price, c.date FROM $wpdb->bap_carts AS c LEFT JOIN $wpdb->bap_places AS p ON c.place_id = p.place_id WHERE session_id = %s", $this->session_id), ARRAY_A);
+        $places_in_carts = $wpdb->get_results($wpdb->prepare("SELECT c.place_id, p.name AS place_name, p.scheme_id AS place_scheme_id, p.price AS place_price, c.date FROM $wpdb->bap_carts AS c LEFT JOIN $wpdb->bap_places AS p ON c.place_id = p.place_id WHERE session_id = %s", $this->session_id), ARRAY_A);
+
+        $places_in_cart = $this->filter_places_by_scheme_id($places_in_carts, $scheme_id);
 
         return $places_in_cart;
     }
 
-    public function clear_cart($session_id = false)
+    public function clear_all_carts($session_id = false)
     {
         if (!$session_id) {
             $session_id = $this->session_id;
@@ -1515,6 +1528,20 @@ Regards';
 
         global $wpdb;
         $delete = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->bap_carts WHERE session_id = %s", $session_id), ARRAY_A);
+
+        return $delete;
+    }
+
+    public function clear_cart($places_ids, $session_id = false)
+    {
+        if (!$session_id) {
+            $session_id = $this->session_id;
+        }
+
+        $in = implode(",", $places_ids);
+
+        global $wpdb;
+        $delete = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->bap_carts WHERE session_id = %s AND place_id IN ($in)", $session_id), ARRAY_A);
 
         return $delete;
     }
@@ -1672,10 +1699,11 @@ Regards';
         return $text;
     }
 
-    private function update_cart_time($session_id)
+    private function update_cart_time($session_id, $places_ids)
     {
         global $wpdb;
-        $update = $wpdb->update($wpdb->bap_carts, array('date' => date('Y-m-d H:i:s')), array('session_id' => $session_id), array('%s'), array('%s'));
+        $in = implode(',', $places_ids);
+        $update = $wpdb->query($wpdb->prepare("UPDATE `$wpdb->bap_carts` SET `date`=%s WHERE `session_id`=%s AND `place_id` IN ($in)", date('Y-m-d H:i:s'), $session_id));
         return $update;
     }
 
@@ -1713,21 +1741,21 @@ Regards';
         $options = get_option(BAP_OPTIONS);
         $cart_expiration_time = $options['cart-expiration-time'] * 60;
 
-        $carts = array();
+        $carts_to_clear = array();
         if (!empty($places_in_carts) && is_array($places_in_carts)) {
             foreach ($places_in_carts as $place) {
-                $carts[$place->session_id]['cart_date'] = $place->date;
-                $carts[$place->session_id]['cart_places'][$place->place_id] = $place->place_id;
+                if (strtotime($place->date) + $cart_expiration_time < time()) {
+                    $carts_to_clear[$place->session_id]['cart_date'] = $place->date;
+                    $carts_to_clear[$place->session_id]['cart_places'][$place->place_id] = $place->place_id;
+                }
             }
 
         }
 
-        if (!empty($carts) && is_array($carts)) {
-            foreach ($carts as $session_id => $cart) {
-                if (strtotime($cart['cart_date']) + $cart_expiration_time < time()) {
-                    $this->clear_cart($session_id);
-                    $this->update_place_status($cart['cart_places'], 1);
-                }
+        if (!empty($carts_to_clear) && is_array($carts_to_clear)) {
+            foreach ($carts_to_clear as $session_id => $cart) {
+                $this->clear_cart($cart['cart_places'], $session_id);
+                $this->update_place_status($cart['cart_places'], 1);
             }
 
         }
@@ -2179,7 +2207,7 @@ Regards';
 
         $html .= '<div id="shopping-cart-container">';
         if ($this->event_booking_open) {
-            $html .= $this->display_cart();
+            $html .= $this->display_cart($scheme);
         }
         $html .= '</div>';
 
@@ -2430,4 +2458,35 @@ Regards';
 
     }
 
+    private function filter_places_by_scheme_id($places_in_carts, $scheme_id)
+    {
+        if (!empty($places_in_carts) && is_array($places_in_carts)) {
+            $places = array();
+            foreach ($places_in_carts as $place) {
+                if ($place['place_scheme_id'] == $scheme_id) {
+                    $places[] = $place;
+                }
+            }
+
+            return $places;
+        }
+
+
+        return $places_in_carts;
+    }
+
+    private function get_places_ids_in_cart_by_scheme_id($scheme_id)
+    {
+        $places_in_cart = $this->get_places_in_cart($scheme_id);
+        $places_ids = array();
+        if (is_array($places_in_cart)) {
+            foreach ($places_in_cart as $place) {
+                $places_ids[] = $place['place_id'];
+            }
+
+            return $places_ids;
+        }
+
+        return false;
+    }
 }
