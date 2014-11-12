@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.2';
+    protected $version = '0.5.3';
 
     /**
      * Unique identifier for plugin.
@@ -245,6 +245,10 @@ class Book_A_Place
         add_action('wp_ajax_add_event', array(
             $this,
             'add_event_ajax'
+        ));
+        add_action('wp_ajax_get_schemes_list', array(
+            $this,
+            'get_schemes_list_ajax'
         ));
         add_action('wp_ajax_get_events_json', array(
             $this,
@@ -748,15 +752,17 @@ Regards';
         ));
     }
 
-    public function get_schemes()
+    public function get_schemes($include_scheme = 0)
     {
         global $wpdb;
 
         $schemes = $wpdb->get_results("
-            SELECT *
-            FROM $wpdb->bap_schemes
-            WHERE 1
-	    ");
+            SELECT `s`.`scheme_id`, `s`.`name`
+            FROM $wpdb->bap_schemes as `s`
+            LEFT JOIN $wpdb->bap_events as `e`
+            ON `s`.`scheme_id` = `e`.`scheme_id`
+            WHERE `e`.`event_id` IS NULL OR `s`.`scheme_id` = $include_scheme
+	    ", OBJECT);
 
         return $schemes;
     }
@@ -1972,9 +1978,9 @@ Regards';
         return date("Y-m-d H:i:s", $ts - $timezone_offset * 3600);
     }
 
-    protected function get_schemes_list()
+    protected function get_schemes_list($include_scheme = 0)
     {
-        $schemes = $this->get_schemes();
+        $schemes = $this->get_schemes($include_scheme);
 
         $html = '<option value="0">' . __("Select Scheme", $this->plugin_slug) . '</option>';
 
@@ -1985,6 +1991,13 @@ Regards';
         }
 
         return $html;
+    }
+
+    public function get_schemes_list_ajax()
+    {
+        $scheme_id = (int) $_POST['scheme_id'];
+        echo $this->get_schemes_list($scheme_id);
+        die();
     }
 
     public function move_event_ajax()

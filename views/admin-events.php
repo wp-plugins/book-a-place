@@ -37,6 +37,7 @@
                 }
             });
 
+            updateSchemesList();
             eventDialog.dialog("open");
 
             //calendar.fullCalendar('unselect');
@@ -105,6 +106,7 @@
                 if (response.error) {
                     return false;
                 } else {
+                    updateSchemesList(response.event.scheme_id);
                     setEventDialogFields(response.event);
                     eventDialog.dialog("open");
                 }
@@ -264,7 +266,7 @@
         // event dialog init
         $("#event-dialog-form").dialog({
             width: 710,
-            height: 675,
+            height: 730,
             draggable: false,
             autoOpen: false,
             modal: true
@@ -307,6 +309,25 @@
             $('body').click(); // to close all wpColorPickers
             $('#event-shortcode').find('code').html($('#event-shortcode').find('code').data('default-text'));
 
+        }
+
+        function updateSchemesList(scheme_id) {
+            var data = {
+                action: 'get_schemes_list',
+                scheme_id: scheme_id
+            };
+
+            $.post(ajaxurl, data, function (response) {
+
+                if (response.error) {
+                    console.log('error');
+                } else {
+                    $('#event-scheme').html(response);
+                    if (scheme_id) {
+                        $('#event-scheme').val(scheme_id);
+                    }
+                }
+            });
         }
 
         function setEventDialogFields(event) {
@@ -370,6 +391,8 @@
                 <select name="event-scheme" id="event-scheme">
                     <?php echo $this->get_schemes_list(); ?>
                 </select>
+
+                <p class="description"><?php _e("If you do not see the desired scheme in the list, perhaps it is already assigned to another event.", $this->plugin_slug); ?></p>
             </div>
             <div class="row">
                 <label for="event-description"><?php _e("Description", $this->plugin_slug); ?></label>
