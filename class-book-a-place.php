@@ -5,7 +5,7 @@
  * @package   Book a Place
  * @author    ArtkanMedia
  * @license   GPL-2.0+
- * @copyright 2013 ArtkanMedia
+ * @copyright 2015 ArtkanMedia
  */
 
 /**
@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.3';
+    protected $version = '0.5.4';
 
     /**
      * Unique identifier for plugin.
@@ -757,11 +757,11 @@ Regards';
         global $wpdb;
 
         $schemes = $wpdb->get_results("
-            SELECT `s`.`scheme_id`, `s`.`name`
+            SELECT `s`.*, `e`.`name` as `event`, `e`.`start`
             FROM $wpdb->bap_schemes as `s`
             LEFT JOIN $wpdb->bap_events as `e`
             ON `s`.`scheme_id` = `e`.`scheme_id`
-            WHERE `e`.`event_id` IS NULL OR `s`.`scheme_id` = $include_scheme
+            WHERE `e`.`event_id` IS NULL OR `e`.`event_id` IS NOT NULL OR `s`.`scheme_id` = $include_scheme
 	    ", OBJECT);
 
         return $schemes;
@@ -1122,7 +1122,8 @@ Regards';
 
     public function book_a_place_shortcode($atts)
     {
-        extract(shortcode_atts(array('scheme' => 1), $atts));
+        //extract(shortcode_atts(array('scheme' => 1), $atts));
+        $scheme = ($atts['scheme']) ? $atts['scheme'] : 1;
 
         $scheme_details = $this->get_scheme_by_id($scheme);
 
@@ -2170,7 +2171,8 @@ Regards';
 
     public function book_a_place_event_shortcode($atts)
     {
-        extract(shortcode_atts(array('id' => 1), $atts));
+        //extract(shortcode_atts(array('id' => 1), $atts));
+        $id = ($atts['id']) ? $atts['id'] : 1;
 
         $event = $this->get_event_by_id($id);
 

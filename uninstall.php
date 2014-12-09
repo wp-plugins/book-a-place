@@ -5,7 +5,7 @@
  * @package   Book a Place
  * @author    ArtkanMedia
  * @license   GPL-2.0+
- * @copyright 2013 ArtkanMedia
+ * @copyright 2015 ArtkanMedia
  */
 
 // If uninstall, not called from WordPress, then exit

@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 0.5.3
+Tested up to: 4.0.1
+Stable tag: 0.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.5.4 =
+* Implemented a restriction to use one scheme for one event. If you want to use the same scheme for other even, you should duplicate the scheme.
+* Added Italian localization of the plugin. Thanks to @tunele@ Wordpress member!
+
 = 0.5.3 =
 * Added new validation to the event creation page. It will be impossible to use the same scheme for different events. So if you have two or more intersecting/parallel events - just duplicate the desired scheme and use it.
 
@@ -141,6 +145,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.5.4 =
+* Implemented a restriction to use one scheme for one event. If you want to use the same scheme for other even, you should duplicate the scheme.
+* Added Italian localization of the plugin. Thanks to @tunele@ Wordpress member!
 
 = 0.5.3 =
 * Added new validation to the event creation page. It will be impossible to use the same scheme for different events. So if you have two or more intersecting/parallel events - just duplicate the desired scheme and use it.
