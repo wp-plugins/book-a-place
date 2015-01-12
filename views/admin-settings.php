@@ -7,7 +7,7 @@ $email_template_new_order_user = get_option(BAP_EMAIL_NEW_ORDER_USER);
 $message = '';
 $error = '';
 
-if (isset($_POST['submit']) && $_POST['submit'] == 'Save Changes') {
+if (isset($_POST['submit'])) {
 
     if (isset($_POST['current-tab']) && $_POST['current-tab'] === '0') {
         if (isset($_POST['email'])) {
