@@ -71,20 +71,14 @@ $schemes = $this->get_schemes();
 
                     <td class="post-title page-title column-title">
                         <strong>
-                            <?php if (!$scheme->event) : ?>
-                                <a title="<?php _e("Edit", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit" class="row-title">
-                                    <?php echo $scheme->name; ?>
-                                </a>
-                            <?php else : ?>
+                            <a title="<?php _e("Edit", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit" class="row-title">
                                 <?php echo $scheme->name; ?>
-                            <?php endif; ?>
+                            </a>
                         </strong>
 
                         <div class="row-actions">
-                            <?php if (!$scheme->event) : ?>
-                                <span class="edit"><a title="<?php _e("Edit this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit"><?php _e("Edit", $this->plugin_slug); ?></a> | </span>
-                                <span class="view"><a title="<?php _e("View this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view"><?php _e("View", $this->plugin_slug); ?></a> | </span>
-                            <?php endif; ?>
+                            <span class="edit"><a title="<?php _e("Edit this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=edit"><?php _e("Edit", $this->plugin_slug); ?></a> | </span>
+                            <span class="view"><a title="<?php _e("View this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=view"><?php _e("View", $this->plugin_slug); ?></a> | </span>
                             <span class="duplicate"><a title="<?php _e("Duplicate this item", $this->plugin_slug); ?>" href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=duplicate"><?php _e("Duplicate", $this->plugin_slug); ?></a> | </span>
                             <span class="trash submitdelete"><a href="<?php echo $this->page_url; ?>&scheme=<?php echo $scheme->scheme_id; ?>&action=delete" title="<?php _e("Delete this item", $this->plugin_slug); ?>"><?php _e("Delete", $this->plugin_slug); ?></a></span>
                         </div>

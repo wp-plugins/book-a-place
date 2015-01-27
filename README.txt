@@ -3,7 +3,7 @@ Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 0.5.5
+Stable tag: 0.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.5.6 =
+* Enabled scheme editing and visual managing (for schemes that are attached to some events).
+* Added Norwegian nb_NO localization. Thanks to @Uncle_K@ Wordpress user.
+* Added Swedish sv_SE localization. Thanks to @paul_t@ Wordpress user.
+
 = 0.5.5 =
 * Fixed the problem with the saving in the Setting section. Related to translated plugins.
 * Fixed wrong URLs in several sections. Related to translated plugins.
@@ -149,6 +154,11 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.5.6 =
+* Enabled scheme editing and visual managing (for schemes that are attached to some events).
+* Added Norwegian nb_NO localization. Thanks to @Uncle_K@ Wordpress user.
+* Added Swedish sv_SE localization. Thanks to @paul_t@ Wordpress user.
 
 = 0.5.5 =
 * Fixed the problem with the saving in the Setting section. Related to translated plugins.

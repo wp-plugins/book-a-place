@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name: Book a Place
  * Description: Booking places, seats, tickets… In theatres, cinemas, restaurants etc. It’s really convenient, when people are able to book a place online. With our plugin it’s possible.
- * Version:     0.5.5
+ * Version:     0.5.6
  * Author:      ArtkanMedia
  * Text Domain: book-a-place
  * License:     GPL-2.0+
