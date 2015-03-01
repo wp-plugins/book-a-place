@@ -124,6 +124,6 @@ $scheme = $this->get_scheme_by_place_id($place_ids[0]);
 
     <p class="submit">
         <input type="submit" value="<?php _e("Save Changes", $this->plugin_slug); ?>" class="button button-primary" id="submit" name="submit">
-        <a class="button" href="?page=<?php echo strstr($this->orders_page_screen_hook_suffix, $this->plugin_slug); ?>"><?php _e("Cancel", $this->plugin_slug); ?></a>
+        <a class="button" href="?page=<?php echo $this->get_proper_page_slug(); ?>"><?php _e("Cancel", $this->plugin_slug); ?></a>
     </p>
 </form>

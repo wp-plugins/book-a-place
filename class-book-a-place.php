@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.6';
+    protected $version = '0.5.7';
 
     /**
      * Unique identifier for plugin.
@@ -386,6 +386,7 @@ class Book_A_Place
         }
 
         $screen = get_current_screen();
+
         if ($screen->id == $this->plugin_screen_hook_suffix || $screen->id == $this->schemes_page_screen_hook_suffix || $screen->id == $this->settings_page_screen_hook_suffix || $screen->id == $this->events_page_screen_hook_suffix || $screen->id == $this->orders_page_screen_hook_suffix) {
             wp_enqueue_style($this->plugin_slug . '-jquery-ui-theme', plugins_url('css/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css', __FILE__), array(), $this->version);
             wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('css/admin.css', __FILE__), array(), $this->version);
@@ -399,6 +400,7 @@ class Book_A_Place
         }
 
     }
+
 
     /**
      * Register and enqueue admin-specific JavaScript.
@@ -2504,4 +2506,21 @@ Regards';
 
         return false;
     }
+
+
+    /**
+     * Prepare proper page slug.
+     *
+     * @since     0.5.7
+     *
+     * @return    string $page_slug    Return proper page slug.
+     */
+    private function get_proper_page_slug()
+    {
+        $screen = get_current_screen();
+        $position = strripos($screen->id, $this->plugin_slug);
+        $page_slug = substr($screen->id, $position);
+        return $page_slug;
+    }
+
 }
