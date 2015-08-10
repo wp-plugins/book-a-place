@@ -1,5 +1,5 @@
 <form action="" method="post">
-    <input type="hidden" name="current-tab" value="0"/>
+    <input type="hidden" name="current-tab" value="1"/>
     <table class="form-table">
         <tbody>
 

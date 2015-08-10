@@ -179,6 +179,23 @@
         });
 
 
+        $(document).on('click', '#scheme-container-visibility', function (e) {
+            e.preventDefault();
+
+            var self = $(this);
+
+            $('#scheme-container').toggle();
+
+            if ($('#scheme-container').is(':visible')) {
+                self.attr('data-visible', 1);
+                self.text(bap_object.loc_strings.scheme_hide_text);
+            } else {
+                self.attr('data-visible', 0);
+                self.text(bap_object.loc_strings.scheme_show_text);
+            }
+        });
+
+
         function refreshScheme() {
 
             if (!bookAPLaceEventBookingOpen) {
@@ -215,8 +232,15 @@
         }
 
         function refreshSchemeAndCartCallback(response) {
+            var schemeContainerVisibility = $('#scheme-container-visibility').data('visible');
+
             $('#scheme-container').replaceWith($(response).find('#scheme-container'));
+            if (schemeContainerVisibility) {
+                $('#scheme-container').toggle();
+            }
+
             $('#shopping-cart-container').replaceWith($(response).find('#shopping-cart-container'));
+
             addCountdown();
         }
 

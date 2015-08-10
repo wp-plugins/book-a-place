@@ -4,214 +4,222 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Book a Place 0.5.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
-"POT-Creation-Date: 2014-12-09 13:23+0200\n"
-"PO-Revision-Date: 2015-01-27 11:49+0200\n"
-"Last-Translator:  <bookaplace@artkanmedia.com>\n"
-"Language-Team:  <translations@example.com>\n"
+"POT-Creation-Date: 2015-08-09 10:10+0200\n"
+"PO-Revision-Date: 2015-08-09 10:11+0200\n"
+"Last-Translator: bookaplace@artkanmedia.com\n"
+"Language-Team: translations@example.com\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
 "esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
-"X-Poedit-Basepath: ../\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class-book-a-place.php:494
+#: class-book-a-place.php:496
 msgid "Book a Place"
 msgstr "Book a Place"
 
-#: class-book-a-place.php:499
+#: class-book-a-place.php:501
 msgid "Schemes"
 msgstr "Scheman"
 
-#: class-book-a-place.php:503
+#: class-book-a-place.php:505
 msgid "Events"
 msgstr "Event"
 
-#: class-book-a-place.php:507
+#: class-book-a-place.php:509
 msgid "Orders"
 msgstr "Ordrar"
 
-#: class-book-a-place.php:515
+#: class-book-a-place.php:517
 msgid "Settings"
 msgstr "Inställningar"
 
-#: class-book-a-place.php:863 class-book-a-place.php:960
+#: class-book-a-place.php:859 class-book-a-place.php:956
 #: views/admin-orders-list.php:188 views/admin-orders-list.php:228
 #: views/admin-orders-view.php:87
 msgid "Status"
 msgstr "Status"
 
-#: class-book-a-place.php:1166 class-book-a-place.php:2234
+#: class-book-a-place.php:1152 class-book-a-place.php:2328
+msgid "Show Scheme"
+msgstr "Visa Schema"
+
+#: class-book-a-place.php:1171 class-book-a-place.php:2240
 msgid "Warning!"
 msgstr "Varning!"
 
-#: class-book-a-place.php:1168 class-book-a-place.php:2236
+#: class-book-a-place.php:1173 class-book-a-place.php:2242
 msgid "Sorry, you can not add this place to your cart!"
 msgstr "Tyvärr, kan du inte lägga till denna produkt i din kundvagn"
 
-#: class-book-a-place.php:1252
+#: class-book-a-place.php:1257
 msgid "Cart"
 msgstr "Kundvagn"
 
-#: class-book-a-place.php:1254
+#: class-book-a-place.php:1259
 msgid "The cart will be cleared in"
 msgstr "Kundvagnen kommer att tömmas"
 
-#: class-book-a-place.php:1260 views/admin-events.php:386
-#: views/admin-schemes-list.php:22 views/admin-schemes-list.php:43
-#: views/admin-schemes-view.php:6 views/includes/admin-schemes-form.php:25
+#: class-book-a-place.php:1265 views/admin-events.php:386
+#: views/admin-schemes-list.php:22 views/admin-schemes-list.php:46
+#: views/admin-schemes-view.php:6 views/includes/admin-schemes-form.php:27
 msgid "Name"
 msgstr "Namn"
 
-#: class-book-a-place.php:1261 views/admin-schemes-view.php:10
+#: class-book-a-place.php:1266 views/admin-schemes-view.php:10
 msgid "Price"
 msgstr "Pris"
 
-#: class-book-a-place.php:1276 views/admin-events.php:98
-#: views/admin-orders-list.php:251 views/admin-schemes-list.php:73
+#: class-book-a-place.php:1281 views/admin-events.php:98
+#: views/admin-orders-list.php:251 views/admin-schemes-list.php:83
 msgid "Delete"
 msgstr "Ta bort"
 
-#: class-book-a-place.php:1282
+#: class-book-a-place.php:1287
 msgid "There are no places in the cart."
 msgstr "Där är inga bokningar i din kundvagn."
 
-#: class-book-a-place.php:1289 views/admin-orders-view.php:98
+#: class-book-a-place.php:1294 views/admin-orders-view.php:98
 msgid "Total Price"
 msgstr "Total pris"
 
-#: class-book-a-place.php:1301 class-book-a-place.php:1304
-#: class-book-a-place.php:1334 class-book-a-place.php:2313
+#: class-book-a-place.php:1306 class-book-a-place.php:1309
+#: class-book-a-place.php:1339 class-book-a-place.php:2319
 msgid "Checkout"
 msgstr "Betala"
 
-#: class-book-a-place.php:1305 views/admin-events.php:380
+#: class-book-a-place.php:1310 views/admin-events.php:380
 #, php-format
 msgid "Fields with %s are required."
 msgstr "Fält med %s är obligatoriska."
 
-#: class-book-a-place.php:1311 views/admin-orders-list.php:170
+#: class-book-a-place.php:1316 views/admin-orders-list.php:170
 #: views/admin-orders-list.php:210 views/admin-orders-view.php:57
 msgid "First Name"
 msgstr "Förnamn"
 
-#: class-book-a-place.php:1315 views/admin-orders-list.php:173
+#: class-book-a-place.php:1320 views/admin-orders-list.php:173
 #: views/admin-orders-list.php:213 views/admin-orders-view.php:62
 msgid "Last Name"
 msgstr "Efternamn"
 
-#: class-book-a-place.php:1319 views/admin-orders-list.php:176
+#: class-book-a-place.php:1324 views/admin-orders-list.php:176
 #: views/admin-orders-list.php:216 views/admin-orders-view.php:67
 msgid "Email"
 msgstr "E-post"
 
-#: class-book-a-place.php:1323 views/admin-orders-list.php:179
+#: class-book-a-place.php:1328 views/admin-orders-list.php:179
 #: views/admin-orders-list.php:219 views/admin-orders-view.php:72
 msgid "Phone"
 msgstr "Telefon"
 
-#: class-book-a-place.php:1327 views/admin-orders-view.php:77
+#: class-book-a-place.php:1332 views/admin-orders-view.php:77
 msgid "Notes"
 msgstr "Övrig information"
 
-#: class-book-a-place.php:1335
+#: class-book-a-place.php:1340
 msgid "Please add to your cart at least one place."
 msgstr "Vänligen lägg till minst en plats i din kundvagn."
 
-#: class-book-a-place.php:1985
+#: class-book-a-place.php:1990
 msgid "Select Scheme"
 msgstr "Välj Schema"
 
-#: class-book-a-place.php:2205
+#: class-book-a-place.php:2211
 msgid "Start"
 msgstr "Starta"
 
-#: class-book-a-place.php:2205
+#: class-book-a-place.php:2211
 msgid "End"
 msgstr "Slut"
 
-#: class-book-a-place.php:2312
+#: class-book-a-place.php:2318
 msgid "Please wait..."
 msgstr "Var god vänta...."
 
-#: class-book-a-place.php:2314 views/admin-events.php:36
+#: class-book-a-place.php:2320 views/admin-events.php:36
 #: views/admin-events.php:100 views/admin-orders-view.php:127
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: class-book-a-place.php:2315
+#: class-book-a-place.php:2321
 msgid "Ok"
 msgstr "Ok"
 
-#: class-book-a-place.php:2316 views/admin-schemes-view.php:1
+#: class-book-a-place.php:2322 views/admin-schemes-view.php:1
 msgid "Set a place"
 msgstr "Välj plats"
 
-#: class-book-a-place.php:2317 views/admin-schemes-view.php:19
+#: class-book-a-place.php:2323 views/admin-schemes-view.php:19
 msgid "Change place status"
 msgstr "Ändra plats status"
 
-#: class-book-a-place.php:2318
+#: class-book-a-place.php:2324
 msgid "Change place price"
 msgstr "Byt plats pris"
 
-#: class-book-a-place.php:2319
+#: class-book-a-place.php:2325
 msgid "Update a place"
 msgstr "Uppdatera en plats"
 
-#: class-book-a-place.php:2320
+#: class-book-a-place.php:2326
 msgid "Are you sure you want to unset this place?"
 msgstr "Är du säker på att du vill avmarkera den här platsen?"
 
-#: class-book-a-place.php:2321 views/admin-orders-list.php:319
+#: class-book-a-place.php:2327 views/admin-orders-list.php:319
 msgid "Are you sure you want to delete this item?"
 msgstr "Är du säker på att du vill radera denna plats?"
 
-#: class-book-a-place.php:2450
+#: class-book-a-place.php:2329 views/includes/admin-schemes-form.php:46
+msgid "Hide Scheme"
+msgstr "Göm Schema"
+
+#: class-book-a-place.php:2457
 msgid "Available"
 msgstr "Tillgänglig"
 
-#: class-book-a-place.php:2451
+#: class-book-a-place.php:2458
 msgid "Booked"
 msgstr "Bokat"
 
-#: class-book-a-place.php:2452
+#: class-book-a-place.php:2459
 msgid "In cart"
 msgstr "I kundvagnen"
 
-#: class-book-a-place.php:2453
+#: class-book-a-place.php:2460
 msgid "In other's cart"
 msgstr "I andras kundvagnar"
 
-#: class-book-a-place.php:2454
+#: class-book-a-place.php:2461
 msgid "Unavailable"
 msgstr "Ej bokbar"
 
-#: class-book-a-place.php:2458
+#: class-book-a-place.php:2465
 msgid "Not defined"
 msgstr "Inte definierad"
 
-#: class-book-a-place.php:2459 views/admin-schemes-view.php:35
+#: class-book-a-place.php:2466 views/admin-schemes-view.php:35
 msgid "Set"
 msgstr "Markera"
 
-#: class-book-a-place.php:2460
+#: class-book-a-place.php:2467
 msgid "Paid"
 msgstr "Betalad"
 
-#: class-book-a-place.php:2461
+#: class-book-a-place.php:2468
 msgid "Cancelled"
 msgstr "Avbruten"
 
-#: class-book-a-place.php:2465
+#: class-book-a-place.php:2472
 msgid "Places has been successfully booked."
 msgstr "Platser har framgångsrikt bokats."
 
-#: class-book-a-place.php:2469
+#: class-book-a-place.php:2476
 msgid "Error. Places has not been booked."
 msgstr "Fel. Platser har inte bokats."
 
@@ -228,7 +236,7 @@ msgid "Edit an event"
 msgstr "Redigera ett event"
 
 #: views/admin-events.php:99 views/admin-schemes-edit.php:25
-#: views/admin-schemes-list.php:67 views/admin-schemes-list.php:70
+#: views/admin-schemes-list.php:74 views/admin-schemes-list.php:80
 #: views/admin-schemes-view.php:36
 msgid "Edit"
 msgstr "Redigera"
@@ -254,7 +262,7 @@ msgstr ""
 "event."
 
 #: views/admin-events.php:398 views/admin-schemes-view.php:8
-#: views/includes/admin-schemes-form.php:29
+#: views/includes/admin-schemes-form.php:31
 msgid "Description"
 msgstr "Beskrivning"
 
@@ -286,8 +294,8 @@ msgstr "Kantfärg"
 msgid "Text Color"
 msgstr "Textfärg"
 
-#: views/admin-events.php:429 views/admin-schemes-list.php:32
-#: views/admin-schemes-list.php:53
+#: views/admin-events.php:429 views/admin-schemes-list.php:35
+#: views/admin-schemes-list.php:59
 msgid "Shortcode"
 msgstr "Kortkod"
 
@@ -408,15 +416,15 @@ msgstr "Datum"
 msgid "Total price"
 msgstr "Totalpris"
 
-#: views/admin-orders-list.php:250 views/admin-schemes-list.php:71
+#: views/admin-orders-list.php:250 views/admin-schemes-list.php:81
 msgid "View this item"
 msgstr "Visa detta objekt"
 
-#: views/admin-orders-list.php:250 views/admin-schemes-list.php:71
+#: views/admin-orders-list.php:250 views/admin-schemes-list.php:81
 msgid "View"
 msgstr "Utsikt"
 
-#: views/admin-orders-list.php:251 views/admin-schemes-list.php:73
+#: views/admin-orders-list.php:251 views/admin-schemes-list.php:83
 msgid "Delete this item"
 msgstr "Radera denna post"
 
@@ -500,29 +508,33 @@ msgstr "Schemat har uppdaterats."
 msgid "Edit Scheme"
 msgstr "Redigera Schema"
 
-#: views/admin-schemes-list.php:26 views/admin-schemes-list.php:47
-#: views/includes/admin-schemes-form.php:36
+#: views/admin-schemes-list.php:26 views/admin-schemes-list.php:50
+msgid "Event"
+msgstr ""
+
+#: views/admin-schemes-list.php:29 views/admin-schemes-list.php:53
+#: views/includes/admin-schemes-form.php:38
 msgid "Width"
 msgstr "Bredd"
 
-#: views/admin-schemes-list.php:29 views/admin-schemes-list.php:50
-#: views/includes/admin-schemes-form.php:40
+#: views/admin-schemes-list.php:32 views/admin-schemes-list.php:56
+#: views/includes/admin-schemes-form.php:42
 msgid "Height"
 msgstr "Höjd"
 
-#: views/admin-schemes-list.php:70
+#: views/admin-schemes-list.php:80
 msgid "Edit this item"
 msgstr "Redigera denna post"
 
-#: views/admin-schemes-list.php:72
+#: views/admin-schemes-list.php:82
 msgid "Duplicate this item"
 msgstr "Duplicera detta objekt"
 
-#: views/admin-schemes-list.php:72
+#: views/admin-schemes-list.php:82
 msgid "Duplicate"
 msgstr "Dubblett"
 
-#: views/admin-schemes-list.php:95
+#: views/admin-schemes-list.php:113
 msgid "There are no schemes yet."
 msgstr "Det finns inga schema ännu."
 
@@ -554,17 +566,22 @@ msgstr "Allmänt"
 msgid "E-mail templates"
 msgstr "E-postmallar"
 
-#: views/includes/admin-schemes-form.php:32
+#: views/includes/admin-schemes-form.php:34
 msgid "Describe the event: mention the date, time and other important info."
 msgstr "Beskriv eventet: ange datum, tid och andra viktiga info."
 
-#: views/includes/admin-schemes-form.php:37
+#: views/includes/admin-schemes-form.php:39
 msgid "cells horizontally"
 msgstr "celler horisontellt"
 
-#: views/includes/admin-schemes-form.php:41
+#: views/includes/admin-schemes-form.php:43
 msgid "cells vertically"
 msgstr "celler vertikalt"
+
+#: views/includes/admin-schemes-form.php:50
+msgid ""
+"It can be useful, if the scheme is wide and can break your theme layout."
+msgstr ""
 
 #: views/includes/admin-settings-tab-email-templates.php:4
 msgid "New order admin template"

@@ -24,7 +24,7 @@ class Book_A_Place
      *
      * @var     string
      */
-    protected $version = '0.5.7';
+    protected $version = '0.6.0';
 
     /**
      * Unique identifier for plugin.
@@ -462,7 +462,7 @@ class Book_A_Place
     }
 
     /**
-     * Register and enqueues public-facing JavaScript files.
+     * Register and enqueue public-facing JavaScript files.
      *
      * @since    0.1.0
      */
@@ -587,6 +587,7 @@ class Book_A_Place
                                   `name` varchar(255) NOT NULL,
                                   `width` int(11) NOT NULL,
                                   `height` int(11) NOT NULL,
+                                  `is_hidden` tinyint(1) NOT NULL DEFAULT '0',
                                   `description` varchar(255) DEFAULT NULL,
                                   PRIMARY  KEY (`scheme_id`)
                                 ) $charset_collate; ";
@@ -683,18 +684,7 @@ class Book_A_Place
         if (!$options) {
             $add_options = add_option(BAP_OPTIONS, $default_options);
         } else {
-            if (!isset($options['plugin_version'])) {
-                $options['plugin_version'] = $default_options['plugin_version'];
-            }
-            if (!isset($options['email'])) {
-                $options['email'] = $default_options['email'];
-            }
-            if (!isset($options['cart-expiration-time'])) {
-                $options['cart-expiration-time'] = $default_options['cart-expiration-time'];
-            }
-            if (!isset($options['currency-symbol'])) {
-                $options['currency-symbol'] = $default_options['currency-symbol'];
-            }
+            $options = wp_parse_args($options, $default_options);
             $update_options = update_option(BAP_OPTIONS, $options);
         }
 
@@ -745,9 +735,11 @@ Regards';
             'name' => stripcslashes($data['scheme-name']),
             'width' => $data['scheme-width'],
             'height' => $data['scheme-height'],
+            'is_hidden' => (!empty($data['scheme-hidden'])) ? $data['scheme-hidden'] : 0,
             'description' => stripcslashes($data['scheme-description']),
         ), array(
             '%s',
+            '%d',
             '%d',
             '%d',
             '%s'
@@ -804,9 +796,11 @@ Regards';
             'name' => $data['scheme-name'],
             'width' => $data['scheme-width'],
             'height' => $data['scheme-height'],
+            'is_hidden' => $data['scheme-hidden'],
             'description' => stripcslashes($data['scheme-description']),
         ), array('scheme_id' => (int)$data['scheme-id']), array(
             '%s',
+            '%d',
             '%d',
             '%d',
             '%s'
@@ -1125,7 +1119,7 @@ Regards';
     public function book_a_place_shortcode($atts)
     {
         //extract(shortcode_atts(array('scheme' => 1), $atts));
-        $scheme = ($atts['scheme']) ? $atts['scheme'] : 1;
+        $scheme = (!empty($atts['scheme'])) ? $atts['scheme'] : 1;
 
         $scheme_details = $this->get_scheme_by_id($scheme);
 
@@ -1153,7 +1147,15 @@ Regards';
 
         $html .= '<p>' . $scheme_details->description . '</p>';
 
-        $html .= '<div id="scheme-container">';
+        if ($scheme_details->is_hidden) {
+            $scheme_container_style = ' style="display: none;"';
+            $scheme_show_text = __('Show Scheme', $this->plugin_slug);
+            $html .= '<a id="scheme-container-visibility" data-visible="0" href="#">' . $scheme_show_text . '</a>';
+        } else {
+            $scheme_container_style = '';
+        }
+
+        $html .= '<div id="scheme-container"' . $scheme_container_style . '>';
         $html .= $this->display_scheme_front($scheme);
         $html .= '</div>';
 
@@ -2216,7 +2218,15 @@ Regards';
 
         $html .= '<p>' . $scheme_details->description . '</p>';
 
-        $html .= '<div id="scheme-container">';
+        if ($scheme_details->is_hidden) {
+            $scheme_container_style = ' style="display: none;"';
+            $scheme_show_text = __('Show Scheme', $this->plugin_slug);
+            $html .= '<a id="scheme-container-visibility" data-visible="0" href="#">' . $scheme_show_text . '</a>';
+        } else {
+            $scheme_container_style = '';
+        }
+
+        $html .= '<div id="scheme-container"' . $scheme_container_style . '>';
 
         $html .= $this->display_scheme_front($scheme, $id);
 
@@ -2323,7 +2333,8 @@ Regards';
             'update_a_place' => __('Update a place', $this->plugin_slug),
             'unset_this_place' => __('Are you sure you want to unset this place?', $this->plugin_slug),
             'delete_this_item' => __('Are you sure you want to delete this item?', $this->plugin_slug),
-
+            'scheme_show_text' => __('Show Scheme', $this->plugin_slug),
+            'scheme_hide_text' => __('Hide Scheme', $this->plugin_slug),
         );
     }
 

@@ -9,7 +9,7 @@ $error = '';
 
 if (isset($_POST['submit'])) {
 
-    if (isset($_POST['current-tab']) && $_POST['current-tab'] === '0') {
+    if (isset($_POST['current-tab']) && $_POST['current-tab'] === '1') {
         if (isset($_POST['email'])) {
             $options['email'] = strip_tags(stripslashes($_POST['email']));
         }
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    if (isset($_POST['current-tab']) && $_POST['current-tab'] === '1') {
+    if (isset($_POST['current-tab']) && $_POST['current-tab'] === '2') {
         if (isset($_POST['subject-admin'])) {
             $email_template_new_order_admin['subject'] = stripslashes($_POST['subject-admin']);
         }
@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 
     <script type="text/javascript">
         jQuery(function () {
-            jQuery("#settings-tabs").tabs("option", "active", <?php echo (int)$_POST['current-tab']; ?>);
+            jQuery("#settings-tabs").tabs("option", "active", <?php echo (int)($_POST['current-tab']-1); ?>);
         });
     </script>
 

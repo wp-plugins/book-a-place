@@ -2,8 +2,8 @@
 Contributors: ArtkanMedia
 Tags: booking, booking events, booking seats, booking places, booking tickets, event booking, shows booking, sell seats, sell tickets, booking management, event management, events, event calendar, booking calendar
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 0.5.7
+Tested up to: 4.2.4
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 
 == Changelog ==
 
+= 0.6.0 =
+* Added an ability to hide the scheme, if it's wide and can break layout.
+* Tested the plugin with the latest Wordpress versions.
+
 = 0.5.7 =
 * Fixed the problem with permissions.
 
@@ -157,6 +161,10 @@ That’s it! Now everybody can book a place. You will get an email about this as
 * Initial version.
 
 == Upgrade Notice ==
+
+= 0.6.0 =
+* Added an ability to hide the scheme, if it's wide and can break layout.
+* Tested the plugin with the latest Wordpress versions.
 
 = 0.5.7 =
 * Fixed the problem with permissions.

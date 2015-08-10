@@ -5,12 +5,14 @@ if (isset($scheme) && !empty($scheme)) {
     $scheme_name = $scheme->name;
     $scheme_width = $scheme->width;
     $scheme_height = $scheme->height;
+    $scheme_hidden = $scheme->is_hidden;
     $scheme_description = $scheme->description;
 } else {
     $scheme_id = '';
     $scheme_name = '';
     $scheme_width = '';
     $scheme_height = '';
+    $scheme_hidden = 0;
     $scheme_description = '';
 }
 
@@ -39,6 +41,15 @@ if (isset($scheme) && !empty($scheme)) {
         <tr valign="top">
             <th scope="row"><label for="scheme-height"><?php _e("Height", $this->plugin_slug); ?></label></th>
             <td><input type="text" class="small-text" id="scheme-height" name="scheme-height" value="<?php echo $scheme_height ? $scheme_height : ''; ?>"> <?php _e("cells vertically", $this->plugin_slug); ?></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row"><label for="scheme-hidden"><?php _e("Hide Scheme", $this->plugin_slug); ?></label></th>
+            <td>
+                <input type="checkbox" id="scheme-hidden" name="scheme-hidden" value="1"<?php echo $scheme_hidden ? ' checked="checked"' : ''; ?>>
+                <p class="description">
+                    <?php _e("It can be useful, if the scheme is wide and can break your theme layout.", $this->plugin_slug); ?><br>
+                </p>
+            </td>
         </tr>
         </tbody>
     </table>

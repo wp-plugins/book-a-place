@@ -1,5 +1,5 @@
 <form action="" method="post">
-    <input type="hidden" name="current-tab" value="1"/>
+    <input type="hidden" name="current-tab" value="2"/>
 
     <h3 class="title"><?php _e("New order admin template", $this->plugin_slug); ?></h3>
 
